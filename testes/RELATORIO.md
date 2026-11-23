@@ -8,3 +8,10 @@
 **Não garantido pelos testes:** colisão após rotação em ângulos extremos, sprites grandes, persistência HTTP real, uso em dispositivos móveis, performance de muitos bots.
 
 Executar: `python -m pip install playwright`, `python -m playwright install chromium`, `python testes/test_smoke.py`, `python testes/test_gizmos.py`. No ZIP local, o teste de gizmos contém cenários adicionais.
+## WMK v1.6.0 — Catálogos (23/11/2026)
+- 39/39 testes do fluxo principal.
+- 13/13 testes de gizmos.
+- 19/19 testes de catálogos e seletor de bots.
+- **71/71 verificações automatizadas aprovadas** no Chromium headless; sem exceções JavaScript reportadas.
+- Testados: criação/duplicação/exportação de objetos; armas customizadas e atribuição a bots; inserção de prefabs; janela de seleção de bots e identificação por equipe.
+- Observações: localStorage simulado; não equivalem a teste real de retenção entre sessões HTTP/Windows nem de performance prolongada.
