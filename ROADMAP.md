@@ -31,3 +31,10 @@
 ## v3.0 — Distribuição
 - [ ] Pacotes versionados e jogo HTML independente
 - [ ] Multiplayer experimental após estabilização offline
+
+
+## v2.2 — Funcionalidades entregues
+- [x] Seleção múltipla Ctrl/Shift
+- [x] Agrupar, mover seleção, desagrupar e duplicar
+- [x] Prefabs compostos com importação/exportação JSON
+- [x] 144 verificações automatizadas; testes HTTP reais ainda pendentes
