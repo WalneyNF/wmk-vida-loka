@@ -1,4 +1,28 @@
-# WMK Vida Loka v2.1.0 — Jogo e Estúdio de Criação 2D
+
+
+## v2.2.0 — World Studio: grupos e prefabs compostos
+
+- **Ctrl/Shift+clique** na cena e Ctrl/Shift na lista permitem selecionar várias entidades.
+- **Selecionar todos**, **Agrupar**, **Desagrupar** e **Duplicar seleção**.
+- Objetos agrupados compartilham `groupId`, que é salvo no mapa JSON; arrastar desloca o grupo selecionado.
+- **Salvar conjunto como prefab** guarda múltiplos objetos com coordenadas relativas. **Inserir conjunto** cria instâncias em outros mapas.
+- Importação e exportação da biblioteca em formato `wmk-composite-prefabs`; os conjuntos também são armazenados localmente.
+- Testes automatizados: 18/18 novos e 126/126 antigos, total **144/144** no Chromium por scripts de interação.
+
+### Teste rápido
+
+1. Menu → World Studio → duplique Terminal Zero.
+2. Insira duas barreiras, selecione ambas com Ctrl+clique e pressione **Agrupar seleção**.
+3. Arraste uma delas para mover ambas e pressione **Duplicar seleção**.
+4. Selecione duas peças, use **Salvar conjunto como prefab** e dê um nome.
+5. Mude de mapa, escolha o prefab e pressione **Inserir conjunto no mapa**.
+6. Exporte **JSON do mapa** e **biblioteca de conjuntos JSON** para backup.
+
+**Limitações:** hierarquia aninhada, escala/rotação coletiva, autotile/atlas, bloqueio de camadas e persistência após recarregar o navegador em HTTP/Windows não foram concluídos ou validados. O ZIP contém o teste completo e os manuais atualizados.
+
+Consulte [Manual World Studio v2.2](manual-world-studio-v2.2.html).
+
+# WMK Vida Loka v2.2.0 — Jogo e Estúdio de Criação 2D
 
 **WMK Vida Loka** é um protótipo de mundo aberto 2D top-down em HTML5 Canvas, com quatro cenários iniciais, bots, missões, veículos, combate em arena e editores.
 
