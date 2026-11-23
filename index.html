@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- WMK Vida Loka v1.3.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v1.3.1 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WMK Vida Loka — Baía Nova | v1.3.0</title>
+  <title>WMK Vida Loka — Baía Nova | v1.3.1</title>
   <style>
     :root {
       color-scheme: dark;
@@ -489,7 +489,29 @@
 #wmkMain .wmk-credits-inline{margin-top:30px;text-align:center;color:#8acfb5}
 @media(max-width:850px){.studio-main{grid-template-columns:1fr;overflow:auto}.studio-viewport{height:45vh;min-height:300px}.studio-panel{max-height:none}#wmkMapStudio{overflow:auto}.wmk-shell h1{font-size:26px}}
 
-  </style>
+  
+/* Menu de abertura v1.3.1 — separado dos painéis de jogo e sem dependências externas. */
+#wmkMain{background:#071016;color:#f4f7f3;overflow:auto;isolation:isolate}
+#wmkMain *{box-sizing:border-box}
+.menu-atmosphere{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 73% 39%,#18374a 0%,#0b1c27 35%,#071016 73%)}
+.menu-atmosphere:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#071016f5 0%,#071016c5 35%,#07101620 75%),repeating-linear-gradient(0deg,transparent 0 5px,#ffffff03 6px);pointer-events:none}
+.menu-sun{position:absolute;width:42vw;height:42vw;max-width:650px;max-height:650px;top:-14vw;right:3vw;border-radius:50%;background:radial-gradient(circle,#ffb96948 0%,#f39b2620 37%,transparent 69%);filter:blur(10px)}
+.menu-skyline{position:absolute;right:0;left:27%;bottom:10%;height:43%;opacity:.5;background:linear-gradient(90deg,transparent 0%,#203746 13%,transparent 15%,#203746 22%,transparent 24%,#203746 30%,transparent 33%,#203746 39%,transparent 42%,#203746 48%,transparent 52%,#203746 59%,transparent 62%,#203746 66%,transparent 69%,#203746 75%,transparent 79%,#203746 89%,transparent 91%),linear-gradient(to top,#152a34 0 40%,transparent 40%);clip-path:polygon(0 77%,7% 77%,7% 39%,14% 39%,14% 57%,20% 57%,20% 26%,26% 26%,26% 62%,32% 62%,32% 15%,38% 15%,38% 48%,44% 48%,44% 34%,50% 34%,50% 64%,56% 64%,56% 28%,62% 28%,62% 52%,68% 52%,68% 19%,76% 19%,76% 64%,84% 64%,84% 31%,93% 31%,93% 58%,100% 58%,100% 100%,0 100%)}
+.skyline-front{bottom:0;height:32%;opacity:.68;transform:scaleX(-1);filter:brightness(.6)}
+.menu-highway{position:absolute;bottom:-13%;left:22%;height:31%;width:100%;background:linear-gradient(170deg,transparent 28%,#f29b2734 29%,transparent 30%,transparent 40%,#ffffff18 41%,transparent 42%);transform:skewY(-8deg)}
+.menu-layout{position:relative;max-width:1540px;min-height:100vh;margin:auto;padding:25px clamp(18px,4vw,72px) 20px;display:flex;flex-direction:column;gap:24px}
+.menu-header{display:flex;align-items:center;justify-content:space-between;gap:15px;border-bottom:1px solid #ffffff18;padding-bottom:18px;font-size:10px;font-weight:800;letter-spacing:2px;color:#b3c3c7}
+.menu-header-brand{display:flex;align-items:center;gap:18px}.menu-header-brand img{width:92px;height:54px;object-fit:contain}.menu-header-brand em{font-style:normal;color:#fbb449}.menu-header-right{display:flex;gap:24px;align-items:center}.menu-pill{border:1px solid #59d4a94a;padding:8px 11px;border-radius:30px;color:#69e1bd;font-size:9px}
+.menu-stage{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.75fr);align-items:stretch;gap:clamp(25px,5vw,90px);min-height:380px;padding:20px 0}
+.menu-intro{display:flex;flex-direction:column;align-items:flex-start;justify-content:center;max-width:670px}.menu-eyebrow,.menu-feature-kicker,.menu-feature-label,.menu-section-heading>div>span{color:#6de4c1;font-weight:900;font-size:10px;letter-spacing:2.8px}.menu-eyebrow span{color:#fdb45c;margin:0 9px}
+.menu-intro h1{font-family:Impact,'Arial Narrow',system-ui,sans-serif;font-weight:900;letter-spacing:1px;font-stretch:condensed;font-size:clamp(70px,9vw,145px);line-height:.93;margin:20px 0 15px;text-shadow:0 10px 35px #0008;white-space:nowrap}.menu-intro h1 strong{color:#f5b044;font-weight:900}.menu-intro h1>span{color:#64e0bb}.menu-intro>p{font-size:clamp(14px,1.4vw,18px);line-height:1.65;color:#afc1c4;margin:0 0 29px;max-width:570px}
+.menu-primary-actions{width:min(100%,470px);display:grid;gap:10px}.menu-button{display:flex;align-items:center;gap:15px;text-align:left;width:100%;padding:14px 18px;min-height:62px;background:#10232ccf;color:#e9f4ee;border:1px solid #3f6673;border-radius:5px;cursor:pointer;transition:transform .16s ease,border-color .16s,background .16s}.menu-button:hover,.menu-button:focus-visible{transform:translateX(5px);border-color:#6beac5;background:#164137;outline:none}.menu-button-primary{background:linear-gradient(95deg,#72e4b9,#34b897);color:#081b19;border:0}.menu-button-primary:hover,.menu-button-primary:focus-visible{background:#9af5cf}.menu-button b{display:block;font-size:13px;letter-spacing:1.5px}.menu-button small{display:block;font-size:10px;font-weight:500;opacity:.75;margin-top:4px}.menu-play-symbol,.menu-action-icon{font-size:22px;width:28px;text-align:center}.menu-button-arrow{font-size:22px;margin-left:auto;opacity:.75}.menu-quick-tools{display:flex;gap:17px;flex-wrap:wrap;margin-top:20px}.menu-quick-tools button,.menu-quick-tools a{background:none;border:0;color:#9eafb5;text-decoration:none;cursor:pointer;font-size:10px;font-weight:800;letter-spacing:.9px;padding:2px 0}.menu-quick-tools button:hover,.menu-quick-tools a:hover{color:#74e6c5}
+.menu-feature{display:flex;position:relative;flex-direction:column;border:1px solid #47737a66;background:linear-gradient(150deg,#12303bdf,#091922e8);min-height:330px;border-radius:9px;overflow:hidden;box-shadow:0 22px 70px #0006}.menu-feature-kicker{padding:20px;display:flex;justify-content:space-between;color:#f3bd66;font-size:9px}.menu-feature-kicker span{color:#89a9a9}.menu-map-illustration{position:absolute;inset:15% 0 27%;overflow:hidden;background:linear-gradient(145deg,#3a5650,#192c39);transform:perspective(450px) rotateX(30deg) rotateZ(-12deg) scale(1.13);opacity:.75}.map-road{position:absolute;background:#19252e;box-shadow:inset 0 0 0 2px #b7b7aa33}.map-road-a,.map-road-b{height:23px;width:130%;left:-15%}.map-road-a{top:25%}.map-road-b{top:72%}.map-road-c,.map-road-d{width:23px;height:130%;top:-15%}.map-road-c{left:30%}.map-road-d{left:71%}.map-block{position:absolute;width:14%;height:23%;background:#617773;border:5px solid #3b5654;box-shadow:8px 10px 0 #07131a88}.map-block-a{left:42%;top:31%}.map-block-b{left:9%;top:37%}.map-block-c{right:7%;top:8%}.map-block-d{right:23%;bottom:0}.map-point{position:absolute;left:64%;top:38%;color:#ffba54;font-size:46px;filter:drop-shadow(0 0 15px #ffb94c)}.menu-feature-content{position:relative;margin-top:auto;background:linear-gradient(transparent,#07141deb 21%);padding:75px 24px 24px}.menu-feature-content h2{font-family:Impact,'Arial Narrow',sans-serif;font-size:clamp(30px,3vw,48px);margin:9px 0 7px;text-transform:uppercase;letter-spacing:1px}.menu-feature-content p{color:#b2c6c4;font-size:12px;line-height:1.5;min-height:35px;max-width:390px}.menu-feature-stats{display:flex;gap:18px;flex-wrap:wrap;color:#eeb46b;font-size:9px;font-weight:800;letter-spacing:1px;border-top:1px solid #ffffff23;padding-top:14px}
+.menu-region-section{padding:14px 0 5px;border-top:1px solid #ffffff1a}.menu-section-heading{display:flex;justify-content:space-between;gap:15px;align-items:end;margin-bottom:17px}.menu-section-heading h2{font-size:22px;margin:5px 0 0;color:#f1faf5}.menu-section-caption{color:#718d94;font-size:9px;letter-spacing:1.5px}.wmk-map-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}.wmk-map-card{position:relative;border:1px solid #436169a1;background:#11232cbf;padding:17px 18px;border-radius:7px;min-height:176px;display:flex;flex-direction:column;gap:7px;transition:border-color .15s,transform .15s}.wmk-map-card:hover{transform:translateY(-3px);border-color:#76dbbd}.wmk-map-card.active{border-color:#70e4bf;box-shadow:inset 0 0 0 1px #70e4bf44;background:linear-gradient(120deg,#183b38,#11232cdd)}.wmk-map-card h3{margin:2px 0;font-size:20px;text-transform:uppercase;color:#fff}.wmk-map-card p{font-size:11px;color:#afc5c5;line-height:1.45;min-height:0;margin:3px 0}.wmk-map-badge{font-size:9px;letter-spacing:1px;color:#ecae62}.menu-map-card-stats{color:#7ce6c4;font-size:10px;font-weight:700}.menu-map-card-actions{display:flex;gap:7px;margin-top:auto;flex-wrap:wrap}.wmk-map-card button{border-radius:5px;background:#213e45;border:1px solid #548179;padding:8px 12px;font-size:10px}.wmk-map-card button.selected{background:#59d5ad;color:#081f19;border-color:#59d5ad;outline:0}.menu-footer{display:flex;justify-content:space-between;gap:15px;color:#82999e;font-size:10px;letter-spacing:1px;border-top:1px solid #ffffff17;padding-top:14px;margin-top:auto}
+@media(max-width:1000px){.menu-stage{grid-template-columns:1fr .7fr;gap:25px}.menu-intro h1{font-size:clamp(60px,9vw,95px)}.wmk-map-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:740px){.menu-layout{padding:15px 17px}.menu-header-brand img{width:70px}.menu-header-brand span,.menu-header-right>span:last-child{display:none}.menu-stage{grid-template-columns:1fr;padding:0;min-height:0}.menu-intro h1{font-size:clamp(56px,15vw,92px)}.menu-feature{min-height:260px}.wmk-map-grid{grid-template-columns:1fr}.menu-section-caption{display:none}.menu-footer{font-size:9px;flex-wrap:wrap}.menu-atmosphere{position:fixed}}
+
+</style>
 </head>
 <body>
   <main id="game">
@@ -500,7 +522,7 @@
         <div class="brand-mark">WMK</div>
         <div>
           <div class="brand-name">WMK VIDA LOKA</div>
-          <div class="brand-subtitle">BAÍA NOVA · v1.3.0</div>
+          <div class="brand-subtitle">BAÍA NOVA · v1.3.1</div>
         </div>
       </div>
 
@@ -603,27 +625,31 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.3.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.3.1</div>
     <div class="toast" id="toast"></div>
   </main>
 
 
-  <section id="wmkMain" aria-label="Menu principal">
-    <div class="wmk-shell">
-      <img src="assets/logo.svg" alt="WMK Vida Loka" style="width:220px;max-width:85%">
-      <h1>WMK Vida Loka <small style="font-size:13px;color:#89a9a0">v1.3.0 · World Studio</small></h1>
-      <p>Escolha uma cidade, crie cenários e construa contratos para mapas específicos ou todos os mapas.</p>
-      <div class="wmk-menu-actions">
-        <button id="wmkPlay">▶ JOGAR MAPA SELECIONADO</button>
-        <button id="wmkOpenMapStudio">🗺️ EDITOR DE MAPAS</button>
-        <button id="wmkOpenMissionStudio">📋 EDITOR DE MISSÕES</button>
-        <button id="wmkExportAll">⬇ Exportar projeto JSON</button>
-        <button id="wmkImportAllButton">⬆ Importar projeto JSON</button>
-        <input id="wmkImportAll" type="file" accept=".json,application/json" hidden>
+  <section id="wmkMain" aria-label="Menu principal WMK Vida Loka">
+    <div class="menu-atmosphere" aria-hidden="true"><div class="menu-sun"></div><div class="menu-skyline skyline-back"></div><div class="menu-skyline skyline-front"></div><div class="menu-highway"></div></div>
+    <div class="menu-layout">
+      <header class="menu-header"><div class="menu-header-brand"><img src="assets/logo.svg" alt="WMK Vida Loka"><span>BAÍA NOVA <em>·</em> UNIVERSO WMK</span></div><div class="menu-header-right"><span class="menu-pill">● OFFLINE / SINGLE PLAYER</span><span>VERSÃO 1.3.1</span></div></header>
+      <div class="menu-stage">
+        <section class="menu-intro">
+          <div class="menu-eyebrow">MUNDO ABERTO 2D <span>///</span> SUA CIDADE, SUAS REGRAS</div>
+          <h1>VIDA <strong>LOKA</strong><span>.</span></h1>
+          <p>Três regiões. Novas histórias. Pegue o volante, escolha um contrato ou construa a sua própria cidade.</p>
+          <div class="menu-primary-actions">
+            <button id="wmkPlay" class="menu-button menu-button-primary" type="button"><span class="menu-play-symbol">▶</span><span><b>INICIAR JOGO</b><small>Explorar o mapa selecionado</small></span><span class="menu-button-arrow">↗</span></button>
+            <button id="wmkOpenMapStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">▦</span><span><b>WORLD STUDIO</b><small>Criar e editar mapas</small></span><span class="menu-button-arrow">↗</span></button>
+            <button id="wmkOpenMissionStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">◎</span><span><b>EDITOR DE MISSÕES</b><small>Contratos, regras e recompensas</small></span><span class="menu-button-arrow">↗</span></button>
+          </div>
+          <div class="menu-quick-tools"><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
+        </section>
+        <aside class="menu-feature" aria-label="Mapa selecionado"><div class="menu-feature-kicker">LOCALIZAÇÃO EM DESTAQUE <span>01 / 03</span></div><div class="menu-map-illustration" aria-hidden="true"><span class="map-road map-road-a"></span><span class="map-road map-road-b"></span><span class="map-road map-road-c"></span><span class="map-road map-road-d"></span><span class="map-block map-block-a"></span><span class="map-block map-block-b"></span><span class="map-block map-block-c"></span><span class="map-block map-block-d"></span><span class="map-point">◆</span></div><div class="menu-feature-content"><span class="menu-feature-label">SEU PRÓXIMO DESTINO</span><h2 id="wmkSelectedMapName">Baía Nova</h2><p id="wmkSelectedMapDescription">O coração urbano de Vida Loka.</p><div class="menu-feature-stats"><span id="wmkSelectedMapMissions">CONTRATOS DISPONÍVEIS</span><span id="wmkSelectedMapObjects">OBJETOS NO MAPA</span></div></div></aside>
       </div>
-      <h2>🌍 Mapas disponíveis</h2>
-      <div id="wmkMapCards" class="wmk-map-grid"></div>
-      <div class="wmk-credits-inline">Walney Moreira Klein — walneyk@hotmail.com</div>
+      <section class="menu-region-section" aria-label="Seleção de mapas"><div class="menu-section-heading"><div><span>ESCOLHA SEU TERRITÓRIO</span><h2>Mapa de operações</h2></div><span class="menu-section-caption">SELECIONE UMA REGIÃO PARA COMEÇAR</span></div><div id="wmkMapCards" class="wmk-map-grid"></div></section>
+      <footer class="menu-footer"><span>© Walney Moreira Klein · walneyk@hotmail.com</span><span>WMK VIDA LOKA / WORLD STUDIO</span></footer>
     </div>
   </section>
   <section id="wmkMapStudio" hidden aria-label="Editor de mapas">
@@ -722,6 +748,7 @@
 
     // Editor WMK: CRUD, JSON e painéis flutuantes, preservando o jogo em Canvas.
     const $=id=>document.getElementById(id);
+    const on=(id,event,handler)=>{const el=$(id);if(!el){console.warn('[WMK] Controle opcional ausente:',id);return false;}el.addEventListener(event,handler);return true;};
     const editorStatus=$('editorStatus');
     const fieldNames=['mTitle','mDescription','mType','mReward','mX','mY','mPoints','mVehicle'];
     function renderMissionList(){
@@ -735,14 +762,14 @@
       $('mX').value=m.points[0][0];$('mY').value=m.points[0][1];$('mPoints').value=m.points.map(p=>p.join(',')).join('\n');$('mVehicle').checked=m.vehicle; $('mMaps').value=(m.maps||[]).join(', '); $('mMode').value=m.mode||'livre';
     }
     function setMission(id){selectedMissionId=id;mission.index=0;mission.finished=false;mission.startedEscape=false;renderMissionList();updateHUD()}
-    $('missionList').addEventListener('change',e=>{selectedMissionId=e.target.value;populateMissionForm();editorStatus.textContent='Clique em Testar para ativar a missão.'});
-    $('missionNew').addEventListener('click',()=>{const m=normalizeMission({id:'nova-'+Date.now(),title:'Novo contrato',type:'checkpoint',points:[[Math.round(player.x),Math.round(player.y)]],reward:250});missionCatalog.push(m);selectedMissionId=m.id;persistMissions();renderMissionList();editorStatus.textContent='Missão criada. Preencha e clique em Salvar.'});
-    $('missionDelete').addEventListener('click',()=>{const id=$('missionList').value;if(!id||!confirm('Excluir esta missão?'))return;missionCatalog=missionCatalog.filter(m=>m.id!==id);selectedMissionId=missionCatalog[0]?.id||'';persistMissions();setMission(selectedMissionId);editorStatus.textContent='Missão excluída.'});
-    $('missionPlay').addEventListener('click',()=>{if(!$('missionList').value)return;setMission($('missionList').value);$('wmkEditor').hidden=true;startGame(currentMapId);showToast('Missão iniciada: '+activeMission().title)});
+    on('missionList','change',e=>{selectedMissionId=e.target.value;populateMissionForm();editorStatus.textContent='Clique em Testar para ativar a missão.'});
+    on('missionNew','click',()=>{const m=normalizeMission({id:'nova-'+Date.now(),title:'Novo contrato',type:'checkpoint',points:[[Math.round(player.x),Math.round(player.y)]],reward:250});missionCatalog.push(m);selectedMissionId=m.id;persistMissions();renderMissionList();editorStatus.textContent='Missão criada. Preencha e clique em Salvar.'});
+    on('missionDelete','click',()=>{const id=$('missionList').value;if(!id||!confirm('Excluir esta missão?'))return;missionCatalog=missionCatalog.filter(m=>m.id!==id);selectedMissionId=missionCatalog[0]?.id||'';persistMissions();setMission(selectedMissionId);editorStatus.textContent='Missão excluída.'});
+    on('missionPlay','click',()=>{if(!$('missionList').value)return;setMission($('missionList').value);$('wmkEditor').hidden=true;startGame(currentMapId);showToast('Missão iniciada: '+activeMission().title)});
     function syncFirstPoint(){const lines=$('mPoints').value.split('\n');lines[0]=$('mX').value+','+$('mY').value;$('mPoints').value=lines.join('\n')}
     ['mX','mY'].forEach(id=>$(id).addEventListener('change',syncFirstPoint));
-    $('missionPosition').addEventListener('click',()=>{$('mX').value=Math.round(player.x);$('mY').value=Math.round(player.y);syncFirstPoint();editorStatus.textContent='Posição atual aplicada ao primeiro marcador. Clique em Salvar.'});
-    $('missionForm').addEventListener('submit',event=>{event.preventDefault();try{
+    on('missionPosition','click',()=>{$('mX').value=Math.round(player.x);$('mY').value=Math.round(player.y);syncFirstPoint();editorStatus.textContent='Posição atual aplicada ao primeiro marcador. Clique em Salvar.'});
+    on('missionForm','submit',event=>{event.preventDefault();try{
       const id=$('missionList').value;if(!id)throw Error('Crie uma missão primeiro.');
       const pts=$('mPoints').value.split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>line.split(/[;,]/).map(v=>Number(v.trim())));
       if(!pts.length)pts.push([Number($('mX').value),Number($('mY').value)]);
@@ -750,9 +777,9 @@
       if(!updated||updated.points.length!==pts.length)throw Error('Coordenadas inválidas. Use X,Y entre os limites do mapa.');
       missionCatalog[missionCatalog.findIndex(m=>m.id===id)]=updated;persistMissions();setMission(id);editorStatus.textContent='Missão salva e ativada!';showToast('Missão salva.');
     }catch(err){editorStatus.textContent='Erro: '+err.message}});
-    $('missionExport').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({format:'wmk-vida-loka-missions',version:1,missions:missionCatalog},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='wmk-missoes.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)});
-    $('missionImportButton').addEventListener('click',()=>$('missionImport').click());
-    $('missionImport').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+    on('missionExport','click',()=>{const blob=new Blob([JSON.stringify({format:'wmk-vida-loka-missions',version:1,missions:missionCatalog},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='wmk-missoes.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)});
+    on('missionImportButton','click',()=>$('missionImport').click());
+    on('missionImport','change',async e=>{const file=e.target.files[0];if(!file)return;try{
       if(file.size>500000)throw Error('Arquivo muito grande (máximo 500 KB).');
       const data=JSON.parse(await file.text());const entries=Array.isArray(data)?data:data.missions;
       if(!Array.isArray(entries)||!entries.length||entries.length>100)throw Error('JSON deve conter de 1 a 100 missões.');
@@ -761,9 +788,9 @@
       if(!confirm('Substituir o catálogo atual de missões pelo arquivo importado?'))return;
       missionCatalog=parsed;selectedMissionId=parsed[0].id;persistMissions();setMission(selectedMissionId);editorStatus.textContent='Importação concluída.';
     }catch(err){editorStatus.textContent='Importação falhou: '+err.message}e.target.value=''});
-    $('showMissionPanel').addEventListener('click',()=>{$('missionPanel').hidden=!$('missionPanel').hidden});
-    $('openGuide').addEventListener('click',()=>$('guideModal').hidden=false);
-    $('closeGuide').addEventListener('click',()=>$('guideModal').hidden=true);
+    on('showMissionPanel','click',()=>{$('missionPanel').hidden=!$('missionPanel').hidden});
+    on('openGuide','click',()=>$('guideModal').hidden=false);
+    on('closeGuide','click',()=>$('guideModal').hidden=true);
     document.querySelectorAll('[data-hide]').forEach(btn=>btn.addEventListener('click',()=>$ (btn.dataset.hide).hidden=true));
     const panelDefaults={missionPanel:{left:18,bottom:72},wmkTools:{right:18,top:190},wmkEditor:{left:Math.max(20,innerWidth/2-350),top:160}};
     function movePanel(panel,x,y){panel.style.left=Math.max(0,Math.min(innerWidth-90,x))+'px';panel.style.top=Math.max(0,Math.min(innerHeight-50,y))+'px';panel.style.right='auto';panel.style.bottom='auto';}
@@ -774,7 +801,7 @@
       grip.addEventListener('pointermove',e=>{if(!start)return;movePanel(panel,start.left+e.clientX-start.x,start.top+e.clientY-start.y)});
       const finish=()=>{if(start){start=null;savePanelLayout()}};grip.addEventListener('pointerup',finish);grip.addEventListener('pointercancel',finish);
     });
-    $('resetPanels').addEventListener('click',()=>{document.querySelectorAll('[data-panel]').forEach(el=>{el.style.left='';el.style.top='';el.style.right='';el.style.bottom='';el.style.width='';el.style.height=''});try{localStorage.removeItem('wmk-vida-loka-layout-v1')}catch(_){}showToast('Posições dos painéis restauradas.')});
+    on('resetPanels','click',()=>{document.querySelectorAll('[data-panel]').forEach(el=>{el.style.left='';el.style.top='';el.style.right='';el.style.bottom='';el.style.width='';el.style.height=''});try{localStorage.removeItem('wmk-vida-loka-layout-v1')}catch(_){}showToast('Posições dos painéis restauradas.')});
     try{const layout=JSON.parse(localStorage.getItem('wmk-vida-loka-layout-v1')||'{}');Object.entries(layout).forEach(([id,rect])=>{const panel=$(id);if(!panel||!rect)return;const x=parseFloat(rect.left),y=parseFloat(rect.top);if(Number.isFinite(x)&&Number.isFinite(y))movePanel(panel,x,y);if(/^\d+px$/.test(rect.width||''))panel.style.width=rect.width;if(/^\d+px$/.test(rect.height||''))panel.style.height=rect.height;})}catch(_){}
     const WORLD_W = 2720;
     const WORLD_H = 2300;
@@ -1988,23 +2015,31 @@
       g.restore();
     }}
     function showMenu(){wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
-      $('wmkTools').hidden=true;renderMapCards()}
+      $('wmkTools').hidden=true;$('guideModal').hidden=true;renderMapCards()}
     function startGame(id){applyMap(id);wmkMode='play';$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('missionPanel').hidden=false;showToast('Explorando '+currentMap.name+' · ESC para menu')}
     function openMissionEditor(){wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;
       $('wmkEditor').hidden=false;renderMissionList()}
-    function renderMapCards(){const host=$('wmkMapCards');host.replaceChildren();for(const m of mapCatalog){
-      const card=document.createElement('article');card.className='wmk-map-card';
-      const label=document.createElement('div');label.className='wmk-map-badge';label.textContent=m.theme.toUpperCase()+' · '+m.objects.length+' OBJETOS';
-      const h=document.createElement('h3');h.textContent=m.name;
-      const desc=document.createElement('p');desc.textContent=m.description;
-      const stat=document.createElement('p');stat.textContent=mapMissions(m.id).length+' missões compatíveis';
-      const choose=document.createElement('button');choose.textContent=m.id===currentMapId?'✓ Selecionado':'Selecionar';choose.className=m.id===currentMapId?'selected':'';
-      choose.addEventListener('click',()=>{currentMapId=m.id;renderMapCards()});
-      const play=document.createElement('button');play.textContent='▶ Jogar';play.addEventListener('click',()=>startGame(m.id));
-      const edit=document.createElement('button');edit.textContent='Editar';edit.addEventListener('click',()=>openMapEditor(m.id));
-      card.append(label,h,desc,stat,choose,play,edit);host.appendChild(card);
-    }}
+    function renderMapCards(){
+      const host=$('wmkMapCards');if(!host)return;host.replaceChildren();
+      const chosen=mapCatalog.find(m=>m.id===currentMapId)||mapCatalog[0];
+      if(chosen){$('wmkSelectedMapName').textContent=chosen.name;$('wmkSelectedMapDescription').textContent=chosen.description;
+        $('wmkSelectedMapMissions').textContent=mapMissions(chosen.id).length+' CONTRATOS';
+        $('wmkSelectedMapObjects').textContent=chosen.objects.length+' OBJETOS PERSONALIZADOS';}
+      mapCatalog.forEach((m,index)=>{
+        const card=document.createElement('article');card.className='wmk-map-card'+(m.id===currentMapId?' active':'');
+        const label=document.createElement('div');label.className='wmk-map-badge';label.textContent=String(index+1).padStart(2,'0')+' / '+({city:'CIDADE',coast:'LITORAL',highlands:'SERRAS',custom:'PERSONALIZADO'}[m.theme]||'MAPA');
+        const h=document.createElement('h3');h.textContent=m.name;
+        const desc=document.createElement('p');desc.textContent=m.description;
+        const stat=document.createElement('div');stat.className='menu-map-card-stats';stat.textContent=mapMissions(m.id).length+' MISSÕES · '+m.objects.length+' OBJETOS';
+        const actions=document.createElement('div');actions.className='menu-map-card-actions';
+        const choose=document.createElement('button');choose.type='button';choose.textContent=m.id===currentMapId?'✓ SELECIONADO':'SELECIONAR';choose.className=m.id===currentMapId?'selected':'';
+        choose.addEventListener('click',()=>{currentMapId=m.id;renderMapCards()});
+        const play=document.createElement('button');play.type='button';play.textContent='▶ JOGAR';play.addEventListener('click',()=>startGame(m.id));
+        const edit=document.createElement('button');edit.type='button';edit.textContent='✎ EDITAR';edit.addEventListener('click',()=>openMapEditor(m.id));
+        actions.append(choose,play,edit);card.append(label,h,desc,stat,actions);host.appendChild(card);
+      });
+    }
     let editingMap=null,selectedObjectId='',studioZoom=1,studioPanX=0,studioPanY=0,studioDrag=null;
     const studioCanvas=$('studioCanvas'),studioCtx=studioCanvas.getContext('2d');
     function syncMapControls(){if(!editingMap)return;
@@ -2071,46 +2106,46 @@
       const p=studioEventCoords(e);o.x=Math.round(clamp(p.x+studioDrag.dx,0,WORLD_W));o.y=Math.round(clamp(p.y+studioDrag.dy,0,WORLD_H));syncObjectProps();drawStudio()});
     studioCanvas.addEventListener('pointerup',()=>{studioDrag=null});studioCanvas.addEventListener('pointercancel',()=>{studioDrag=null});
     studioCanvas.addEventListener('wheel',e=>{e.preventDefault();studioZoom=clamp(studioZoom*(e.deltaY>0?.9:1.1),.55,4);drawStudio()},{passive:false});
-    $('studioObjectList').addEventListener('change',e=>{selectedObjectId=e.target.value;syncObjectProps();drawStudio()});
+    on('studioObjectList','change',e=>{selectedObjectId=e.target.value;syncObjectProps();drawStudio()});
     for(const [field,key] of Object.entries({objName:'name',objX:'x',objY:'y',objW:'w',objH:'h',objRotation:'rotation',objColor:'color',objLayer:'layer'})){
       $(field).addEventListener('input',e=>{const o=selectedObject();if(!o)return;o[key]=['name','color'].includes(key)?e.target.value:Number(e.target.value);drawStudio();renderMapCards()});
       $(field).addEventListener('change',()=>renderObjectList());
     }
-    $('objSolid').addEventListener('change',e=>{const o=selectedObject();if(o)o.solid=e.target.checked});
-    $('objDelete').addEventListener('click',()=>{if(!selectedObject())return;editingMap.objects=editingMap.objects.filter(o=>o.id!==selectedObjectId);clearSelection()});
-    $('objDuplicate').addEventListener('click',()=>{const o=selectedObject();if(!o)return;const c={...o,id:'obj-'+Date.now(),name:o.name+' (cópia)',x:Math.min(o.x+45,WORLD_W),y:Math.min(o.y+45,WORLD_H)};editingMap.objects.push(c);selectedObjectId=c.id;renderObjectList();drawStudio()});
-    $('studioMapSelect').addEventListener('change',e=>{editingMap=mapCatalog.find(m=>m.id===e.target.value);selectedObjectId='';syncMapControls()});
-    $('studioNew').addEventListener('click',()=>{const m=sanitizeMap({id:'mapa-'+Date.now(),name:'Novo mapa',description:'Meu cenário WMK',background:'#668874',theme:'custom',spawn:[160,150],roadsX:[160,760,1360,1960,2560],roadsY:[150,650,1150,1650,2150],objects:[]});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
-    $('studioDuplicate').addEventListener('click',()=>{const m=sanitizeMap({...editingMap,id:'copia-'+Date.now(),name:editingMap.name+' (cópia)',locked:false});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
-    $('studioDelete').addEventListener('click',()=>{if(editingMap.locked){$('studioStatus').textContent='Mapas iniciais não podem ser excluídos; você pode duplicá-los.';return}
+    on('objSolid','change',e=>{const o=selectedObject();if(o)o.solid=e.target.checked});
+    on('objDelete','click',()=>{if(!selectedObject())return;editingMap.objects=editingMap.objects.filter(o=>o.id!==selectedObjectId);clearSelection()});
+    on('objDuplicate','click',()=>{const o=selectedObject();if(!o)return;const c={...o,id:'obj-'+Date.now(),name:o.name+' (cópia)',x:Math.min(o.x+45,WORLD_W),y:Math.min(o.y+45,WORLD_H)};editingMap.objects.push(c);selectedObjectId=c.id;renderObjectList();drawStudio()});
+    on('studioMapSelect','change',e=>{editingMap=mapCatalog.find(m=>m.id===e.target.value);selectedObjectId='';syncMapControls()});
+    on('studioNew','click',()=>{const m=sanitizeMap({id:'mapa-'+Date.now(),name:'Novo mapa',description:'Meu cenário WMK',background:'#668874',theme:'custom',spawn:[160,150],roadsX:[160,760,1360,1960,2560],roadsY:[150,650,1150,1650,2150],objects:[]});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
+    on('studioDuplicate','click',()=>{const m=sanitizeMap({...editingMap,id:'copia-'+Date.now(),name:editingMap.name+' (cópia)',locked:false});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
+    on('studioDelete','click',()=>{if(editingMap.locked){$('studioStatus').textContent='Mapas iniciais não podem ser excluídos; você pode duplicá-los.';return}
       if(!confirm('Excluir permanentemente o mapa '+editingMap.name+' do navegador?'))return;
       const id=editingMap.id;mapCatalog=mapCatalog.filter(m=>m.id!==id);if(currentMapId===id)currentMapId='baia-nova';persistMaps();openMapEditor(currentMapId)});
-    $('studioMapName').addEventListener('change',saveEditorMap);$('studioMapDescription').addEventListener('change',saveEditorMap);$('studioBackground').addEventListener('input',()=>{editingMap.background=$('studioBackground').value;drawStudio()});
-    $('studioSave').addEventListener('click',saveEditorMap);
-    $('studioTest').addEventListener('click',()=>{saveEditorMap();startGame(editingMap.id)});
-    $('studioReturn').addEventListener('click',()=>{saveEditorMap();showMenu()});
-    $('studioExport').addEventListener('click',()=>{saveEditorMap();downloadJSON({format:'wmk-vida-loka-map',version:1,map:editingMap,assets:assetCatalog.filter(a=>editingMap.objects.some(o=>o.assetId===a.id))},editingMap.id+'.json')});
-    $('studioImportBtn').addEventListener('click',()=>$('studioImportFile').click());
-    $('studioImportFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{
+    on('studioMapName','change',saveEditorMap);on('studioMapDescription','change',saveEditorMap);on('studioBackground','input',()=>{editingMap.background=$('studioBackground').value;drawStudio()});
+    on('studioSave','click',saveEditorMap);
+    on('studioTest','click',()=>{saveEditorMap();startGame(editingMap.id)});
+    on('studioReturn','click',()=>{saveEditorMap();showMenu()});
+    on('studioExport','click',()=>{saveEditorMap();downloadJSON({format:'wmk-vida-loka-map',version:1,map:editingMap,assets:assetCatalog.filter(a=>editingMap.objects.some(o=>o.assetId===a.id))},editingMap.id+'.json')});
+    on('studioImportBtn','click',()=>$('studioImportFile').click());
+    on('studioImportFile','change',async e=>{const f=e.target.files[0];if(!f)return;try{
       if(f.size>8_000_000)throw Error('Arquivo acima de 8 MB; reduza os sprites.');
       const data=JSON.parse(await f.text());if(data.format!=='wmk-vida-loka-map')throw Error('Arquivo não é um mapa WMK.');
       const m=sanitizeMap(data.map);if(mapCatalog.some(x=>x.id===m.id))m.id='importado-'+Date.now();m.locked=false;
       const imported=Array.isArray(data.assets)?data.assets:[];for(const a of imported){if(typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)&&a.data.length<=1_400_000&&!assetCatalog.some(x=>x.id===a.id))assetCatalog.push({id:String(a.id).slice(0,75),name:String(a.name||'imagem').slice(0,80),data:a.data})}
       persistAssets();mapCatalog.push(m);persistMaps();openMapEditor(m.id);$('studioStatus').textContent='Mapa importado. Verifique colisões e posição inicial.';
     }catch(err){$('studioStatus').textContent='Falha ao importar: '+err.message}e.target.value=''});
-    $('studioAssetButton').addEventListener('click',()=>$('studioAssetFile').click());
-    $('studioAssetFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+    on('studioAssetButton','click',()=>$('studioAssetFile').click());
+    on('studioAssetFile','change',async e=>{const file=e.target.files[0];if(!file)return;try{
       if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>750000)throw Error('Use PNG/JPG/WebP de até 750 KB.');
       const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)});
       const asset={id:'asset-'+Date.now(),name:file.name.slice(0,80),data};assetCatalog.push(asset);imageCache.delete(asset.id);persistAssets();renderAssetSelect();$('studioAssetSelect').value=asset.id;$('studioTool').value='sprite';$('studioStatus').textContent='Sprite importado. Clique no mapa para posicionar.';
     }catch(err){$('studioStatus').textContent=err.message}e.target.value=''});
-    $('wmkPlay').addEventListener('click',()=>startGame(currentMapId));
-    $('wmkOpenMapStudio').addEventListener('click',()=>openMapEditor(currentMapId));
-    $('wmkOpenMissionStudio').addEventListener('click',openMissionEditor);
-    $('mainMenuReturn').addEventListener('click',showMenu);
-    $('wmkExportAll').addEventListener('click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog},'wmk-projeto-completo.json'));
-    $('wmkImportAllButton').addEventListener('click',()=>$('wmkImportAll').click());
-    $('wmkImportAll').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+    on('wmkPlay','click',()=>startGame(currentMapId));
+    on('wmkOpenMapStudio','click',()=>openMapEditor(currentMapId));
+    on('wmkOpenMissionStudio','click',openMissionEditor);
+    on('mainMenuReturn','click',showMenu);
+    on('wmkExportAll','click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog},'wmk-projeto-completo.json'));
+    on('wmkImportAllButton','click',()=>$('wmkImportAll').click());
+    on('wmkImportAll','change',async e=>{const file=e.target.files[0];if(!file)return;try{
       if(file.size>12_000_000)throw Error('Limite de 12 MB por projeto.');
       const data=JSON.parse(await file.text());if(data.format!=='wmk-vida-loka-project'||!Array.isArray(data.maps))throw Error('Projeto WMK inválido.');
       const maps=data.maps.slice(0,60).map(sanitizeMap),ids=new Set(maps.map(m=>m.id));if(ids.size!==maps.length)throw Error('IDs de mapa duplicados.');
