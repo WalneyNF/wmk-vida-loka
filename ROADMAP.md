@@ -69,3 +69,18 @@
 - [ ] Painéis móveis nos outros editores
 - [ ] IA tática avançada e medição de desempenho
 - [ ] Persistência real em Windows e migração para IndexedDB
+
+## v2.6 — Laboratórios móveis e bots cooperativos
+- [x] Painéis móveis/redimensionáveis de Bots, Avatar e Missões
+- [x] Gravar posições por laboratório e restaurar layout
+- [x] Comunicação de última posição observada por equipe
+- [x] Busca experimental de cobertura com geometria de obstáculos
+- [x] Regressão em Chromium/Playwright (222/222)
+- [ ] Testar persistência real no Windows via HTTP após reinício
+- [ ] Testes táticos e desempenho com dezenas de bots
+
+## v2.7 — Próximas melhorias
+- [ ] Sprites de avatar por camadas e timeline de animação
+- [ ] Ordens de esquadrão e waypoints compartilhados
+- [ ] Depurador visual de IA e coberturas
+- [ ] Modularização progressiva do motor e dos editores
