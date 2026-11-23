@@ -1,10 +1,24 @@
-# Relatório v2.5.0
+# WMK Vida Loka — Relatório de testes v2.6.0
 
-Chromium/Playwright, armazenamento local simulado.
+Chromium/Playwright, HTML carregado no navegador com armazenamento local simulado.
 
-- v2.5: **13/13** verificações aprovadas.
-- Regressão: avatar 12/12; catálogos 19/19; creator roundtrip 3/3; gizmos 13/13; smoke 39/39; v2.0 18/18; v2.1 22/22; v2.2 18/18; v2.3 23/23; v2.4 16/16.
-- Total: **196/196 verificações**.
-- `node --check` sem erros.
+| Suíte | Resultado |
+|---|---:|
+| test_avatar.py | 12/12 |
+| test_catalogos.py | 19/19 |
+| test_creator_roundtrip.py | 3/3 |
+| test_gizmos.py | 13/13 |
+| test_smoke.py | 39/39 |
+| test_v20.py | 18/18 |
+| test_v21.py | 22/22 |
+| test_v22.py | 18/18 |
+| test_v23.py | 23/23 |
+| test_v24.py | 16/16 |
+| test_v25.py | 13/13 |
+| test_v26.py | 26/26 |
 
-**Não validado integralmente:** persistência HTTP entre sessões no Windows, FPS com muitos bots e atlas grandes, eficácia tática da cobertura, uso em celulares.
+**Total 222/222 verificações em 12 suítes.**
+
+A suíte v2.6 verifica abertura, arraste, restauração, armazenamento e retorno ao modo fixo dos três laboratórios, ausência de erros JavaScript e existência das rotinas da IA. Os testes de IA são estruturais, não um teste exaustivo de eficácia tática.
+
+**Pendências:** validação da persistência real após reiniciar Chromium no Windows, desempenho sob muitos bots, cobertura com obstáculos complexos.
