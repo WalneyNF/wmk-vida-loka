@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- WMK Vida Loka v1.6.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v1.7.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
@@ -566,6 +566,25 @@
 .wmk-catalog-studio{position:fixed;inset:0;z-index:60;background:#09161f;color:#e5f4ee;overflow:auto;font:13px system-ui;padding:20px;box-sizing:border-box}
 .wmk-catalog-studio[hidden]{display:none!important}.wmk-catalog-studio header{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #315c56;padding:5px 12px 17px}.wmk-catalog-studio h2{font-size:23px;margin:0}.wmk-catalog-studio h2 small{font-size:11px;color:#8fc5ae}.wmk-catalog-studio button,.wmk-picker button{cursor:pointer;border:1px solid #477d74;border-radius:7px;background:#17473f;color:#e5fff3;padding:9px 12px;font-weight:700}.wmk-catalog-studio header>div{display:flex;flex-wrap:wrap;gap:7px}.wmk-catalog-content{display:grid;grid-template-columns:minmax(205px,265px) minmax(400px,820px);gap:16px;max-width:1120px;margin:20px auto}.wmk-catalog-content aside,.wmk-catalog-content form{background:#142832;border:1px solid #315551;padding:17px;border-radius:11px;display:flex;flex-direction:column;gap:12px}.wmk-catalog-content aside p{line-height:1.6;color:#a3c3b9}.wmk-catalog-content form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}.wmk-catalog-content label{display:flex;flex-direction:column;gap:5px;color:#a6d2c5;font-size:12px}.wmk-catalog-content label:has(input[type=checkbox]){flex-direction:row;align-items:center}.wmk-catalog-content input,.wmk-catalog-content select{width:100%;box-sizing:border-box;border:1px solid #3b6865;border-radius:6px;background:#0d2029;color:#fff;padding:10px;min-height:37px}.wmk-catalog-content input[type=checkbox]{width:18px;min-height:18px}.wmk-catalog-content select[size]{height:310px}.wmk-catalog-content .wmk-wide{grid-column:1/-1}.wmk-picker{width:min(720px,calc(100vw - 24px));max-height:85dvh;background:#10232c;color:#e8f7f2;border:1px solid #6ed4b0;border-radius:15px;padding:20px;box-shadow:0 25px 80px #000c}.wmk-picker::backdrop{background:#020c13d9}.wmk-picker header{display:flex;justify-content:space-between;gap:12px;align-items:center}.wmk-picker>p{color:#a9cabe}.wmk-picker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;overflow:auto;max-height:55dvh}.wmk-picker-card{display:grid;gap:6px;text-align:left;background:#1a343e!important;border-color:#507a74!important}.wmk-picker-card strong{font-size:15px}.wmk-picker-card small{font-size:11px;color:#b1d8ca}.wmk-picker-card b{font-size:11px;color:#fff}.wmk-picker-card.red{border-left:6px solid #f16d68!important}.wmk-picker-card.blue{border-left:6px solid #5cbcff!important}.wmk-picker-card.neutral{border-left:6px solid #d5d7d3!important}.wmk-picker-card:hover{outline:2px solid #7deac4}
 @media(max-width:700px){.wmk-catalog-content{grid-template-columns:1fr}.wmk-catalog-studio header{flex-wrap:wrap}.wmk-catalog-content form{grid-template-columns:1fr}}
+
+/* WMK Avatar Studio — editor de aparência do personagem em vista superior */
+#wmkAvatarStudio{position:fixed;inset:0;z-index:72;overflow:auto;background:#09141c;color:#e4f8ed;font:13px system-ui}
+#wmkAvatarStudio[hidden]{display:none!important}
+#wmkAvatarStudio .avatar-head{display:flex;flex-wrap:wrap;justify-content:space-between;gap:14px;align-items:center;padding:16px 24px;background:#142e37;border-bottom:1px solid #3c695f}
+#wmkAvatarStudio .avatar-head h2{margin:0;font-size:23px}
+#wmkAvatarStudio button{border:1px solid #507d74;background:#174a47;color:#edfff8;border-radius:7px;padding:9px 12px;cursor:pointer;font-weight:650}
+#wmkAvatarStudio button:hover{background:#236d61}
+#wmkAvatarStudio .avatar-layout{display:grid;grid-template-columns:minmax(245px,390px) minmax(260px,440px);justify-content:center;gap:22px;margin:20px auto;max-width:960px;padding:12px}
+#wmkAvatarStudio .avatar-panel{background:#142830;border:1px solid #355c59;border-radius:12px;padding:18px;min-width:0}
+#wmkAvatarStudio label{display:flex;flex-direction:column;gap:5px;margin-bottom:13px;color:#b3d8cc;font-weight:650}
+#wmkAvatarStudio input,#wmkAvatarStudio select{background:#0c1d25;border:1px solid #497169;border-radius:6px;color:#fff;min-height:35px;padding:7px;width:100%}
+#wmkAvatarStudio input[type=color]{padding:3px;width:100%;height:40px}
+#wmkAvatarStudio .avatar-colors{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#wmkAvatarStudio #avatarCanvas{width:min(100%,410px);aspect-ratio:1;background:#273b3d;border:1px solid #486e68;border-radius:9px;image-rendering:auto}
+#wmkAvatarStudio .avatar-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+#wmkAvatarStudio .avatar-tip{color:#95bfb0;font-size:12px;line-height:1.6}
+@media(max-width:730px){#wmkAvatarStudio .avatar-layout{grid-template-columns:1fr}}
+
 </style>
 </head>
 <body>
@@ -685,7 +704,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.6.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.7.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -704,7 +723,7 @@
             <button id="wmkOpenMapStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">▦</span><span><b>WORLD STUDIO</b><small>Criar e editar mapas</small></span><span class="menu-button-arrow">↗</span></button>
             <button id="wmkOpenMissionStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">◎</span><span><b>EDITOR DE MISSÕES</b><small>Contratos, regras e recompensas</small></span><span class="menu-button-arrow">↗</span></button>
           </div>
-          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkOpenObjectStudio" type="button">▣ EDITOR DE OBJETOS</button><button id="wmkOpenWeaponStudio" type="button">⌖ EDITOR DE ARMAS</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
+          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkOpenObjectStudio" type="button">▣ EDITOR DE OBJETOS</button><button id="wmkOpenWeaponStudio" type="button">⌖ EDITOR DE ARMAS</button><button id="wmkOpenAvatarStudio" type="button">◉ EDITOR DE AVATAR</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
         </section>
         <aside class="menu-feature" aria-label="Mapa selecionado"><div class="menu-feature-kicker">LOCALIZAÇÃO EM DESTAQUE <span>01 / 04</span></div><div class="menu-map-illustration" aria-hidden="true"><span class="map-road map-road-a"></span><span class="map-road map-road-b"></span><span class="map-road map-road-c"></span><span class="map-road map-road-d"></span><span class="map-block map-block-a"></span><span class="map-block map-block-b"></span><span class="map-block map-block-c"></span><span class="map-block map-block-d"></span><span class="map-point">◆</span></div><div class="menu-feature-content"><span class="menu-feature-label">SEU PRÓXIMO DESTINO</span><h2 id="wmkSelectedMapName">Baía Nova</h2><p id="wmkSelectedMapDescription">O coração urbano de Vida Loka.</p><div class="menu-feature-stats"><span id="wmkSelectedMapMissions">CONTRATOS DISPONÍVEIS</span><span id="wmkSelectedMapObjects">OBJETOS NO MAPA</span></div></div></aside>
       </div>
@@ -764,6 +783,28 @@
   <dialog id="wmkBotPicker" class="wmk-picker"><header><strong>♟ ESCOLHA O BOT PARA INSERIR</strong><button id="pickerCancel" type="button">✕ Fechar</button></header><p>Selecione um modelo. Depois clique no mapa para posicioná-lo.</p><div id="pickerCards" class="wmk-picker-grid"></div><p id="pickerFeedback" role="status"></p></dialog>
   <section id="wmkObjectStudio" class="wmk-catalog-studio" hidden><header><h2>▣ WMK Object Lab <small>· Editor de objetos reutilizáveis</small></h2><div><button id="objectExport">⬇ Exportar JSON</button><button id="objectImportButton">⬆ Importar JSON</button><input id="objectImportFile" type="file" accept=".json,application/json" hidden><button id="objectReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de objetos<select id="objectList" size="13"></select></label><button id="objectNew">+ Novo objeto</button><button id="objectClone">⧉ Duplicar</button><button id="objectDelete">🗑 Excluir</button><p>Use os modelos no World Studio com a ferramenta «Objeto da biblioteca». Sprite é opcional.</p></aside><form id="objectForm"><label>Nome<input id="prefName" required maxlength="60"></label><label>Tipo<select id="prefType"><option value="building">Prédio</option><option value="tree">Árvore</option><option value="barrier">Barreira</option><option value="decoration">Decoração</option><option value="sprite">Sprite</option><option value="water">Água</option><option value="sand">Areia</option></select></label><label>Largura<input id="prefW" type="number" min="4" max="900" required></label><label>Altura<input id="prefH" type="number" min="4" max="900" required></label><label>Rotação inicial<input id="prefRotation" type="number" min="-360" max="360"></label><label>Camada<input id="prefLayer" type="number" min="-20" max="20"></label><label>Cor<input id="prefColor" type="color"></label><label>Sprite<select id="prefAsset"></select></label><label class="wmk-wide"><input id="prefSolid" type="checkbox"> Objeto sólido (colisão)</label><button type="submit">💾 Salvar modelo</button><p id="objectStatus" role="status" class="wmk-wide"></p></form></div></section>
   <section id="wmkWeaponStudio" class="wmk-catalog-studio" hidden><header><h2>⌖ WMK Arsenal Lab <small>· Editor de armas fictícias</small></h2><div><button id="weaponExport">⬇ Exportar JSON</button><button id="weaponImportButton">⬆ Importar JSON</button><input id="weaponImportFile" type="file" accept=".json,application/json" hidden><button id="weaponReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de armas<select id="weaponList" size="13"></select></label><button id="weaponNew">+ Nova arma</button><button id="weaponClone">⧉ Duplicar</button><button id="weaponDelete">🗑 Excluir</button><p>Armas são dados do jogo. Atribua-as aos bots no Bot Lab; seus atributos afetam o combate simulado.</p></aside><form id="weaponForm"><label>Nome<input id="wpName" required maxlength="60"></label><label>Categoria<select id="wpType"><option value="pistol">Pistola</option><option value="smg">Automática</option><option value="rifle">Carabina</option><option value="other">Personalizada</option></select></label><label>Dano por disparo<input id="wpDamage" type="number" min="1" max="100" required></label><label>Alcance<input id="wpRange" type="number" min="60" max="1000" required></label><label>Cadência (disparos/seg.)<input id="wpRate" type="number" min="0.2" max="20" step="0.1" required></label><label>Capacidade<input id="wpMagazine" type="number" min="1" max="200" required></label><label>Precisão (%)<input id="wpAccuracy" type="number" min="0" max="100" required></label><label>Cor temática<input id="wpColor" type="color"></label><button type="submit">💾 Salvar arma</button><p id="weaponStatus" role="status" class="wmk-wide"></p></form></div></section>
+
+  <section id="wmkAvatarStudio" hidden aria-label="Editor de avatar do jogador">
+    <header class="avatar-head"><div><h2>◉ WMK AVATAR LAB <small>· Personagem jogável</small></h2><p>Personalize seu personagem 2D. O resultado aparece no jogo em todos os mapas.</p></div><button id="avatarReturn" type="button">← Menu principal</button></header>
+    <div class="avatar-layout"><div class="avatar-panel">
+      <label>Nome do personagem<input id="avatarName" maxlength="32" placeholder="Meu personagem"></label>
+      <label>Formato do corpo<select id="avatarBody"><option value="regular">Regular</option><option value="slim">Esbelto</option><option value="wide">Robusto</option></select></label>
+      <label>Formato do cabelo<select id="avatarHair"><option value="short">Curto</option><option value="long">Comprido</option><option value="none">Sem cabelo</option></select></label>
+      <label>Acessório na cabeça<select id="avatarHat"><option value="none">Nenhum</option><option value="cap">Boné</option><option value="helmet">Capacete</option></select></label>
+      <label>Equipamento nas costas<select id="avatarBackpack"><option value="none">Nenhum</option><option value="pack">Mochila</option></select></label>
+      <div class="avatar-colors">
+        <label>Tom da pele<input type="color" id="avatarSkin"></label>
+        <label>Roupa<input type="color" id="avatarShirt"></label>
+        <label>Calça<input type="color" id="avatarPants"></label>
+        <label>Cabelo<input type="color" id="avatarHairColor"></label>
+        <label>Boné/capacete<input type="color" id="avatarHatColor"></label>
+        <label>Mochila<input type="color" id="avatarPackColor"></label>
+      </div>
+      <div class="avatar-actions"><button id="avatarSave" type="button">💾 Salvar avatar</button><button id="avatarReset" type="button">↶ Restaurar padrão</button><button id="avatarExport" type="button">⬇ Exportar JSON</button><button id="avatarImportBtn" type="button">⬆ Importar JSON</button><input id="avatarImport" type="file" accept=".json,application/json" hidden></div>
+      <p id="avatarStatus" role="status" class="avatar-tip">Alterações são visualizadas antes de salvar.</p>
+    </div><div class="avatar-panel"><h3>Pré-visualização ao vivo</h3><canvas id="avatarCanvas" width="420" height="420" aria-label="Visualização do personagem em vista de cima"></canvas><p class="avatar-tip">Modelo estilizado em vista de cima, desenhado por Canvas, sem depender de sprites externos. As opções salvas são aplicadas ao personagem no mundo aberto e na arena. Alterar a aparência não modifica os atributos de combate.</p><p class="avatar-tip">Os modelos de bots são editados separadamente pelo Bot Lab. No futuro, ambos poderão compartilhar uma biblioteca de avatares.</p></div></div>
+  </section>
+
   <script>
     const WMK_DEFAULT_DRIVING = Object.freeze({ maxSpeed: 220, acceleration: 140, braking: 500, steering: 1.55 });
     const driving = { ...WMK_DEFAULT_DRIVING };
@@ -1865,35 +1906,7 @@
     }
 
     function drawPlayer() {
-      ctx.save();
-      ctx.translate(player.x, player.y);
-
-      ctx.fillStyle = "rgba(0, 0, 0, .35)";
-      ctx.beginPath();
-      ctx.ellipse(2, 7, 11, 6, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.rotate(player.angle);
-
-      ctx.fillStyle = "#172320";
-      roundedRectPath(ctx, -8, -9, 17, 19, 6);
-      ctx.fill();
-
-      ctx.fillStyle = "#50d6a8";
-      roundedRectPath(ctx, -7, -10, 15, 18, 5);
-      ctx.fill();
-
-      ctx.fillStyle = "#f2c6a1";
-      ctx.beginPath();
-      ctx.arc(5, 0, 5, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.fillStyle = "#edf6df";
-      ctx.beginPath();
-      ctx.arc(7, -1, 1.2, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.restore();
+      ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.angle);paintAvatar(ctx,avatar);ctx.restore();
     }
 
     function drawMissionMarker(target) {
@@ -2183,7 +2196,7 @@
       }
       g.restore();
     }}
-    function showMenu(){$('wmkObjectStudio').hidden=true;$('wmkWeaponStudio').hidden=true;$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
+    function showMenu(){$('wmkAvatarStudio').hidden=true;$('wmkObjectStudio').hidden=true;$('wmkWeaponStudio').hidden=true;$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('wmkTools').hidden=true;$('wmkCombatHUD').hidden=true;shootHeld=false;$('guideModal').hidden=true;renderMapCards()}
     function startGame(id){applyMap(id);wmkMode='play';$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('missionPanel').hidden=false;$('wmkCombatHUD').hidden=currentMap.theme!=='arena';showToast('Explorando '+currentMap.name+' · ESC para menu')}
@@ -2373,7 +2386,7 @@
     on('wmkOpenMapStudio','click',()=>openMapEditor(currentMapId));on('studioOpenObjectEditor','click',()=>openObjectStudio());
     on('wmkOpenMissionStudio','click',openMissionEditor);on('missionReturn','click',showMenu);
     on('mainMenuReturn','click',showMenu);
-    on('wmkExportAll','click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog,objects:objectCatalog,weapons:weaponCatalog},'wmk-projeto-completo.json'));
+    on('wmkExportAll','click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog,objects:objectCatalog,weapons:weaponCatalog,avatar},'wmk-projeto-completo.json'));
     on('wmkImportAllButton','click',()=>$('wmkImportAll').click());
     on('wmkImportAll','change',async e=>{const file=e.target.files[0];if(!file)return;try{
       if(file.size>12_000_000)throw Error('Limite de 12 MB por projeto.');
@@ -2382,7 +2395,7 @@
       const missions=(data.missions||[]).map(normalizeMission);if(missions.some(m=>!m))throw Error('Missões inválidas.');
       if(!confirm('Substituir mapas, missões e biblioteca local pelos dados importados?'))return;
       mapCatalog=maps;assetCatalog=Array.isArray(data.assets)?data.assets.filter(a=>typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)&&a.data.length<1_400_000).slice(0,30):[];
-      missionCatalog=missions;if(Array.isArray(data.objects))objectCatalog=data.objects.slice(0,100).map(safeObject);if(Array.isArray(data.weapons)&&data.weapons.length)weaponCatalog=data.weapons.slice(0,100).map(safeWeapon);persistObjectCatalog();persistWeaponCatalog();currentMapId=maps[0]?.id||'baia-nova';selectedMissionId=missions[0]?.id||'';
+      missionCatalog=missions;if(Array.isArray(data.objects))objectCatalog=data.objects.slice(0,100).map(safeObject);if(Array.isArray(data.weapons)&&data.weapons.length)weaponCatalog=data.weapons.slice(0,100).map(safeWeapon);persistObjectCatalog();persistWeaponCatalog();if(data.avatar){avatar=safeAvatar(data.avatar);try{localStorage.setItem(WMK_AVATAR_KEY,JSON.stringify(avatar))}catch{}}currentMapId=maps[0]?.id||'baia-nova';selectedMissionId=missions[0]?.id||'';
       persistAssets();persistMaps();persistMissions();applyMap(currentMapId);showMenu();
     }catch(err){alert('Importação não realizada: '+err.message)}e.target.value=''});
     window.addEventListener('keydown',e=>{if(e.code==='Escape'&&wmkMode==='play'){showMenu();e.preventDefault()}
@@ -2417,6 +2430,36 @@
     canvas.addEventListener('pointerdown',e=>{if(wmkMode==='play'&&currentMap.theme==='arena'&&e.button===0){shootHeld=true;playerShoot()}});
     window.addEventListener('pointerup',()=>shootHeld=false);
     window.addEventListener('keydown',e=>{if(e.code==='KeyR'&&wmkMode==='play'&&currentMap.theme==='arena'&&!e.repeat){reloadTimer=1.3;magazine=0}});
+
+
+    // Avatar do jogador: esquema estável, sem execução de scripts importados.
+    const WMK_AVATAR_KEY='wmk-vida-loka-avatar-v1';
+    const defaultAvatar=Object.freeze({name:'Piloto WMK',body:'regular',hair:'short',hat:'none',backpack:'none',skin:'#f2c6a1',shirt:'#50d6a8',pants:'#213740',hairColor:'#342722',hatColor:'#d1b260',packColor:'#5a8191'});
+    function safeAvatar(value){const a=value&&typeof value==='object'?value:{};const options=(v,valid,def)=>valid.includes(v)?v:def;const color=(v,def)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:def;return {name:String(a.name||defaultAvatar.name).slice(0,32),body:options(a.body,['regular','slim','wide'],'regular'),hair:options(a.hair,['short','long','none'],'short'),hat:options(a.hat,['none','cap','helmet'],'none'),backpack:options(a.backpack,['none','pack'],'none'),skin:color(a.skin,defaultAvatar.skin),shirt:color(a.shirt,defaultAvatar.shirt),pants:color(a.pants,defaultAvatar.pants),hairColor:color(a.hairColor,defaultAvatar.hairColor),hatColor:color(a.hatColor,defaultAvatar.hatColor),packColor:color(a.packColor,defaultAvatar.packColor)}}
+    let avatar=(()=>{try{return safeAvatar(JSON.parse(localStorage.getItem(WMK_AVATAR_KEY)||'null'))}catch{return safeAvatar(defaultAvatar)}})();
+    let avatarDraft={...avatar};
+    const avatarInputs={avatarName:'name',avatarBody:'body',avatarHair:'hair',avatarHat:'hat',avatarBackpack:'backpack',avatarSkin:'skin',avatarShirt:'shirt',avatarPants:'pants',avatarHairColor:'hairColor',avatarHatColor:'hatColor',avatarPackColor:'packColor'};
+    function paintAvatar(c,a){const bw=a.body==='wide'?21:a.body==='slim'?13:17;
+      c.save();c.fillStyle='rgba(0,0,0,.28)';c.beginPath();c.ellipse(2,7,bw*.75,11,0,0,Math.PI*2);c.fill();
+      if(a.backpack==='pack'){c.fillStyle=a.packColor;c.fillRect(-bw*.72,-10,8,20)}
+      c.fillStyle=a.pants;c.fillRect(-bw*.55,-9,bw*.85,18);
+      c.fillStyle=a.shirt;c.beginPath();c.roundRect(-bw*.50,-10,bw,20,5);c.fill();
+      c.fillStyle=a.skin;c.beginPath();c.arc(5,0,5,0,Math.PI*2);c.fill();
+      if(a.hair!=='none'){c.fillStyle=a.hairColor;c.beginPath();c.arc(4,-1,a.hair==='long'?5:3,Math.PI,Math.PI*1.9);c.fill();if(a.hair==='long')c.fillRect(1,-7,3,3)}
+      if(a.hat!=='none'){c.fillStyle=a.hatColor;c.beginPath();c.roundRect(0,-8,a.hat==='helmet'?9:7,16,3);c.fill();if(a.hat==='cap')c.fillRect(7,-3,5,6)}
+      c.fillStyle='#f7fff5';c.beginPath();c.arc(8,-1,1.2,0,Math.PI*2);c.fill();c.restore();}
+    function renderAvatarPreview(){const canvas=$('avatarCanvas');if(!canvas)return;const c=canvas.getContext('2d');c.clearRect(0,0,420,420);c.fillStyle='#284047';c.fillRect(0,0,420,420);c.strokeStyle='rgba(255,255,255,.07)';for(let i=0;i<420;i+=30){c.beginPath();c.moveTo(i,0);c.lineTo(i,420);c.moveTo(0,i);c.lineTo(420,i);c.stroke()}
+      c.save();c.translate(210,205);c.scale(8,8);paintAvatar(c,avatarDraft);c.restore();c.fillStyle='#ddfff4';c.font='bold 17px system-ui';c.textAlign='center';c.fillText(avatarDraft.name,210,370);c.fillStyle='#91b9aa';c.font='12px system-ui';c.fillText('VISÃO DE CIMA · TAMANHO AMPLIADO',210,393);}
+    function avatarFormRefresh(){for(const [id,key] of Object.entries(avatarInputs))$(id).value=avatarDraft[key];renderAvatarPreview()}
+    function openAvatarStudio(){showMenu();wmkMode='avatar';$('wmkMain').hidden=true;$('wmkAvatarStudio').hidden=false;avatarDraft={...avatar};avatarFormRefresh()}
+    on('wmkOpenAvatarStudio','click',openAvatarStudio);
+    on('avatarReturn','click',showMenu);
+    for(const [id,key] of Object.entries(avatarInputs))on(id,'input',()=>{avatarDraft=safeAvatar({...avatarDraft,[key]:$(id).value});renderAvatarPreview()});
+    on('avatarSave','click',()=>{avatar=safeAvatar(avatarDraft);try{localStorage.setItem(WMK_AVATAR_KEY,JSON.stringify(avatar));$('avatarStatus').textContent='Avatar salvo! Aparência aplicada ao jogo.'}catch{$('avatarStatus').textContent='Avatar aplicado, mas o navegador bloqueou o salvamento.'}});
+    on('avatarReset','click',()=>{avatarDraft={...defaultAvatar};avatarFormRefresh();$('avatarStatus').textContent='Padrão restaurado na prévia. Clique em Salvar para aplicar.'});
+    on('avatarExport','click',()=>downloadJSON({format:'wmk-vida-loka-avatar',version:1,avatar:safeAvatar(avatarDraft)},'wmk-avatar.json'));
+    on('avatarImportBtn','click',()=>$('avatarImport').click());
+    on('avatarImport','change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>20000)throw Error('JSON acima de 20 KB');const raw=JSON.parse(await f.text());if(raw.format!=='wmk-vida-loka-avatar'||!raw.avatar||typeof raw.avatar!=='object')throw Error('Formato de avatar inválido');avatarDraft=safeAvatar(raw.avatar);avatarFormRefresh();$('avatarStatus').textContent='Importado para a prévia. Clique Salvar para aplicar.'}catch(err){$('avatarStatus').textContent='Falha ao importar: '+err.message}e.target.value=''});
 
     // Catálogos independentes: cada modelo pode ser reutilizado por múltiplos mapas.
     let activePrefabId='',activeWeaponId='';
