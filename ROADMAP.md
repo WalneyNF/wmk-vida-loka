@@ -47,3 +47,13 @@
 - [x] JSON de mapas retrocompatível com layerSettings
 - [x] 23 testes específicos e regressão geral no Chromium
 - [ ] Árvore aninhada, seleção por caixa, autotile e pivô persistente
+
+
+## v2.4 — World Studio (entregue)
+- [x] Seleção por retângulo de bots e objetos
+- [x] Grupos superiores com hierarquia e salvamento JSON
+- [x] Presets de terreno: grama/asfalto/areia/água/pedra/terra
+- [x] Painel de propriedades recolhível
+- [x] Testes de regressão Chromium
+- [ ] Atlas de tiles/spritesheet, autotile e pincel contínuo
+- [ ] Drag-and-drop na árvore e testes de persistência real por HTTP no Windows
