@@ -1,38 +1,26 @@
-# WMK Vida Loka — Roadmap
+# Roadmap WMK Vida Loka
 
-## ✅ v1.5 implementado
-- World Studio: seleção de objetos e bots na cena e lista
-- Gizmos para mover X/Y/livre; escala e rotação para objetos
-- Grade opcional de 25 unidades e histórico básico Ctrl+Z/Ctrl+Y
-- Editor de Missões compacto em tela dedicada
-- Testes Chromium: 39 regressões e 13 verificações dos gizmos
-- Guia HTML de estudo e evolução
+## v2.0.0 — Integrado e testado
+- [x] Gizmos, bot editor, objetos/armas e quatro mapas editáveis.
+- [x] Pincel básico de terreno em blocos e exibição de colisões.
+- [x] Prefabs simples a partir de objetos selecionados.
+- [x] Rotas de patrulha por clique no World Studio.
+- [x] Navegação A* em grade, experimental, para bots da arena.
+- [x] Biblioteca de perfis de avatar e vinculação aos bots.
+- [x] Visualização linear do fluxo de missões.
+- [x] Game Creator com pacote JSON importável/exportável.
+- [x] Manuais e testes automatizados.
 
-## Planejamento
-- v1.6: multisseleção, grupos, camadas visíveis, prefabs, pivôs, copiadora e biblioteca de sprites.
-- v1.7: bots A*, comportamentos de estados, navegação de waypoints e cobertura.
-- v1.8: equipes, rounds, placar, respawn e modos de jogo.
-- v1.9: editor de missões por nós, eventos, diálogos e condições.
-- v2.0: campanhas, inventário, economia W$, veículos e personagens JSON.
-- Futuro: WMK Game Creator e multiplayer.
+## Próximas etapas — ainda não implementadas
+- [ ] World Studio modular: multisseleção, grupos, outliner, tilesets e autotile.
+- [ ] Avatar por partes com animações e equipamento visual.
+- [ ] IA tática completa: cobertura, investigação, avoidance e formação.
+- [ ] Editor de missões por nós editáveis, condições, escolhas e diálogos.
+- [ ] Mundo vivo: NPCs com rotinas, interiores e trânsito simulado.
+- [ ] Garagem e veículos por JSON, inventário e economia W$ persistente.
+- [ ] Campanhas com progressão entre mapas.
+- [ ] Empacotar jogo HTML independente e instaladores.
+- [ ] Multiplayer autoritativo, depois de estabilizar o modo offline.
 
-Consulte [evolucao.html](evolucao.html) para o estudo prático de cada etapa.
-## WMK v1.6.0 — Implementado
-- Seletor de bots por cartões com 🔴 inimigo, 🔵 aliado e ⚪ neutro.
-- Object Lab: biblioteca de prefabs com sprites, colisões, camada e dimensões.
-- Arsenal Lab: armas fictícias com dano, alcance, cadência, capacidade e precisão.
-- World Studio insere modelos do Object Lab e Bot Lab seleciona armas cadastradas.
-- Exportação/importação JSON por catálogo e inclusão no backup completo.
-
-## Prioridades futuras
-- IA com A*, waypoints e patrulhas visuais; controle de armas do jogador, munição e recarga dos bots.
-- Manipulação completa de personagens (sprites, animações), grupos e camadas.
-- Empacotamento de projetos e validação de persistência real no Windows.
-
-## v1.7 — Avatar Lab (implementado)
-- Editor com prévia Canvas de personagem 2D, roupa/cabelo, acessórios e cores.
-- Salvar, exportar/importar JSON e compartilhar em backup do projeto.
-- Avatar aplicado ao personagem jogável de todos os mapas.
-
-## Futuro
-- Galeria de avatares e skins PNG animadas, equipamentos visuais, perfis de NPCs, animação direcional.
+## Qualidade
+Antes de cada publicação executar `testes/test_smoke.py`, `testes/test_gizmos.py`, `testes/test_catalogos.py`, `testes/test_avatar.py`, `testes/test_v20.py` e `testes/test_creator_roundtrip.py`.
