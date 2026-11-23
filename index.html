@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- WMK Vida Loka v2.3.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v2.4.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
@@ -603,6 +603,12 @@
 #wmkAvatarStudio .avatar-tip{color:#95bfb0;font-size:12px;line-height:1.6}
 @media(max-width:730px){#wmkAvatarStudio .avatar-layout{grid-template-columns:1fr}}
 
+/* v2.4: ferramentas compactas */
+.studio-v24-check{display:flex;gap:7px;align-items:center;padding:7px;background:#173b3b;border-radius:7px;font-size:11px;color:#b9e6d5}
+.studio-v24-check input{width:auto!important;accent-color:#62e4b7}
+.studio-props-v24 .studio-props-section{border:1px solid #355d60;background:#122c34;border-radius:8px;padding:8px;margin:6px 0}
+.studio-props-v24 .studio-props-section summary{cursor:pointer;font-size:12px;font-weight:700;color:#91ebca;padding:5px}
+.studio-props-v24 .studio-props-section label{margin:8px 0}
 </style>
 </head>
 <body>
@@ -722,7 +728,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.3.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.4.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -767,7 +773,7 @@
         <div class="studio-v22-tools" aria-label="Operações com grupos">
           <strong>▤ Grupos e multisseleção</strong>
           <span>Ctrl+clique: adicionar/remover · Shift+clique: adicionar</span>
-          <button id="studioSelectAll" type="button">Selecionar todos</button>
+          <button id="studioSelectAll" type="button">Selecionar todos</button><label class="studio-v24-check"><input type="checkbox" id="studioMarquee" checked> Seleção por retângulo no espaço vazio</label>
           <div class="studio-v23-tools" aria-label="Árvore e camadas">
             <h4>🌲 Hierarquia de entidades</h4>
             <div id="studioHierarchy" class="studio-tree" role="tree" aria-label="Árvore de grupos, objetos e bots"></div>
@@ -777,7 +783,7 @@
             <span>G: mover · S: escalar seleção · R: rotacionar seleção. Camadas bloqueadas não podem ser editadas.</span>
           </div>
           <button id="studioGroup" type="button">Agrupar seleção</button>
-          <button id="studioUngroup" type="button">Desagrupar</button>
+          <button id="studioUngroup" type="button">Desagrupar</button><button id="studioNestGroup" type="button">↳ Criar grupo superior da seleção</button><button id="studioFlattenGroup" type="button">↰ Desfazer grupo superior</button>
           <button id="studioCloneSelection" type="button">Duplicar seleção</button>
           <button id="studioSaveComposite" type="button">Salvar conjunto como prefab</button>
           <label>Prefabs compostos<select id="studioCompositeSelect"></select></label>
@@ -790,7 +796,7 @@
         <button id="studioNew">+ Novo mapa</button><button id="studioDuplicate">⧉ Duplicar mapa</button><button id="studioDelete">Excluir</button>
         <label>Nome<input id="studioMapName" maxlength="70"></label>
         <label>Descrição<textarea id="studioMapDescription" rows="2" maxlength="240"></textarea></label>
-        <label>Cor do terreno<input id="studioBackground" type="color"></label><label>Pincel: cor<input id="studioPaintColor" type="color" value="#b69a75"></label><label>Pincel: tamanho<select id="studioBrushSize"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option></select></label><label><input type="checkbox" id="studioDebugCollision"> 🛡 Mostrar colisões</label><button id="studioSavePrefab" type="button">▣ Salvar objeto selecionado na biblioteca</button>
+        <label>Cor do terreno<input id="studioBackground" type="color"></label><label>Pincel: cor<input id="studioPaintColor" type="color" value="#b69a75"></label><label>Tileset rápido<select id="studioTilePreset"><option value="custom">Personalizado</option><option value="grass">🌿 Grama</option><option value="asphalt">🛣 Asfalto</option><option value="sand">🏖 Areia</option><option value="water">🌊 Água</option><option value="stone">🪨 Pedra</option><option value="dirt">🟫 Terra</option></select></label><label>Pincel: tamanho<select id="studioBrushSize"><option value="50">50</option><option value="100" selected>100</option><option value="200">200</option></select></label><label><input type="checkbox" id="studioDebugCollision"> 🛡 Mostrar colisões</label><button id="studioSavePrefab" type="button">▣ Salvar objeto selecionado na biblioteca</button>
         <label>Ferramenta<select id="studioTool"><option value="terrain">🖌 Pincel de terreno</option><option value="patrol">➰ Rota de patrulha do bot</option><option value="select">Selecionar/mover</option><option value="building">🏢 Prédio</option><option value="tree">🌳 Árvore</option><option value="water">🌊 Água</option><option value="sand">🏖 Areia</option><option value="barrier">🚧 Barreira</option><option value="decoration">✨ Decoração</option><option value="sprite">🖼 Sprite importado</option><option value="bot">♟ Inserir bot (escolher tipo)</option><option value="prefab">▣ Objeto da biblioteca</option><option value="spawn">📍 Posição inicial</option><option value="erase">🗑 Apagar</option></select></label>
         <label>Objeto personalizado<select id="studioPrefabSelect"></select></label><button id="studioOpenObjectEditor" type="button">▣ Abrir Editor de Objetos</button><label>Sprite (biblioteca)<select id="studioAssetSelect"></select></label>
         <button id="studioAssetButton">+ Importar PNG/JPG/WebP</button><input id="studioAssetFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
@@ -798,16 +804,16 @@
         <p style="font-size:11px">🔴 Inimigos · 🔵 Aliados · ⚪ Neutros. Ao inserir um bot, escolha o modelo no catálogo. Selecione uma ferramenta e clique no mapa. Com “Selecionar”, arraste para mover. Colisões impedem passagem de pedestres e carros.</p>
       </aside>
       <div class="studio-viewport"><div class="gizmo-toolbar" id="gizmoToolbar" role="toolbar" aria-label="Ferramentas de transformação"><button type="button" id="gizmoMove" class="active" title="Mover (G)">✥ Mover G</button><button type="button" id="gizmoScale" title="Escalonar (S)">⤡ Escala S</button><button type="button" id="gizmoRotate" title="Rotacionar (R)">⟳ Rotação R</button><button type="button" id="gizmoDeselect" title="Limpar seleção">✕</button><span id="gizmoReadout">Selecione objeto ou bot</span></div><canvas id="studioCanvas" width="1000" height="760"></canvas><div class="studio-hint">Selecionar objeto/bot → G mover · S escalar · R girar · arrastar alças coloridas · botão direito: panorâmica</div></div>
-      <aside class="studio-panel"><h3>🧱 Seleção e propriedades</h3><select id="studioObjectList" size="10" multiple title="Use Ctrl ou Shift para selecionar vários itens"></select><p class="studio-bot-note" id="studioBotNote" hidden>♟ Bot selecionado: arraste para mover. Abra o Bot Lab para definir arma, dano e IA.</p><button id="studioEditBot" type="button" hidden>⚙ Editar bot no Bot Lab</button>
+      <aside class="studio-panel studio-props-v24"><h3>🧱 Seleção e propriedades</h3><select id="studioObjectList" size="10" multiple title="Use Ctrl ou Shift para selecionar vários itens"></select><p class="studio-bot-note" id="studioBotNote" hidden>♟ Bot selecionado: arraste para mover. Abra o Bot Lab para definir arma, dano e IA.</p><button id="studioEditBot" type="button" hidden>⚙ Editar bot no Bot Lab</button>
         <div id="studioObjectProps">
-          <label>Nome<input id="objName" maxlength="60"></label>
+          <details open class="studio-props-section"><summary>Identificação e posição</summary><label>Nome<input id="objName" maxlength="60"></label>
           <label>Tipo<input id="objType" readonly></label>
-          <label>X<input id="objX" type="number"></label><label>Y<input id="objY" type="number"></label>
+          <label>X<input id="objX" type="number"></label><label>Y<input id="objY" type="number"></label></details><details open class="studio-props-section"><summary>Dimensões e aparência</summary>
           <label>Largura<input id="objW" type="number" min="4" max="900"></label><label>Altura<input id="objH" type="number" min="4" max="900"></label>
           <label>Rotação (graus)<input id="objRotation" type="number" min="-360" max="360"></label>
-          <label>Cor<input id="objColor" type="color"></label>
+          <label>Cor<input id="objColor" type="color"></label></details><details class="studio-props-section"><summary>Colisões e camada</summary>
           <label><input id="objSolid" type="checkbox"> Ativar colisão</label>
-          <label>Camada (ordem de desenho)<input id="objLayer" type="number" min="-20" max="20"></label>
+          <label>Camada (ordem de desenho)<input id="objLayer" type="number" min="-20" max="20"></label></details>
           <button id="objDuplicate">⧉ Duplicar objeto</button><button id="objDelete">🗑 Excluir objeto</button>
         </div>
         <p id="studioStatus" style="font-size:11px;color:#a9e7cc" role="status">Selecione ou crie um objeto.</p>
@@ -2225,7 +2231,7 @@
         type:types.includes(o.type)?o.type:'decoration',x:num(o.x,0,2720,100),y:num(o.y,0,2300,100),
         w:num(o.w,4,900,60),h:num(o.h,4,900,60),rotation:num(o.rotation,-360,360,0),
         color:/^#[0-9a-f]{6}$/i.test(o.color||'')?o.color:'#5d9d8c',
-        solid:!!o.solid,layer:num(o.layer,-20,20,0),assetId:String(o.assetId||'').slice(0,75),groupId:String(o.groupId||'').replace(/[^a-z0-9-]/gi,'').slice(0,70)
+        solid:!!o.solid,layer:num(o.layer,-20,20,0),assetId:String(o.assetId||'').slice(0,75),groupId:String(o.groupId||'').replace(/[^a-z0-9-]/gi,'').slice(0,70),tilePreset:String(o.tilePreset||'custom').slice(0,20)
       })):[];
       const coord=(arr,defaults,max)=>Array.isArray(arr)?arr.map(Number).filter(x=>Number.isFinite(x)&&x>=75&&x<=max-75).slice(0,18).sort((a,b)=>a-b):[...defaults];
       return {id:String(raw.id||'mapa-'+Date.now()).replace(/[^a-z0-9-]/gi,'-').slice(0,70),
@@ -2235,7 +2241,7 @@
         spawn:[num(raw.spawn?.[0],35,2685,255),num(raw.spawn?.[1],35,2265,120)],
         roadsX:coord(raw.roadsX,defaultRoadX,2720),roadsY:coord(raw.roadsY,defaultRoadY,2300),
         objects,bots:Array.isArray(raw.bots)?raw.bots.slice(0,100).map((bot,i)=>sanitizeBot(bot,i)):[],
-        layerSettings:Object.fromEntries(Object.entries(raw.layerSettings||{}).filter(([k,v])=>/^-?(?:[0-9]|1[0-9]|20)$/.test(k)&&v&&typeof v==='object').map(([k,v])=>[k,{visible:v.visible!==false,locked:!!v.locked}])),locked:!!raw.locked};
+        groupParents:Object.fromEntries(Object.entries(raw.groupParents||{}).filter(([child,parent])=>/^[a-z0-9-]{1,70}$/i.test(child)&&typeof parent==='string'&&/^[a-z0-9-]{1,70}$/i.test(parent)&&child!==parent).slice(0,150)),layerSettings:Object.fromEntries(Object.entries(raw.layerSettings||{}).filter(([k,v])=>/^-?(?:[0-9]|1[0-9]|20)$/.test(k)&&v&&typeof v==='object').map(([k,v])=>[k,{visible:v.visible!==false,locked:!!v.locked}])),locked:!!raw.locked};
     }
     let mapCatalog=presets.map(sanitizeMap);
     try{const saved=JSON.parse(localStorage.getItem(WMK_MAPS_KEY)||'null');if(Array.isArray(saved)&&saved.length){
@@ -2320,12 +2326,12 @@
         actions.append(choose,play,edit);card.append(label,h,desc,stat,actions);host.appendChild(card);
       });
     }
-    let editingMap=null,selectedObjectId='',selectedBotInMapId='',studioSelection=new Set(),studioZoom=1,studioPanX=0,studioPanY=0,studioDrag=null,gizmoMode='move',studioUndoStack=[],studioRedoStack=[];
+    let editingMap=null,selectedObjectId='',selectedBotInMapId='',studioSelection=new Set(),studioZoom=1,studioPanX=0,studioPanY=0,studioDrag=null,gizmoMode='move',studioUndoStack=[],studioRedoStack=[],studioMarqueeRect=null;
     const studioCanvas=$('studioCanvas'),studioCtx=studioCanvas.getContext('2d');
-    function studioSnapshot(){return JSON.stringify({objects:editingMap.objects,bots:editingMap.bots,spawn:editingMap.spawn,layerSettings:editingMap.layerSettings||{}})}
+    function studioSnapshot(){return JSON.stringify({objects:editingMap.objects,bots:editingMap.bots,spawn:editingMap.spawn,layerSettings:editingMap.layerSettings||{},groupParents:editingMap.groupParents||{}})}
     function studioCheckpoint(){studioUndoStack.push(studioSnapshot());if(studioUndoStack.length>70)studioUndoStack.shift();studioRedoStack.length=0}
     function studioHistory(redo=false){const source=redo?studioRedoStack:studioUndoStack,target=redo?studioUndoStack:studioRedoStack;if(!source.length)return;
-      target.push(studioSnapshot());const state=JSON.parse(source.pop());editingMap.objects=state.objects;editingMap.bots=state.bots;editingMap.spawn=state.spawn;editingMap.layerSettings=state.layerSettings||{};selectedObjectId='';selectedBotInMapId='';studioSelection.clear();renderObjectList();drawStudio();persistMaps();$('studioStatus').textContent=redo?'Ação refeita.':'Ação desfeita.'}
+      target.push(studioSnapshot());const state=JSON.parse(source.pop());editingMap.objects=state.objects;editingMap.bots=state.bots;editingMap.spawn=state.spawn;editingMap.layerSettings=state.layerSettings||{};editingMap.groupParents=state.groupParents||{};selectedObjectId='';selectedBotInMapId='';studioSelection.clear();renderObjectList();drawStudio();persistMaps();$('studioStatus').textContent=redo?'Ação refeita.':'Ação desfeita.'}
     function snapStudio(value){return $('studioSnap').checked?Math.round(value/25)*25:Math.round(value)}
     on('studioUndo','click',()=>studioHistory(false));on('studioRedo','click',()=>studioHistory(true));
     function selectedBotInMap(){return editingMap?.bots.find(b=>b.id===selectedBotInMapId)||null}
@@ -2338,17 +2344,26 @@
     function selectedStudioEntries(){return [...studioSelection].map(key=>{const split=key.indexOf(':');const type=key.slice(0,split),id=key.slice(split+1);return {type,entity:type==='obj'?editingMap.objects.find(o=>o.id===id):editingMap.bots.find(b=>b.id===id)}}).filter(e=>e.entity)}
     function selectStudioEntity(entity,kind,additive=false){if(entity&&!studioEditable(entity,kind==='bot'?'bot':'obj'))return;const key=entity?studioSelectionKey(kind==='bot'?'bot':'obj',entity.id):'';if(!additive)studioSelection.clear();if(key){if(additive&&studioSelection.has(key))studioSelection.delete(key);else studioSelection.add(key)}const last=selectedStudioEntries().at(-1);selectedObjectId=last?.type==='obj'?last.entity.id:'';selectedBotInMapId=last?.type==='bot'?last.entity.id:'';renderObjectList();drawStudio()}
     function setStudioSelection(entity,kind){selectStudioEntity(entity,kind,false)}
-    function selectStudioGroup(groupId){if(!groupId)return;studioSelection.clear();for(const o of editingMap.objects.filter(o=>o.groupId===groupId&&studioEditable(o,'obj')))studioSelection.add('obj:'+o.id);const first=selectedStudioEntries()[0];selectedObjectId=first?.entity.id||'';selectedBotInMapId='';renderObjectList();drawStudio()}
+    function selectStudioGroup(groupId){if(!groupId)return;studioSelection.clear();for(const o of editingMap.objects.filter(o=>groupDescendants(groupId).has(o.groupId)&&studioEditable(o,'obj')))studioSelection.add('obj:'+o.id);const first=selectedStudioEntries()[0];selectedObjectId=first?.entity.id||'';selectedBotInMapId='';renderObjectList();drawStudio()}
     const WMK_COMPOSITES_KEY='wmk-vida-loka-composites-v1';
     let compositeCatalog=[];try{const c=JSON.parse(localStorage.getItem(WMK_COMPOSITES_KEY)||'[]');if(Array.isArray(c))compositeCatalog=c.slice(0,80).filter(v=>v&&Array.isArray(v.objects)&&v.objects.length<=100)}catch(_){ }
     function saveCompositeCatalog(){try{localStorage.setItem(WMK_COMPOSITES_KEY,JSON.stringify(compositeCatalog));return true}catch(_){$('studioStatus').textContent='Espaço insuficiente; exporte o mapa JSON.';return false}}
     function renderComposites(){const s=$('studioCompositeSelect');s.replaceChildren();for(const pref of compositeCatalog){const o=document.createElement('option');o.value=pref.id;o.textContent=pref.name+' · '+pref.objects.length+' peças';s.appendChild(o)}}
     function studioBatchCommit(msg){renderObjectList();drawStudio();persistMaps();$('studioStatus').textContent=msg}
     function studioSetSelection(keys){studioSelection=new Set(keys);const last=selectedStudioEntries().at(-1);selectedObjectId=last?.type==='obj'?last.entity.id:'';selectedBotInMapId=last?.type==='bot'?last.entity.id:'';renderObjectList();drawStudio()}
+    function groupRoot(gid){const parents=editingMap.groupParents||{};const seen=new Set();while(parents[gid]&&!seen.has(gid)){seen.add(gid);gid=parents[gid]}return gid}
+    function groupDescendants(gid){const seen=new Set([gid]),parents=editingMap.groupParents||{};let changed=true;while(changed){changed=false;for(const [child,parent] of Object.entries(parents)){if(seen.has(parent)&&!seen.has(child)){seen.add(child);changed=true}}}return seen}
+    on('studioNestGroup','click',()=>{const selected=selectedStudioEntries().filter(e=>e.type==='obj');const groups=[...new Set(selected.map(e=>e.entity.groupId).filter(Boolean).map(groupRoot))];if(groups.length<2){$('studioStatus').textContent='Selecione objetos de pelo menos dois grupos para criar um grupo superior.';return}studioCheckpoint();const parent=studioUniqueId('supergrupo');editingMap.groupParents??={};groups.forEach(id=>editingMap.groupParents[id]=parent);studioBatchCommit('Grupo superior criado com '+groups.length+' subgrupos.');});
+    on('studioFlattenGroup','click',()=>{const selected=selectedStudioEntries().filter(e=>e.type==='obj');const groups=new Set(selected.map(e=>e.entity.groupId).filter(Boolean));if(!groups.size)return;const parents=editingMap.groupParents||{};const affected=[...groups].filter(g=>parents[g]);if(!affected.length){$('studioStatus').textContent='Os grupos selecionados não possuem grupo superior.';return}studioCheckpoint();for(const g of affected)delete parents[g];studioBatchCommit('Subgrupos desvinculados: '+affected.length)});
+    const tilePresets={grass:['#557c4f','sand'],asphalt:['#343d45','sand'],sand:['#d2ad76','sand'],water:['#2983a7','water'],stone:['#818b91','sand'],dirt:['#8e7257','sand']};
+    on('studioTilePreset','change',()=>{const val=$('studioTilePreset').value;if(tilePresets[val]){$('studioPaintColor').value=tilePresets[val][0];$('studioTool').value='terrain';$('studioStatus').textContent='Pincel preparado: '+$('studioTilePreset').selectedOptions[0].textContent;}});
     function renderStudioHierarchy(){const root=$('studioHierarchy'),layers=$('studioLayers');if(!root||!layers||!editingMap)return;root.replaceChildren();layers.replaceChildren();
       const node=(name,keys,css='',level=0)=>{const button=document.createElement('button');button.type='button';button.className=css+(level?' wmk-tree-member':'');button.setAttribute('role','treeitem');button.setAttribute('aria-level',String(level+1));button.setAttribute('aria-pressed',String(keys.some(k=>studioSelection.has(k))));button.textContent=name;button.addEventListener('click',e=>{const picked=keys.filter(k=>{const entry=k.startsWith('obj:')?editingMap.objects.find(o=>'obj:'+o.id===k):editingMap.bots.find(b=>'bot:'+b.id===k);return entry&&studioEditable(entry,k.startsWith('obj:')?'obj':'bot')});if(e.ctrlKey||e.shiftKey)studioSetSelection([...studioSelection,...picked]);else studioSetSelection(picked)});root.appendChild(button)};
       const byGroup=new Map();for(const o of editingMap.objects){if(!studioVisible(o,'obj'))continue;const key=o.groupId||'';if(!byGroup.has(key))byGroup.set(key,[]);byGroup.get(key).push(o)}
-      for(const [gid,items] of byGroup){const keys=items.map(o=>'obj:'+o.id);if(gid)node('▤ Grupo '+gid.slice(-9)+' ('+items.length+')',keys,'wmk-tree-group');for(const o of items)node((studioEditable(o,'obj')?'▣ ':'🔒 ')+o.name+' · C'+o.layer,['obj:'+o.id],'',gid?1:0)}
+      const parents=editingMap.groupParents||{},groupIds=new Set([...byGroup.keys()].filter(Boolean)),rendered=new Set();for(const child of [...groupIds]){let parent=parents[child],depth=0;while(parent&&depth++<8){groupIds.add(parent);parent=parents[parent]}}
+      function renderGroup(gid,level=0){if(rendered.has(gid)||level>8)return;rendered.add(gid);const items=byGroup.get(gid)||[];const children=[...groupIds].filter(child=>child!==gid&&parents[child]===gid);const descendants=groupDescendants(gid);const keys=[...editingMap.objects.filter(o=>descendants.has(o.groupId)).map(o=>'obj:'+o.id)];node('▤ '+(level?'↳ ':'')+'Grupo '+gid.slice(-9)+' ('+items.length+' peças)',keys,'wmk-tree-group',level);for(const o of items)node((studioEditable(o,'obj')?'▣ ':'🔒 ')+o.name+' · C'+o.layer,['obj:'+o.id],'',level+1);for(const child of children)renderGroup(child,level+1)}
+      for(const [gid,items] of byGroup){if(!gid){for(const o of items)node((studioEditable(o,'obj')?'▣ ':'🔒 ')+o.name+' · C'+o.layer,['obj:'+o.id]);continue}if(!parents[gid]||!groupIds.has(parents[gid]))renderGroup(gid)}
+      for(const gid of groupIds)if(!rendered.has(gid))renderGroup(gid);
       if(editingMap.bots.length)node('♟ Bots ('+editingMap.bots.length+')',editingMap.bots.map(b=>'bot:'+b.id),'wmk-tree-group');for(const b of editingMap.bots)node((b.team==='red'?'🔴 ':b.team==='blue'?'🔵 ':'⚪ ')+b.name,['bot:'+b.id],'',1);
       const values=[...new Set([0,...editingMap.objects.map(o=>o.layer)])].sort((a,b)=>b-a);for(const layer of values){const opts=studioLayerOptions(layer),row=document.createElement('div');row.className='studio-layer-row';const text=document.createElement('span');text.textContent='Camada '+layer+' ('+editingMap.objects.filter(o=>o.layer===layer).length+')';const visible=document.createElement('button'),lock=document.createElement('button');visible.type=lock.type='button';visible.textContent=opts.visible?'👁':'◌';visible.title=opts.visible?'Ocultar camada':'Mostrar camada';visible.setAttribute('aria-label','Alternar visibilidade da camada '+layer);lock.textContent=opts.locked?'🔒':'🔓';lock.title=opts.locked?'Desbloquear camada':'Bloquear camada';lock.setAttribute('aria-label','Alternar bloqueio da camada '+layer);visible.addEventListener('click',()=>{studioCheckpoint();editingMap.layerSettings??={};editingMap.layerSettings[layer]={...opts,visible:!opts.visible};studioSetSelection([...studioSelection].filter(key=>key.startsWith('bot:')||studioVisible(editingMap.objects.find(o=>'obj:'+o.id===key)||{layer},'obj')));persistMaps()});lock.addEventListener('click',()=>{studioCheckpoint();editingMap.layerSettings??={};editingMap.layerSettings[layer]={...opts,locked:!opts.locked};studioSetSelection([...studioSelection].filter(key=>key.startsWith('bot:')||studioEditable(editingMap.objects.find(o=>'obj:'+o.id===key)||{layer},'obj')));persistMaps()});row.append(text,visible,lock);layers.appendChild(row)}
     }
@@ -2357,8 +2372,8 @@
 
     function studioUniqueId(prefix){return prefix+'-'+Date.now()+'-'+Math.random().toString(36).slice(2,9)}
     on('studioSelectAll','click',()=>{studioSelection.clear();for(const o of editingMap.objects.filter(o=>studioEditable(o,'obj')))studioSelection.add('obj:'+o.id);for(const b of editingMap.bots)studioSelection.add('bot:'+b.id);const first=selectedStudioEntries()[0];selectedObjectId=first?.type==='obj'?first.entity.id:'';selectedBotInMapId=first?.type==='bot'?first.entity.id:'';renderObjectList();drawStudio()});
-    on('studioGroup','click',()=>{const objs=selectedStudioEntries().filter(e=>e.type==='obj');if(objs.length<2){$('studioStatus').textContent='Selecione pelo menos dois objetos para agrupar.';return}studioCheckpoint();const group=studioUniqueId('grupo');for(const {entity} of objs)entity.groupId=group;studioBatchCommit('Grupo criado com '+objs.length+' objetos.')});
-    on('studioUngroup','click',()=>{const objs=selectedStudioEntries().filter(e=>e.type==='obj'&&e.entity.groupId);if(!objs.length){$('studioStatus').textContent='Selecione objetos agrupados.';return}studioCheckpoint();const gids=new Set(objs.map(e=>e.entity.groupId));for(const o of editingMap.objects)if(gids.has(o.groupId))o.groupId='';studioBatchCommit('Grupos separados: '+gids.size)});
+    on('studioGroup','click',()=>{const objs=selectedStudioEntries().filter(e=>e.type==='obj');if(objs.length<2){$('studioStatus').textContent='Selecione pelo menos dois objetos para agrupar.';return}studioCheckpoint();const group=studioUniqueId('grupo');const originalGroups=[...new Set(objs.map(e=>e.entity.groupId).filter(Boolean))];editingMap.groupParents??={};for(const gid of originalGroups)if(!editingMap.groupParents[gid])editingMap.groupParents[gid]=group;for(const {entity} of objs)if(!entity.groupId)entity.groupId=group;studioBatchCommit('Grupo criado com '+objs.length+' objetos e '+originalGroups.length+' subgrupos.')});
+    on('studioUngroup','click',()=>{const objs=selectedStudioEntries().filter(e=>e.type==='obj'&&e.entity.groupId);if(!objs.length){$('studioStatus').textContent='Selecione objetos agrupados.';return}studioCheckpoint();const gids=new Set(objs.map(e=>e.entity.groupId));for(const o of editingMap.objects)if(gids.has(o.groupId))o.groupId='';for(const gid of gids)delete (editingMap.groupParents||{})[gid];studioBatchCommit('Grupos separados: '+gids.size)});
     on('studioCloneSelection','click',()=>{const chosen=selectedStudioEntries();if(!chosen.length){$('studioStatus').textContent='Selecione objetos ou bots.';return}studioCheckpoint();const newKeys=[];const groupRemap=new Map();for(const {type,entity} of chosen){const copy=structuredClone(entity);copy.id=studioUniqueId(type==='obj'?'obj':'bot');copy.name=entity.name+' (cópia)';copy.x=clamp(entity.x+50,20,WORLD_W-20);copy.y=clamp(entity.y+50,20,WORLD_H-20);if(type==='obj'){if(copy.groupId){if(!groupRemap.has(copy.groupId))groupRemap.set(copy.groupId,studioUniqueId('grupo'));copy.groupId=groupRemap.get(copy.groupId)}editingMap.objects.push(copy)}else editingMap.bots.push(copy);newKeys.push(type+':'+copy.id)}studioSelection=new Set(newKeys);const first=selectedStudioEntries()[0];selectedObjectId=first?.type==='obj'?first.entity.id:'';selectedBotInMapId=first?.type==='bot'?first.entity.id:'';studioBatchCommit(chosen.length+' entidades duplicadas.')});
     on('studioSaveComposite','click',()=>{const selected=selectedStudioEntries().filter(e=>e.type==='obj').map(e=>e.entity);if(selected.length<2){$('studioStatus').textContent='Selecione dois ou mais objetos para criar o prefab composto.';return}const name=prompt('Nome do conjunto (ex.: Posto de gasolina):','Novo conjunto');if(!name)return;const x=selected.reduce((a,o)=>a+o.x,0)/selected.length,y=selected.reduce((a,o)=>a+o.y,0)/selected.length;compositeCatalog.push({id:studioUniqueId('prefab'),name:name.slice(0,70),objects:selected.map(o=>({...structuredClone(o),x:o.x-x,y:o.y-y}))});if(compositeCatalog.length>80)compositeCatalog.shift();saveCompositeCatalog();renderComposites();$('studioStatus').textContent='Prefab composto salvo: '+name});
     on('studioExportComposites','click',()=>downloadJSON({format:'wmk-composite-prefabs',version:1,prefabs:compositeCatalog},'wmk-prefabs-compostos.json'));
@@ -2388,7 +2403,7 @@
     function syncObjectProps(){const o=selectedObject(),b=selectedBotInMap();$('studioObjectProps').hidden=!o;$('studioBotNote').hidden=!b;$('studioEditBot').hidden=!b;
       $('gizmoReadout').textContent=b?'♟ '+b.name+' ('+Math.round(b.x)+','+Math.round(b.y)+')':o?o.name+' ('+Math.round(o.x)+','+Math.round(o.y)+')':'Selecione objeto ou bot';
       if(!o)return;for(const [field,key] of Object.entries({objName:'name',objType:'type',objX:'x',objY:'y',objW:'w',objH:'h',objRotation:'rotation',objColor:'color',objLayer:'layer'}))$(field).value=o[key];$('objSolid').checked=o.solid}
-    function openMapEditor(id){editingMap=mapCatalog.find(m=>m.id===id)||mapCatalog[0];selectedObjectId='';selectedBotInMapId='';studioSelection.clear();wmkMode='editor';studioUndoStack=[];studioRedoStack=[];
+    function openMapEditor(id){editingMap=mapCatalog.find(m=>m.id===id)||mapCatalog[0];selectedObjectId='';selectedBotInMapId='';studioSelection.clear();wmkMode='editor';studioUndoStack=[];studioRedoStack=[];studioMarqueeRect=null;
       $('wmkMain').hidden=true;$('wmkEditor').hidden=true;$('wmkMapStudio').hidden=false;studioZoom=1;studioPanX=0;studioPanY=0;syncMapControls()}
     function drawingTransform(){const width=studioCanvas.width,height=studioCanvas.height;
       const fit=Math.min(width/WORLD_W,height/WORLD_H)*studioZoom;
@@ -2430,7 +2445,7 @@
       for(const b of editingMap.bots){if(b.patrol?.length){g.save();g.strokeStyle=b.team==='blue'?'#64caff':'#f7c55b';g.lineWidth=4;g.setLineDash([18,12]);g.beginPath();g.moveTo(b.x,b.y);for(const point of b.patrol){g.lineTo(point[0],point[1])}g.stroke();g.setLineDash([]);for(const [i,point] of b.patrol.entries()){g.beginPath();g.arc(point[0],point[1],12,0,2*Math.PI);g.fillStyle='#f2cf57';g.fill();g.fillStyle='#102029';g.font='12px system-ui';g.fillText(String(i+1),point[0]-4,point[1]+4)}g.restore()}}
       for(const {type,entity} of selectedStudioEntries()){if(type!=='obj'||entity.id===selectedObjectId)continue;g.save();g.translate(entity.x,entity.y);g.rotate((entity.rotation||0)*Math.PI/180);g.strokeStyle='#4fffd1';g.lineWidth=5;g.setLineDash([18,8]);g.strokeRect(-entity.w/2,-entity.h/2,entity.w,entity.h);g.restore()}
       drawGizmo(g);
-      g.fillStyle='#f9e86e';g.beginPath();g.arc(...editingMap.spawn,18,0,Math.PI*2);g.fill();g.strokeStyle='#142228';g.lineWidth=4;g.stroke();g.restore()}
+      g.fillStyle='#f9e86e';g.beginPath();g.arc(...editingMap.spawn,18,0,Math.PI*2);g.fill();g.strokeStyle='#142228';g.lineWidth=4;g.stroke();g.restore();if(studioMarqueeRect){const a=studioMarqueeRect;const tr=drawingTransform();g.save();g.fillStyle='#55ddb52b';g.strokeStyle='#68f4cd';g.lineWidth=2;g.setLineDash([7,4]);g.fillRect(tr.ox+a.x1*tr.scale,tr.oy+a.y1*tr.scale,(a.x2-a.x1)*tr.scale,(a.y2-a.y1)*tr.scale);g.strokeRect(tr.ox+a.x1*tr.scale,tr.oy+a.y1*tr.scale,(a.x2-a.x1)*tr.scale,(a.y2-a.y1)*tr.scale);g.restore()}}
     function addStudioObject(type,x,y){const defaults={building:[145,115,'#72848a',true],tree:[55,55,'#3e9677',true],water:[180,120,'#257ea4',true],sand:[180,130,'#d1ad74',false],barrier:[130,35,'#c87a50',true],decoration:[80,80,'#72a1ca',false],sprite:[96,96,'#9e75cb',false]};
       const [w,h,color,solid]=defaults[type]||defaults.decoration;
       if(type==='sprite'&&!$('studioAssetSelect').value){$('studioStatus').textContent='Importe uma imagem primeiro e escolha-a na biblioteca.';return}
@@ -2465,7 +2480,7 @@
       if(e.button===2){studioDrag={kind:'pan',x:e.clientX,y:e.clientY,panX:studioPanX,panY:studioPanY};studioCanvas.setPointerCapture(e.pointerId);return}
       if(e.button!==0||p.x<0||p.y<0||p.x>WORLD_W||p.y>WORLD_H)return;
       if(tool==='patrol'){const b=selectedBotInMap();if(!b){$('studioStatus').textContent='Selecione primeiro um bot na lista ou no mapa.';return}studioCheckpoint();b.patrol=b.patrol||[];if(b.patrol.length>=30){$('studioStatus').textContent='Máximo de 30 pontos por bot.';return}b.patrol.push([snapStudio(p.x),snapStudio(p.y)]);b.behavior='patrol';persistMaps();drawStudio();$('studioStatus').textContent='Waypoint '+b.patrol.length+' salvo no bot '+b.name;return}
-      if(tool==='terrain'){studioCheckpoint();const size=Number($('studioBrushSize').value);const o={id:'tile-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name:'Terreno pintado',type:'sand',x:snapStudio(p.x),y:snapStudio(p.y),w:size,h:size,color:$('studioPaintColor').value,solid:false,rotation:0,layer:-10,assetId:''};editingMap.objects.push(o);persistMaps();drawStudio();return}
+      if(tool==='terrain'){studioCheckpoint();const size=Number($('studioBrushSize').value);const preset=$('studioTilePreset').value;const o={id:'tile-'+Date.now()+'-'+Math.random().toString(36).slice(2,7),name:'Tile '+(preset==='custom'?'personalizado':preset),type:preset==='water'?'water':'sand',x:snapStudio(p.x),y:snapStudio(p.y),w:size,h:size,color:$('studioPaintColor').value,solid:false,rotation:0,layer:-10,assetId:'',tilePreset:preset};editingMap.objects.push(o);persistMaps();drawStudio();return}
       if(tool==='bot'){if(!pendingBotTemplate){botTemplateCards();$('wmkBotPicker').showModal();return}studioCheckpoint();const b=sanitizeBot({...pendingBotTemplate,id:'bot-'+Date.now(),x:p.x,y:p.y},editingMap.bots.length);editingMap.bots.push(b);setStudioSelection(b,'bot');$('studioTool').value='select';pendingBotTemplate=null;persistMaps();$('studioStatus').textContent='Bot inserido. Arraste para mover, ou use Bot Lab para propriedades.';return}
       if(tool==='prefab'){const pref=objectCatalog.find(o=>o.id===$('studioPrefabSelect').value);if(!pref){$('studioStatus').textContent='Escolha um modelo na biblioteca.';return}studioCheckpoint();const o={...structuredClone(pref),id:'obj-'+Date.now()+'-'+Math.floor(Math.random()*1000),x:snapStudio(p.x),y:snapStudio(p.y)};editingMap.objects.push(o);setStudioSelection(o,'object');$('studioTool').value='select';persistMaps();return}
       if(tool==='spawn'){studioCheckpoint();editingMap.spawn=[Math.round(p.x),Math.round(p.y)];drawStudio();return}
@@ -2476,11 +2491,12 @@
       if(handle){studioCheckpoint();const ent=selectedEntity();studioDrag=studioStartTransform(handle,p,ent);studioCanvas.setPointerCapture(e.pointerId);return}
       if(bot||hit){const entity=bot||hit,key=(bot?'bot:':'obj:')+entity.id;
         if(e.ctrlKey||e.shiftKey){selectStudioEntity(entity,bot?'bot':'object',true);return}
-        studioCheckpoint();if(!studioSelection.has(key)){if(hit?.groupId&&!bot)selectStudioGroup(hit.groupId);else setStudioSelection(entity,bot?'bot':'object')}
+        studioCheckpoint();if(!studioSelection.has(key)){if(hit?.groupId&&!bot)selectStudioGroup(groupRoot(hit.groupId));else setStudioSelection(entity,bot?'bot':'object')}
         studioDrag=studioStartTransform('move',p,entity);studioCanvas.setPointerCapture(e.pointerId)}
-      else clearSelection()
+      else if($('studioMarquee').checked){studioMarqueeRect={x1:p.x,y1:p.y,x2:p.x,y2:p.y,additive:e.ctrlKey||e.shiftKey};studioDrag={kind:'marquee'};studioCanvas.setPointerCapture(e.pointerId);drawStudio()}else clearSelection()
     });
     studioCanvas.addEventListener('pointermove',e=>{if(!studioDrag)return;
+      if(studioDrag.kind==='marquee'){const p=studioEventCoords(e);studioMarqueeRect.x2=p.x;studioMarqueeRect.y2=p.y;drawStudio();return}
       if(studioDrag.kind==='pan'){const r=studioCanvas.getBoundingClientRect();studioPanX=studioDrag.panX+(e.clientX-studioDrag.x)*studioCanvas.width/r.width;studioPanY=studioDrag.panY+(e.clientY-studioDrag.y)*studioCanvas.height/r.height;drawStudio();return}
       const entity=studioDrag.entity==='bot'?editingMap.bots.find(b=>b.id===studioDrag.id):editingMap.objects.find(o=>o.id===studioDrag.id);if(!entity)return;
       const p=studioEventCoords(e),d=studioDrag;
@@ -2488,7 +2504,7 @@
       else if(d.kind==='scale'){const factor=clamp(Math.hypot(p.x-d.pivot.x,p.y-d.pivot.y)/d.radius,.1,10);for(const m of d.members){const ent=m.type==='bot'?editingMap.bots.find(b=>b.id===m.id):editingMap.objects.find(o=>o.id===m.id);if(!ent)continue;ent.x=snapStudio(clamp(d.pivot.x+(m.x-d.pivot.x)*factor,10,WORLD_W-10));ent.y=snapStudio(clamp(d.pivot.y+(m.y-d.pivot.y)*factor,10,WORLD_H-10));if(m.type==='obj'){ent.w=Math.round(clamp(m.w*factor,4,900));ent.h=Math.round(clamp(m.h*factor,4,900))}}}
       else if(d.kind==='rotate'){const radians=Math.atan2(p.y-d.pivot.y,p.x-d.pivot.x)-d.angle,c=Math.cos(radians),si=Math.sin(radians);for(const m of d.members){const ent=m.type==='bot'?editingMap.bots.find(b=>b.id===m.id):editingMap.objects.find(o=>o.id===m.id);if(!ent)continue;const dx=m.x-d.pivot.x,dy=m.y-d.pivot.y;ent.x=snapStudio(clamp(d.pivot.x+dx*c-dy*si,10,WORLD_W-10));ent.y=snapStudio(clamp(d.pivot.y+dx*si+dy*c,10,WORLD_H-10));if(m.type==='obj')ent.rotation=Math.round((m.rotation+radians*180/Math.PI)/5)*5}}
       syncObjectProps();drawStudio()});
-    function stopStudioDrag(){if(studioDrag&&studioDrag.kind!=='pan'){persistMaps();renderMapCards()}studioDrag=null}
+    function stopStudioDrag(){if(studioDrag?.kind==='marquee'&&studioMarqueeRect){const r=studioMarqueeRect,minX=Math.min(r.x1,r.x2),maxX=Math.max(r.x1,r.x2),minY=Math.min(r.y1,r.y2),maxY=Math.max(r.y1,r.y2);const keys=r.additive?[...studioSelection]:[];for(const o of editingMap.objects)if(studioEditable(o,'obj')&&o.x+o.w/2>=minX&&o.x-o.w/2<=maxX&&o.y+o.h/2>=minY&&o.y-o.h/2<=maxY)keys.push('obj:'+o.id);for(const b of editingMap.bots)if(b.x>=minX&&b.x<=maxX&&b.y>=minY&&b.y<=maxY)keys.push('bot:'+b.id);studioMarqueeRect=null;studioDrag=null;studioSetSelection([...new Set(keys)]);$('studioStatus').textContent=studioSelection.size+' entidades selecionadas por retângulo.';return}if(studioDrag&&studioDrag.kind!=='pan'){persistMaps();renderMapCards()}studioDrag=null}
     studioCanvas.addEventListener('pointerup',stopStudioDrag);studioCanvas.addEventListener('pointercancel',stopStudioDrag);
     studioCanvas.addEventListener('wheel',e=>{e.preventDefault();studioZoom=clamp(studioZoom*(e.deltaY>0?.9:1.1),.55,4);drawStudio()},{passive:false});
     on('studioObjectList','change',e=>{studioSelection=new Set([...e.target.selectedOptions].map(o=>o.value).filter(key=>{const entity=key.startsWith('bot:')?editingMap.bots.find(b=>'bot:'+b.id===key):editingMap.objects.find(o=>'obj:'+o.id===key);return entity&&studioEditable(entity,key.startsWith('bot:')?'bot':'obj')}));const first=selectedStudioEntries().at(-1);selectedObjectId=first?.type==='obj'?first.entity.id:'';selectedBotInMapId=first?.type==='bot'?first.entity.id:'';renderObjectList();drawStudio()});
