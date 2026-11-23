@@ -1,78 +1,48 @@
-# WMK Vida Loka v1.6.0 — Mundo aberto e World Studio
+# 🚗 WMK Vida Loka v2.0.0 — Mundo aberto e criador de jogos 2D
 
-Jogo 2D top-down em HTML5 Canvas, com quatro mapas, missões, bots e editores de mapas, objetos e armas fictícias.
+**Walney Moreira Klein — walneyk@hotmail.com**
 
-**Créditos das adaptações:** Walney Moreira Klein — walneyk@hotmail.com
+Jogo e editor em HTML5 Canvas, CSS e JavaScript. Quatro cenários iniciais: Baía Nova, Costa Dourada, Serra Brava e Terminal Zero. Projeto em português, com moeda fictícia **W$**.
 
 ## Executar
-Baixe o ZIP em **Code → Download ZIP**, extraia os arquivos e abra `index.html` em Chrome ou Edge. Opcionalmente, use XAMPP/Live Server para servir por HTTP. Não há compilação nem dependências JS obrigatórias.
+1. Baixe o repositório usando **Code → Download ZIP**.
+2. Extraia todos os arquivos preservando `assets/`, `testes/` e os manuais.
+3. Abra `index.html`. Recomendado servir a pasta por um servidor HTTP local (por exemplo XAMPP) para testar armazenamento local.
+4. Escolha o mapa. WASD move, Shift corre, E entra/sai de veículos; no modo arena, mouse mira/dispara e R recarrega.
 
-## Mapas
-- **Baía Nova:** ruas, prédios, veículos e entregas.
-- **Costa Dourada:** praia e marina.
-- **Serra Brava:** interior e galpões.
-- **Terminal Zero:** arena top-down com combate e bots.
+## Editores disponíveis
+- **World Studio:** editar/criar/copiar mapas, posicionar e transformar objetos e bots com gizmos, exportar/importar JSON, usar grade, salvar prefab do objeto selecionado, pintar terreno por blocos, visualizar colisões e desenhar pontos de patrulha.
+- **Bot Lab:** equipes, vida, arma, dano, precisão, comportamento, waypoints e avatar visual.
+- **Object Lab:** modelos reutilizáveis com colisão, sprite, escala e cor.
+- **Arsenal Lab:** armas fictícias por JSON com dano, cadência, alcance e munição.
+- **Avatar Lab:** personalização, perfis salvos e aparência reutilizável para bots.
+- **Editor de Missões:** criar, duplicar, excluir, testar, definir mapas e recompensas em W$, visualizar fluxo linear de objetivos.
+- **WMK Game Creator:** selecionar mapas e missões, gerar/importar pacote JSON, testar o mapa inicial.
 
-Todos os mapas podem ser duplicados e editados no **World Studio**.
+## O que mudou na v2.0.0
+- Navegação **A*** simples em grade, aplicada aos bots da arena com cache de rotas.
+- Ferramenta visual de waypoints no World Studio.
+- Depurador de colisões e pincel de terreno retangular.
+- Salvamento direto de objetos selecionados como prefabs.
+- Biblioteca de avatares e vínculo com bots.
+- Visão linear do fluxo de missões.
+- Game Creator para importação/exportação de pacotes completos de dados.
 
-## Editores
-| Ferramenta | Recursos |
-|---|---|
-| World Studio | Colocar objetos/sprites e bots, definir colisões e gizmos para G mover, S escalar objetos, R rotacionar objetos. Exportar/importar mapa JSON |
-| Editor de Missões | Criar, editar, duplicar e excluir contratos, escolher mapas e configurar objetivos e recompensas W$ |
-| Bot Lab | Equipe (inimigo/aliado/neutro), vida, comportamento, arma, dano, alcance, precisão, velocidade e pontos de patrulha |
-| **Object Lab (novo)** | Biblioteca de modelos editáveis: tipo, dimensões, cor, camada, sprite e colisão |
-| **Arsenal Lab (novo)** | Armas fictícias com nome, dano, alcance, cadência, capacidade e precisão |
-
-### Inserir bot claramente identificado
-1. Menu → **World Studio** → mapa.
-2. Ferramenta → **♟ Inserir bot (escolher tipo)**.
-3. Aparece uma janela com cartões **🔴 INIMIGO**, **🔵 ALIADO** ou **⚪ NEUTRO**, mostrando nome, comportamento, arma e HP.
-4. Escolha o modelo e clique no mapa. O bot pode ser selecionado novamente pela lista lateral e movido com o gizmo.
-5. Edite atributos avançados no **Bot Lab**.
-
-### Criar modelo de objeto e inserir em mapas
-1. Menu → **▣ EDITOR DE OBJETOS** → Novo.
-2. Nome, tipo, largura/altura, rotação, camada, cor, sprite (opcional), colisão.
-3. Salve; no World Studio escolha **▣ Objeto da biblioteca**, selecione o modelo e clique no mapa.
-4. G/S/R para transformar. Instâncias já colocadas não se atualizam automaticamente após editar o modelo original.
-
-### Criar arma fictícia
-1. Menu → **⌖ EDITOR DE ARMAS** → Nova arma.
-2. Configure dano, alcance, tiros/segundo, capacidade, precisão e nome.
-3. No Bot Lab selecione a arma; **dano, alcance e precisão** são preenchidos como valores iniciais editáveis por bot.
-4. A cadência do catálogo controla o intervalo entre tiros dos bots. A capacidade é armazenada, mas **a recarga dos bots ainda não foi implementada**. O jogador usa o equipamento padrão por enquanto.
-
-## Comandos
-**Jogo:** WASD, Shift correr, E entrar/sair de carro, Espaço freio, ESC menu. Arena: mouse mira, clique dispara, R recarrega.
-
-**World Studio:** G mover, S escalar objeto, R girar objeto, Ctrl+Z desfazer, Ctrl+Y refazer, scroll zoom, botão direito panorâmica.
-
-## JSON e backup
-O jogo salva dados em `localStorage` quando disponível. Exportações: mapa, missões, bots, biblioteca de objetos (`wmk-vida-loka-prefabs`) e armas (`wmk-vida-loka-weapons`). **EXPORTAR PROJETO** inclui todos esses catálogos e sprites. Faça backups: limpar dados do navegador pode apagar progresso.
-
-## Manuais e testes
+## Manuais
 - [Manual do jogador](manual-jogador.html)
 - [Manual do desenvolvedor](manual-desenvolvedor.html)
-- [Guia de evolução](evolucao.html)
+- [Laboratório de evolução](evolucao.html)
 - [Roadmap](roadmap.html)
+- [Pesquisa](pesquisa.html)
 - [Relatório de testes](testes/RELATORIO.md)
 
-No Chromium headless, foram aprovados **39 testes gerais + 13 de gizmos + 19 dos novos editores = 71/71 verificações**. Os testes simulam `localStorage`. Persistência real em Windows, desempenho e browsers móveis ainda requerem validação.
+## Testes
+104/104 verificações automatizadas aprovadas nas suítes `test_smoke.py`, `test_gizmos.py`, `test_catalogos.py`, `test_avatar.py`, `test_v20.py` e `test_creator_roundtrip.py`. Não substituem testes em aparelhos reais.
+
+## Limitações honestas
+O Game Creator gera um **pacote JSON**, não um executável ou HTML independente. O fluxo de missões é uma visualização, não um editor de grafos com ramificações. A IA ainda não tem cover/avoidance completo. O pincel não tem autotile. Avatares são vetoriais e não possuem spritesheets de oito direções. Sem multiplayer. Faça backups JSON regularmente.
 
 ## Licença
-O arquivo `LICENSE` contém MIT para contribuições próprias. **A licença do protótipo HTML original ainda não foi comprovada; a distribuição do conjunto integral sob MIT depende dos direitos necessários.** Recursos de terceiros mantêm suas licenças. Não inclui arte proprietária de GTA ou Counter-Strike.
+O arquivo `LICENSE` contém MIT para o material passível de licenciamento por seus titulares. **É necessário verificar a licença e a autoria do protótipo de origem antes de afirmar que todo o código-base pode ser distribuído como MIT.** Assets externos mantêm as respectivas licenças.
 
-## Avatar Lab — personalização do personagem (v1.7)
-
-Abra **◉ EDITOR DE AVATAR** no menu principal. Defina nome, corpo (regular, esbelto ou robusto), penteado (curto, comprido, sem cabelo), acessório de cabeça (nenhum, boné, capacete), mochila e cores de pele, camisa, calça, cabelo e acessórios. O painel direito apresenta uma prévia ampliada em Canvas.
-
-Clique **Salvar avatar** para aplicar imediatamente ao personagem de todos os mapas. **Restaurar padrão** altera primeiro a prévia e exige confirmação em Salvar. **Exportar JSON** cria `wmk-avatar.json`; **Importar JSON** valida e carrega o modelo na prévia antes de salvar. O backup **Exportar Projeto** inclui a configuração do avatar, e Importar Projeto a restaura.
-
-O avatar utiliza um desenho 2D vetorial simples. Não há ainda editor de pixel art, sprites animados, hitbox por tamanho corporal ou skins múltiplas. Os bots mantêm aparências independentes.
-
-### Testes da v1.7
-
-Passaram **12/12 verificações específicas** do Avatar Lab em Chromium usando `page.set_content` e armazenamento simulado. Foram exercitados prévia, alterações, salvar, exportar, restaurar, voltar ao menu e jogar; não equivale a validar persistência real entre sessões em Windows/HTTP.
-
-Consulte [Manual do jogador](manual-jogador.html), [Manual do desenvolvedor](manual-desenvolvedor.html), [Guia de evolução](evolucao.html) e [Relatório de testes](testes/RELATORIO.md).
+**Repositório:** https://github.com/WalneyNF/wmk-vida-loka
