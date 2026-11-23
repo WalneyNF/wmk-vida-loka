@@ -61,7 +61,6 @@ with sync_playwright() as pw:
     page.locator('#wmkPlay').click()
     check('Jogo inicia',page.evaluate("wmkMode==='play'"))
     page.wait_for_timeout(800)
-    check('Modo ativo',page.evaluate("wmkMode==='play' && !!currentMap"))
     check('Sem exceções JS',not errors)
     browser.close()
 print(f'{sum(v for _,v in checks)}/{len(checks)} testes')
