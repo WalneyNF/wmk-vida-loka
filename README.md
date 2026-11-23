@@ -1,19 +1,20 @@
-# WMK Vida Loka v2.4.0 — Jogo e estúdio de criação 2D
+# WMK Vida Loka v2.5.0 — Jogo e estúdio de criação 2D
 
 **WMK Vida Loka** é um protótipo de mundo aberto 2D top-down com quatro mapas iniciais, bots, missões, veículos, combate em arena e ferramentas de edição.
 
 **Créditos das adaptações:** Walney Moreira Klein — walneyk@hotmail.com.
 
-## Novidades da v2.4.0
 
-- **Seleção por retângulo**: use a ferramenta Selecionar/mover e arraste a partir do chão vazio; Ctrl ou Shift adiciona objetos e bots à seleção.
-- **Grupos superiores**: selecione dois grupos e use Criar grupo superior da seleção; a hierarquia pai/filhos é salva no JSON do mapa.
-- **Presets de terreno**: grama, asfalto, areia, água, pedra e terra; são blocos coloridos e editáveis, não um atlas com autotile.
-- **Propriedades compactas**: seções recolhíveis para posição, dimensões, colisão e camada.
-- **Compatibilidade**: mantém os mapas antigos; novas propriedades opcionais `groupParents` e `tilePreset`.
-- **Validação**: 183/183 verificações em Chromium. Persistência após reiniciar o navegador Windows via HTTP continua pendente.
+## Novidades da v2.5.0 — World Studio
 
-Manual: [World Studio 2.4](manual-world-studio-v2.4.html).
+- **Seleção por retângulo:** na ferramenta `Selecionar/mover`, arraste a partir de uma área vazia do mapa. Ctrl/Shift acrescenta objetos à seleção.
+- **Hierarquia de grupos:** selecione peças de dois grupos, clique em `Criar grupo superior da seleção` e edite o conjunto. A árvore exibe a relação pai/filho. `Desfazer grupo superior` desvincula os níveis.
+- **Presets de terreno:** Grama, Asfalto, Areia, Água, Pedra e Terra. São blocos coloridos editáveis, não um atlas gráfico/autotile; importar sprites externos continua disponível.
+- **Propriedades compactas:** painéis recolhíveis para identificação, dimensões e colisões/camadas.
+- **Compatibilidade JSON:** metadados `groupParents` e `tilePreset` são opcionais; arquivos antigos permanecem aceitos.
+- **Testes:** 185/185 verificações em dez suítes no Chromium; veja `testes/RELATORIO.md`. O teste de persistência real após reiniciar o navegador no Windows permanece pendente.
+
+Manual específico: [`manual-world-studio-v2.4.html`](manual-world-studio-v2.4.html).
 
 ## Como jogar
 
@@ -126,3 +127,13 @@ O núcleo compartilhado é um **primeiro módulo**: o motor e vários editores a
 Este repositório contém um arquivo `LICENSE` MIT. **A aplicação da MIT ao código-base inicial depende de confirmar sua origem e permissões; não se pode relicenciar automaticamente código de terceiros.** Recursos importados (inclusive Kenney) conservam suas próprias licenças. Não considere a presença do arquivo MIT prova de que todos os ativos e código-base são livres para redistribuição.
 
 Repositório: https://github.com/WalneyNF/wmk-vida-loka
+
+
+## Novidades v2.5
+
+- World Studio: atlas PNG dividido em grade, seleção de célula e pintura por clique, salvo no JSON do mapa.
+- Painéis flutuantes do World Studio: arraste pela alça, redimensione e restaure a posição; layout local salvo.
+- Bots feridos: protótipo de busca de proteção atrás de objetos sólidos usando a navegação existente.
+- Manual `manual-world-studio-v2.5.html`; 196 testes automatizados aprovados.
+
+Limitações: sem TMX/TSX, cobertura simplificada, persistência real após fechar o navegador não verificada.
