@@ -17,3 +17,14 @@
 - Futuro: WMK Game Creator e multiplayer.
 
 Consulte [evolucao.html](evolucao.html) para o estudo prático de cada etapa.
+## WMK v1.6.0 — Implementado
+- Seletor de bots por cartões com 🔴 inimigo, 🔵 aliado e ⚪ neutro.
+- Object Lab: biblioteca de prefabs com sprites, colisões, camada e dimensões.
+- Arsenal Lab: armas fictícias com dano, alcance, cadência, capacidade e precisão.
+- World Studio insere modelos do Object Lab e Bot Lab seleciona armas cadastradas.
+- Exportação/importação JSON por catálogo e inclusão no backup completo.
+
+## Prioridades futuras
+- IA com A*, waypoints e patrulhas visuais; controle de armas do jogador, munição e recarga dos bots.
+- Manipulação completa de personagens (sprites, animações), grupos e camadas.
+- Empacotamento de projetos e validação de persistência real no Windows.
