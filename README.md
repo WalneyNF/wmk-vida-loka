@@ -1,4 +1,17 @@
-# WMK Vida Loka v2.6.0 — Jogo e estúdio de criação 2D
+# WMK Vida Loka v2.7.0 — Avatar Lab 2.0
+
+**Walney Moreira Klein — walneyk@hotmail.com**
+
+## Novidades v2.7
+- Quatro camadas PNG (corpo, roupa, cabeça, equipamento) configuráveis no Avatar Lab.
+- PNG importado para a biblioteca compartilhada de sprites; limite por imagem de 350 KB.
+- Animação procedural com estados parado, caminhada, corrida e disparo, controle de velocidade, pausa e avanço de quadro.
+- Compatibilidade com os avatares antigos, reaproveitamento dos perfis no Bot Lab e exportação de avatar JSON v2 com imagens referenciadas.
+- Regressão local: **245/245 verificações em 13 suítes**. Persistência real após reiniciar o navegador no Windows ainda não validada.
+- Consulte [Manual Avatar Lab 2.0](manual-avatar-lab-v2.7.html) e [ROADMAP.md](ROADMAP.md).
+
+---
+
 
 **WMK Vida Loka** é um protótipo de mundo aberto 2D top-down com quatro mapas iniciais, bots, missões, veículos, combate em arena e ferramentas de edição.
 
