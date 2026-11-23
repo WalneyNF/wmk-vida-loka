@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- WMK Vida Loka v2.0.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v2.1.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WMK Vida Loka — World Studio | v2.0.0</title>
+  <title>WMK Vida Loka — Baía Nova | v1.6.0</title>
   <style>
     :root {
       color-scheme: dark;
@@ -596,7 +596,7 @@
         <div class="brand-mark">WMK</div>
         <div>
           <div class="brand-name">WMK VIDA LOKA</div>
-          <div class="brand-subtitle">BAÍA NOVA · v2.0.0</div>
+          <div class="brand-subtitle">BAÍA NOVA · v1.6.0</div>
         </div>
       </div>
 
@@ -704,7 +704,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.0.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.1.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -719,7 +719,7 @@
   <section id="wmkMain" aria-label="Menu principal WMK Vida Loka">
     <div class="menu-atmosphere" aria-hidden="true"><div class="menu-sun"></div><div class="menu-skyline skyline-back"></div><div class="menu-skyline skyline-front"></div><div class="menu-highway"></div></div>
     <div class="menu-layout">
-      <header class="menu-header"><div class="menu-header-brand"><img src="assets/logo.svg" alt="WMK Vida Loka"><span>BAÍA NOVA <em>·</em> UNIVERSO WMK</span></div><div class="menu-header-right"><span class="menu-pill">● OFFLINE / SINGLE PLAYER</span><span>VERSÃO 2.0.0</span></div></header>
+      <header class="menu-header"><div class="menu-header-brand"><img src="assets/logo.svg" alt="WMK Vida Loka"><span>BAÍA NOVA <em>·</em> UNIVERSO WMK</span></div><div class="menu-header-right"><span class="menu-pill">● OFFLINE / SINGLE PLAYER</span><span>VERSÃO 2.1.0</span></div></header>
       <div class="menu-stage">
         <section class="menu-intro">
           <div class="menu-eyebrow">MUNDO ABERTO 2D <span>///</span> SUA CIDADE, SUAS REGRAS</div>
@@ -730,7 +730,7 @@
             <button id="wmkOpenMapStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">▦</span><span><b>WORLD STUDIO</b><small>Criar e editar mapas</small></span><span class="menu-button-arrow">↗</span></button>
             <button id="wmkOpenMissionStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">◎</span><span><b>EDITOR DE MISSÕES</b><small>Contratos, regras e recompensas</small></span><span class="menu-button-arrow">↗</span></button>
           </div>
-          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkOpenObjectStudio" type="button">▣ EDITOR DE OBJETOS</button><button id="wmkOpenWeaponStudio" type="button">⌖ EDITOR DE ARMAS</button><button id="wmkOpenAvatarStudio" type="button">◉ EDITOR DE AVATAR</button><button id="wmkOpenGameCreator" type="button">✦ CRIAR MEU JOGO</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
+          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkOpenObjectStudio" type="button">▣ EDITOR DE OBJETOS</button><button id="wmkOpenWeaponStudio" type="button">⌖ EDITOR DE ARMAS</button><button id="wmkOpenAvatarStudio" type="button">◉ EDITOR DE AVATAR</button><button id="wmkOpenGameCreator" type="button">✦ CRIAR MEU JOGO</button><button id="wmkOpenLibrary" type="button">▤ BIBLIOTECA & DIAGNÓSTICO</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
         </section>
         <aside class="menu-feature" aria-label="Mapa selecionado"><div class="menu-feature-kicker">LOCALIZAÇÃO EM DESTAQUE <span>01 / 04</span></div><div class="menu-map-illustration" aria-hidden="true"><span class="map-road map-road-a"></span><span class="map-road map-road-b"></span><span class="map-road map-road-c"></span><span class="map-road map-road-d"></span><span class="map-block map-block-a"></span><span class="map-block map-block-b"></span><span class="map-block map-block-c"></span><span class="map-block map-block-d"></span><span class="map-point">◆</span></div><div class="menu-feature-content"><span class="menu-feature-label">SEU PRÓXIMO DESTINO</span><h2 id="wmkSelectedMapName">Baía Nova</h2><p id="wmkSelectedMapDescription">O coração urbano de Vida Loka.</p><div class="menu-feature-stats"><span id="wmkSelectedMapMissions">CONTRATOS DISPONÍVEIS</span><span id="wmkSelectedMapObjects">OBJETOS NO MAPA</span></div></div></aside>
       </div>
@@ -791,6 +791,15 @@
   <section id="wmkObjectStudio" class="wmk-catalog-studio" hidden><header><h2>▣ WMK Object Lab <small>· Editor de objetos reutilizáveis</small></h2><div><button id="objectExport">⬇ Exportar JSON</button><button id="objectImportButton">⬆ Importar JSON</button><input id="objectImportFile" type="file" accept=".json,application/json" hidden><button id="objectReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de objetos<select id="objectList" size="13"></select></label><button id="objectNew">+ Novo objeto</button><button id="objectClone">⧉ Duplicar</button><button id="objectDelete">🗑 Excluir</button><p>Use os modelos no World Studio com a ferramenta «Objeto da biblioteca». Sprite é opcional.</p></aside><form id="objectForm"><label>Nome<input id="prefName" required maxlength="60"></label><label>Tipo<select id="prefType"><option value="building">Prédio</option><option value="tree">Árvore</option><option value="barrier">Barreira</option><option value="decoration">Decoração</option><option value="sprite">Sprite</option><option value="water">Água</option><option value="sand">Areia</option></select></label><label>Largura<input id="prefW" type="number" min="4" max="900" required></label><label>Altura<input id="prefH" type="number" min="4" max="900" required></label><label>Rotação inicial<input id="prefRotation" type="number" min="-360" max="360"></label><label>Camada<input id="prefLayer" type="number" min="-20" max="20"></label><label>Cor<input id="prefColor" type="color"></label><label>Sprite<select id="prefAsset"></select></label><label class="wmk-wide"><input id="prefSolid" type="checkbox"> Objeto sólido (colisão)</label><button type="submit">💾 Salvar modelo</button><p id="objectStatus" role="status" class="wmk-wide"></p></form></div></section>
   <section id="wmkWeaponStudio" class="wmk-catalog-studio" hidden><header><h2>⌖ WMK Arsenal Lab <small>· Editor de armas fictícias</small></h2><div><button id="weaponExport">⬇ Exportar JSON</button><button id="weaponImportButton">⬆ Importar JSON</button><input id="weaponImportFile" type="file" accept=".json,application/json" hidden><button id="weaponReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de armas<select id="weaponList" size="13"></select></label><button id="weaponNew">+ Nova arma</button><button id="weaponClone">⧉ Duplicar</button><button id="weaponDelete">🗑 Excluir</button><p>Armas são dados do jogo. Atribua-as aos bots no Bot Lab; seus atributos afetam o combate simulado.</p></aside><form id="weaponForm"><label>Nome<input id="wpName" required maxlength="60"></label><label>Categoria<select id="wpType"><option value="pistol">Pistola</option><option value="smg">Automática</option><option value="rifle">Carabina</option><option value="other">Personalizada</option></select></label><label>Dano por disparo<input id="wpDamage" type="number" min="1" max="100" required></label><label>Alcance<input id="wpRange" type="number" min="60" max="1000" required></label><label>Cadência (disparos/seg.)<input id="wpRate" type="number" min="0.2" max="20" step="0.1" required></label><label>Capacidade<input id="wpMagazine" type="number" min="1" max="200" required></label><label>Precisão (%)<input id="wpAccuracy" type="number" min="0" max="100" required></label><label>Cor temática<input id="wpColor" type="color"></label><button type="submit">💾 Salvar arma</button><p id="weaponStatus" role="status" class="wmk-wide"></p></form></div></section>
 
+  <section id="wmkLibrary" hidden class="wmk-catalog-studio" aria-label="Biblioteca compartilhada WMK">
+  <header><h2>▤ WMK BIBLIOTECA <small>· recursos e dependências</small></h2><button id="wmkLibraryReturn" type="button">← Menu principal</button></header>
+  <div class="wmk-library-layout">
+    <aside class="wmk-library-nav"><h3>Catálogos</h3><label>Tipo de recurso<select id="wmkLibraryType"><option value="maps">Mapas</option><option value="missions">Missões</option><option value="bots">Bots</option><option value="objects">Prefabs</option><option value="weapons">Armas</option><option value="avatars">Avatares</option><option value="assets">Sprites</option></select></label>
+    <button id="wmkLibraryGoEditor" type="button">✎ Abrir editor correspondente</button><button id="wmkLibraryAudit" type="button">↻ Verificar referências</button><button id="wmkLibraryBackup" type="button">↓ Exportar backup da biblioteca</button>
+    <p>As alterações continuam nos editores próprios. Aqui você consulta os recursos compartilhados, suas referências e possíveis problemas.</p></aside>
+    <div class="wmk-library-content"><div id="wmkLibraryMetrics" class="wmk-library-metrics"></div><h3>Recursos disponíveis</h3><div id="wmkLibraryEntries" class="wmk-library-entries"></div><h3>Diagnóstico de referências</h3><div id="wmkLibraryProblems" role="status"></div><p id="wmkLibraryStatus" role="status">Pronto para analisar os dados locais.</p></div>
+  </div>
+</section>
   <section id="wmkGameCreator" hidden class="wmk-catalog-studio" aria-label="WMK Game Creator"><header><h2>✦ WMK GAME CREATOR <small>· Monte sua própria campanha 2D</small></h2><button id="creatorReturn">← Menu principal</button></header><div class="wmk-catalog-content"><aside><h3>Seu jogo</h3><label>Nome<input id="creatorName" value="Minha Aventura WMK" maxlength="80"></label><label>Descrição<textarea id="creatorDescription" rows="4" maxlength="400">Um novo jogo criado no WMK Vida Loka.</textarea></label><label>Gênero<select id="creatorGenre"><option value="openworld">Mundo aberto</option><option value="tactical">Combate tático</option><option value="adventure">Aventura</option><option value="racing">Corrida</option><option value="survival">Sobrevivência</option></select></label><button id="creatorExport" type="button">⬇ Exportar pacote JSON</button><button id="creatorImportBtn" type="button">⬆ Importar pacote JSON</button><input id="creatorImportFile" hidden type="file" accept=".json,application/json"><button id="creatorPreview" type="button">▶ Testar primeiro mapa</button><p id="creatorStatus" role="status">Escolha os mapas e missões; os dados não são executáveis por conta própria.</p></aside><div><h3>Mapas incluídos</h3><div id="creatorMaps" class="wmk-check-grid"></div><h3>Missões incluídas</h3><div id="creatorMissions" class="wmk-check-grid"></div><p>O pacote exporta cópias dos mapas, missões, bots, catálogo de armas, objetos, avatares e sprites. O jogo é executado pelo motor WMK Vida Loka, não por scripts externos.</p></div></div></section>
   <section id="wmkAvatarStudio" hidden aria-label="Editor de avatar do jogador">
     <header class="avatar-head"><div><h2>◉ WMK AVATAR LAB <small>· Personagem jogável</small></h2><p>Personalize seu personagem 2D. O resultado aparece no jogo em todos os mapas.</p></div><button id="avatarReturn" type="button">← Menu principal</button></header>
@@ -813,6 +822,22 @@
     </div><div class="avatar-panel"><h3>Pré-visualização ao vivo</h3><canvas id="avatarCanvas" width="420" height="420" aria-label="Visualização do personagem em vista de cima"></canvas><p class="avatar-tip">Modelo estilizado em vista de cima, desenhado por Canvas, sem depender de sprites externos. As opções salvas são aplicadas ao personagem no mundo aberto e na arena. Alterar a aparência não modifica os atributos de combate.</p><p class="avatar-tip">Os modelos de bots são editados separadamente pelo Bot Lab. No futuro, ambos poderão compartilhar uma biblioteca de avatares.</p></div></div>
   </section>
 
+  <style id="wmkLibraryStyles">
+  .wmk-library-layout{display:grid;grid-template-columns:minmax(190px,280px) minmax(0,1fr);gap:18px;padding:20px;overflow:auto;height:calc(100% - 64px);color:#e2f5ef}
+  .wmk-library-layout button,.wmk-library-layout select{width:100%;padding:11px;margin:6px 0;background:#213f48;border:1px solid #527a79;color:#edfdf6;border-radius:8px;cursor:pointer}
+  .wmk-library-nav,.wmk-library-content{background:#142b34;border:1px solid #34515a;border-radius:12px;padding:18px;min-width:0;overflow:auto}
+  .wmk-library-nav p{color:#a7c5c0;font-size:12px;line-height:1.6}
+  .wmk-library-metrics{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:9px}
+  .wmk-library-metrics div,.wmk-library-entries article{padding:12px;border:1px solid #365763;background:#1d3942;border-radius:8px}
+  .wmk-library-metrics b{font-size:20px;display:block;color:#6ce9c3}
+  .wmk-library-metrics small,.wmk-library-entries small{color:#acd0cf;display:block}
+  .wmk-library-entries{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px;max-height:300px;overflow:auto}
+  .wmk-library-entries strong{display:block;margin-bottom:4px}
+  .wmk-library-problem{border-left:3px solid #ecad5e;background:#403329;padding:10px;margin:7px 0;border-radius:5px}
+  .wmk-library-ok{color:#67e5b3;padding:10px;background:#193e36;border-radius:6px}
+  @media(max-width:740px){.wmk-library-layout{grid-template-columns:1fr}}
+</style>
+  <script src="js/wmk-core.js"></script>
   <script>
     const WMK_DEFAULT_DRIVING = Object.freeze({ maxSpeed: 220, acceleration: 140, braking: 500, steering: 1.55 });
     const driving = { ...WMK_DEFAULT_DRIVING };
@@ -2227,7 +2252,7 @@
       }
       g.restore();
     }}
-    function showMenu(){$('wmkGameCreator').hidden=true;$('wmkAvatarStudio').hidden=true;$('wmkObjectStudio').hidden=true;$('wmkWeaponStudio').hidden=true;$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
+    function showMenu(){$('wmkLibrary').hidden=true;$('wmkGameCreator').hidden=true;$('wmkAvatarStudio').hidden=true;$('wmkObjectStudio').hidden=true;$('wmkWeaponStudio').hidden=true;$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('wmkTools').hidden=true;$('wmkCombatHUD').hidden=true;shootHeld=false;$('guideModal').hidden=true;renderMapCards()}
     function startGame(id){applyMap(id);wmkMode='play';$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('missionPanel').hidden=false;$('wmkCombatHUD').hidden=currentMap.theme!=='arena';showToast('Explorando '+currentMap.name+' · ESC para menu')}
@@ -2551,6 +2576,46 @@
       persistMaps();persistMissions();persistAssets();persistObjectCatalog();persistWeaponCatalog();creatorOpen();$('creatorStatus').textContent='Pacote importado. Os novos mapas aparecem na seleção.';
     }catch(err){$('creatorStatus').textContent='Importação recusada: '+err.message}e.target.value=''});
     on('creatorPreview','click',()=>{const id=[...creatorSelection('creatorMaps')][0];if(!id){$('creatorStatus').textContent='Selecione um mapa';return}$('wmkGameCreator').hidden=true;startGame(id)});
+    // v2.1: catálogo unificado com verificação cruzada de recursos. Nenhum JSON é executado.
+    let wmkLibraryLastReport=null;
+    function wmkLibrarySnapshot(){return {maps:mapCatalog,missions:missionCatalog,objects:objectCatalog,weapons:weaponCatalog,avatars:avatarProfiles,assets:assetCatalog}}
+    function wmkLibraryEntries(type){
+      const data=wmkLibrarySnapshot();
+      if(type==='bots')return mapCatalog.flatMap(m=>(m.bots||[]).map(b=>({id:b.id,name:b.name,details:m.name+' · '+(b.team==='red'?'Inimigo':b.team==='blue'?'Aliado':'Neutro')+' · '+weaponById(b.weapon).name})));
+      return (data[type]||[]).map(item=>({id:item.id,name:item.name||item.title||item.avatar?.name||item.id,details:type==='maps'?((item.objects||[]).length+' objetos · '+(item.bots||[]).length+' bots'):type==='missions'?(item.maps?.length?item.maps.join(', '):'Todos os mapas'):type==='weapons'?('Dano '+item.damage+' · alcance '+item.range):type==='objects'?('Colisão: '+(item.solid?'sim':'não')):type==='assets'?'Sprite importado':'Personagem salvo'}));
+    }
+    function renderLibrary(){
+      const type=$('wmkLibraryType').value;
+      const report=window.WMKCore?.inspect(wmkLibrarySnapshot());
+      wmkLibraryLastReport=report;
+      const metrics=$('wmkLibraryMetrics');metrics.replaceChildren();
+      if(report)for(const [key,value] of Object.entries(report.counts)){const card=document.createElement('div'),num=document.createElement('b'),label=document.createElement('small');num.textContent=value;label.textContent=({maps:'Mapas',missions:'Missões',objects:'Prefabs',weapons:'Armas',avatars:'Avatares',assets:'Sprites',bots:'Bots em mapas',placedObjects:'Objetos em mapas'})[key]||key;card.append(num,label);metrics.append(card)}
+      const container=$('wmkLibraryEntries');container.replaceChildren();
+      const entries=wmkLibraryEntries(type);
+      if(!entries.length){const empty=document.createElement('p');empty.textContent='Não há recursos deste tipo.';container.append(empty)}
+      entries.slice(0,500).forEach(item=>{const article=document.createElement('article'),name=document.createElement('strong'),detail=document.createElement('small'),code=document.createElement('small');name.textContent=item.name;detail.textContent=item.details;code.textContent='ID: '+item.id;article.append(name,detail,code);container.append(article)});
+      const problems=$('wmkLibraryProblems');problems.replaceChildren();
+      if(!report){problems.textContent='O módulo compartilhado não carregou. Abra o jogo pelo servidor HTTP e confira js/wmk-core.js.';return}
+      if(!report.problems.length){const good=document.createElement('div');good.className='wmk-library-ok';good.textContent='✓ Referências íntegras: nenhum ID ausente, repetido ou dependência quebrada identificada.';problems.append(good)}
+      report.problems.slice(0,60).forEach(p=>{const div=document.createElement('div');div.className='wmk-library-problem';div.textContent=p.message;problems.append(div)});
+      $('wmkLibraryStatus').textContent=report.problems.length+' inconsistência(s) encontradas. Auditoria não modifica o projeto.';
+    }
+    function openLibrary(){showMenu();wmkMode='library';$('wmkMain').hidden=true;$('wmkLibrary').hidden=false;renderLibrary()}
+    on('wmkOpenLibrary','click',openLibrary);
+    on('wmkLibraryReturn','click',showMenu);
+    on('wmkLibraryType','change',renderLibrary);
+    on('wmkLibraryAudit','click',renderLibrary);
+    on('wmkLibraryBackup','click',()=>{try{const bundle=WMKCore.makeBackup(wmkLibrarySnapshot());downloadJSON(bundle,'wmk-biblioteca-backup-v2.1.json');$('wmkLibraryStatus').textContent='Backup completo exportado. Faça também backup pelo menu de projeto.'}catch(e){$('wmkLibraryStatus').textContent='Não foi possível exportar: '+e.message}});
+    on('wmkLibraryGoEditor','click',()=>{
+      const type=$('wmkLibraryType').value;
+      if(type==='maps'||type==='assets'){showMenu();openMapEditor(currentMapId)}
+      else if(type==='missions'){showMenu();openMissionEditor()}
+      else if(type==='bots'){showMenu();openBotStudio(currentMapId)}
+      else if(type==='objects'){showMenu();openObjectStudio()}
+      else if(type==='weapons'){showMenu();openWeaponStudio()}
+      else if(type==='avatars'){showMenu();openAvatarStudio()}
+    });
+
     function initWMKWorldStudio(){applyMap(currentMapId);wmkMode='menu';$('wmkMain').hidden=false;renderMapCards();}
 
     resize();
