@@ -1,83 +1,117 @@
-# WMK Vida Loka v2.2.0 — Jogo e Estúdio de Criação 2D
+# WMK Vida Loka v2.3.0 — Jogo e estúdio de criação 2D
 
-## v2.2.0 — World Studio: grupos e prefabs compostos
-
-- **Ctrl/Shift+clique** na cena e Ctrl/Shift na lista permitem selecionar várias entidades.
-- **Selecionar todos**, **Agrupar**, **Desagrupar** e **Duplicar seleção**.
-- Objetos agrupados compartilham `groupId`, que é salvo no mapa JSON; arrastar desloca o grupo selecionado.
-- **Salvar conjunto como prefab** guarda múltiplos objetos com coordenadas relativas. **Inserir conjunto** cria instâncias em outros mapas.
-- Importação e exportação da biblioteca em formato `wmk-composite-prefabs`; os conjuntos também são armazenados localmente.
-- Testes automatizados: 18/18 novos e 126/126 antigos, total **144/144** no Chromium por scripts de interação.
-
-### Teste rápido
-
-1. Menu → World Studio → duplique Terminal Zero.
-2. Insira duas barreiras, selecione ambas com Ctrl+clique e pressione **Agrupar seleção**.
-3. Arraste uma delas para mover ambas e pressione **Duplicar seleção**.
-4. Selecione duas peças, use **Salvar conjunto como prefab** e dê um nome.
-5. Mude de mapa, escolha o prefab e pressione **Inserir conjunto no mapa**.
-6. Exporte **JSON do mapa** e **biblioteca de conjuntos JSON** para backup.
-
-**Limitações:** hierarquia aninhada, escala/rotação coletiva, autotile/atlas, bloqueio de camadas e persistência após recarregar o navegador em HTTP/Windows não foram concluídos ou validados. O ZIP contém o teste completo e os manuais atualizados.
-
-Consulte [Manual World Studio v2.2](manual-world-studio-v2.2.html).
-
-
-**WMK Vida Loka** é um protótipo de mundo aberto 2D top-down em HTML5 Canvas, com quatro cenários iniciais, bots, missões, veículos, combate em arena e editores.
+**WMK Vida Loka** é um protótipo de mundo aberto 2D top-down com quatro mapas iniciais, bots, missões, veículos, combate em arena e ferramentas de edição.
 
 **Créditos das adaptações:** Walney Moreira Klein — walneyk@hotmail.com.
 
-## Instalação e execução
+## Como jogar
 
-1. Baixe em **Code → Download ZIP** e extraia todo o projeto, incluindo as pastas `assets/` e `js/`.
-2. Inicie pela pasta do projeto com `py -m http.server 8000` ou use XAMPP.
-3. Acesse `http://localhost:8000` no navegador.
-4. Selecione Baía Nova, Costa Dourada, Serra Brava ou Terminal Zero e clique **Iniciar Jogo**.
-5. Comandos principais: WASD, Shift, E e Espaço. Na arena, mouse para mirar/disparar, R para recarregar e Esc para voltar ao menu.
+1. Faça o download do ZIP ou use **Code → Download ZIP** no GitHub.
+2. Extraia a pasta preservando `index.html`, `assets/` e `js/`.
+3. Recomenda-se iniciar por HTTP local: `py -m http.server 8000` na pasta do projeto; então abrir `http://localhost:8000`.
+4. Selecione Baía Nova, Costa Dourada, Serra Brava ou Terminal Zero e clique em **Iniciar Jogo**.
+5. Use WASD, Shift, E e Espaço. No Terminal Zero, mire/dispare com o mouse e recarregue com R. Pressione Esc para retornar ao menu.
 
-## Editores
+## Editores disponíveis
 
-| Editor | Funções |
+| Editor | Função |
 |---|---|
-| World Studio | Criar, editar e duplicar mapas, inserir objetos, bots, gizmos, sprites, colisões e patrulhas |
-| Editor de Missões | Contratos, recompensas W$, mapas permitidos e condições de vitória |
-| Bot Lab | Equipes, atributos, arma, comportamento, avatar e patrulhas |
-| Object Lab | Prefabs, aparência, dimensões, colisões |
-| Arsenal Lab | Catálogo de armas fictícias com atributos |
-| Avatar Lab | Aparência e perfis de avatares |
-| Game Creator | Exportar e importar pacotes JSON de conteúdo para o motor WMK |
-| **Biblioteca & Diagnóstico (v2.1)** | Visualização centralizada de recursos, dependências quebradas e exportação de backup de auditoria |
+| World Studio | Mapas, objetos posicionados, gizmos, sprites importados, colisões, cópia de mapas e rotas de patrulha |
+| Bot Lab | Equipe, arma, vida, dano, precisão, alcance, comportamento e avatar |
+| Object Lab | Prefabs compartilhados, dimensões, aparência e colisão |
+| Arsenal Lab | Armas fictícias configuradas em catálogo JSON |
+| Avatar Lab | Aparência e perfis reutilizáveis |
+| Editor de Missões | Contratos, mapas permitidos, marcadores, tipos e recompensas |
+| Game Creator | Exportar/importar pacotes de mapas e missões compatíveis com o motor WMK |
+| **Biblioteca & Diagnóstico — novo** | Contar recursos, consultar IDs, navegar para os editores, detectar referências quebradas e exportar backup de auditoria |
 
-## Novidades v2.1
+## Novidades v2.3.0 — Hierarquia, camadas e transformação coletiva
 
-- `js/wmk-core.js`: primeiro módulo JavaScript separado, responsável por inspeção de recursos e geração de cópias de auditoria.
-- Biblioteca no menu principal, com contagem de mapas, missões, bots, objetos posicionados, prefabs, armas, avatares e sprites.
-- Validação de IDs ausentes ou duplicados, além de referências a armas, avatares, sprites e mapas inexistentes.
-- Navegação direta para os editores correspondentes e exportação JSON do inventário atual.
-- Testes automatizados e guia HTML [Arquitetura v2.1](arquitetura-v2.1.html).
+- **Hierarquia visual** no World Studio: grupos, seus membros e bots; clique para selecionar o grupo ou uma peça, Ctrl/Shift para agregar.
+- **Camadas por número (-20 a 20)** com botões 👁/◌ para ocultar na visualização do editor e 🔒/🔓 para bloquear manipulação. Configurações em `map.layerSettings`, mantidas ao salvar/exportar/importar JSON.
+- **Gizmos coletivos**: com dois ou mais objetos selecionados, G move, S redimensiona proporcionalmente e R gira posições e ângulos. Bots participam das transformações de posição, mas não têm tamanho ou rotação visual editáveis nesta etapa.
+- **Pivô** no centro da seleção ou no objeto ativo. `Ctrl+Z` / `Ctrl+Y` desfazem/refazem transformações e mudanças nas camadas.
+- **Compatibilidade**: mapas antigos sem `layerSettings` recebem camadas visíveis e desbloqueadas por padrão. O bloqueio/ocultação é uma ferramenta **do editor**, não remove objetos da física do jogo publicado.
+- **Manual específico**: [`manual-world-studio-v2.3.html`](manual-world-studio-v2.3.html). Testes: `testes/test_v23.py`.
 
-**Importante:** o backup `wmk-vida-loka-library` é **somente para auditoria**, não é aceito diretamente pelo importador de projeto. Para um backup restaurável, use **Exportar Projeto** no menu principal.
+### Exemplo de configuração JSON
 
-## Documentação
+```json
+{"id":"meu-mapa","layerSettings":{"1":{"visible":true,"locked":true},"-2":{"visible":false,"locked":false}}}
+```
+
+## Novidades v2.2.0 — World Studio: grupos e prefabs compostos
+
+- **Ctrl+clique** ou **Shift+clique** adiciona/remove entidades da seleção no mapa. No painel à direita, a lista suporta seleção múltipla com Ctrl/Shift.
+- **Selecionar todos**, **Agrupar seleção**, **Desagrupar** e **Duplicar seleção** disponíveis no painel esquerdo.
+- Grupos de objetos usam `groupId`; clicar em uma peça do grupo seleciona suas peças. Ao arrastar, a seleção se desloca em conjunto.
+- **Salvar conjunto como prefab** captura dois ou mais objetos, com coordenadas relativas ao centro do grupo; o botão **Inserir conjunto no mapa** posiciona a composição perto do spawn, com novo ID de grupo.
+- **Exportar/Importar biblioteca de conjuntos JSON** (`wmk-composite-prefabs`) para copiar composições entre navegadores e computadores.
+- Persistência `groupId` incluída na sanitização, duplicação e importação/exportação de mapas JSON.
+- Histórico básico de desfazer/refazer foi preservado; os conjuntos persistem no armazenamento local separadamente dos mapas. **Exporte a biblioteca de conjuntos como backup adicional.**
+- `manual-world-studio-v2.2.html` e teste `testes/test_v22.py` (18 verificações).
+
+### Tutorial rápido: criar uma garagem como prefab composto
+
+1. Menu principal → World Studio → selecione um mapa ou duplique-o.
+2. Crie pelo menos dois objetos, como um prédio e uma barreira.
+3. Escolha **Selecionar/mover**, segure Ctrl e clique em cada objeto (ou use a lista múltipla).
+4. Pressione **Agrupar seleção**. Arraste uma peça para mover as selecionadas juntas.
+5. Clique em **Salvar conjunto como prefab**, digite um nome e salve.
+6. Abra outro mapa, selecione o conjunto no campo **Prefabs compostos** e clique em **Inserir conjunto no mapa**.
+7. Faça alterações e salve o mapa; exporte tanto o **JSON do mapa** quanto a **biblioteca de conjuntos**.
+
+**Limitações honestas:** não há ainda árvore hierárquica aninhada, transformações múltiplas de escala/rotação, grupos com pivô próprio, nem tileset/atlas com autotile. A escala e rotação por gizmo continuam aplicadas à entidade primária. O armazenamento local não substitui um backup exportado.
+
+## Novidades v2.3.0
+
+- Núcleo independente `js/wmk-core.js` para inspecionar recursos compartilhados.
+- Painel **Biblioteca & Diagnóstico**, acessível exclusivamente pelo menu principal.
+- Detecção de IDs duplicados e ausentes, sprites inexistentes nos mapas, armas e avatares ausentes nos bots, mapas não encontrados nas missões.
+- Visão centralizada das quantidades de mapas, missões, bots, instâncias, prefabs, armas, avatares e sprites.
+- Exportação JSON de snapshot da biblioteca (`wmk-vida-loka-library`). **Este formato é de auditoria e não é restaurável diretamente pelos importadores existentes.** Use **Exportar Projeto** para backup restaurável.
+- Novo tutorial [Arquitetura v2.1](arquitetura-v2.1.html) e suíte `testes/test_v21.py`.
+
+## Como testar
+
+Instale Python 3 e Playwright para executar os scripts, além do Chromium disponível no ambiente:
+
+```powershell
+py -m pip install playwright
+py testes/test_smoke.py
+py testes/test_v20.py
+py testes/test_v21.py
+```
+
+Os testes de interface podem requerer ajuste do caminho do Chromium no Windows. O relatório de execução está em [testes/RELATORIO.md](testes/RELATORIO.md). Testes com navegação HTTP e recuperação real após reinício permanecem pendentes, pois o navegador de validação disponível bloqueou navegação HTTP e `file://` neste ambiente.
+
+## Documentação em português
 
 - [Manual do Jogador](manual-jogador.html)
 - [Manual do Desenvolvedor](manual-desenvolvedor.html)
-- [Arquitetura e biblioteca v2.1](arquitetura-v2.1.html)
-- [Guia de evolução](evolucao.html)
-- [Roadmap](roadmap.html)
-- [Relatório de testes](testes/RELATORIO.md)
-- [Pesquisa](pesquisa.html)
+- [Guia da Arquitetura v2.1](arquitetura-v2.1.html)
+- [Guia de Evolução](evolucao.html)
+- [Roadmap Visual](roadmap.html)
+- [Pesquisa de referências](pesquisa.html)
 
-## Testes
+## Organização
 
-As sete suítes de regressão executadas somaram **126/126 verificações aprovadas** no Chromium headless. A navegação direta via HTTP e `file://` foi bloqueada no ambiente de validação, portanto o carregamento real pelo servidor e a persistência após reiniciar o navegador ainda devem ser conferidos no Windows. Veja o relatório.
+```text
+index.html                 Interface e jogo atual
+js/wmk-core.js             Núcleo independente de diagnóstico
+assets/                    Identidade visual
+exemplos/                  Exemplos de dados JSON
+testes/                    Testes Playwright e relatório
+*.html                     Manuais e documentação
+LICENSE                    Proposta de licença MIT
+```
 
-## Limitações
+## Limitações conhecidas
 
-O projeto ainda concentra parte considerável da lógica em `index.html`: a migração modular é incremental. Não há multiplayer, exportação independente de HTML executável, nem editor de missão ramificado ou animação completa de personagens. O armazenamento local pode esgotar, especialmente com sprites. Faça backups regularmente.
+O núcleo compartilhado é um **primeiro módulo**: o motor e vários editores ainda estão integrados em `index.html`, para reduzir risco de regressão. A biblioteca é um painel de consulta e auditoria, não edita dados diretamente. Não há multiplayer, exportação de executável, árvore de comportamento avançada ou animações completas. Salvamento local depende do navegador e possui limite de tamanho; faça backups do projeto regularmente.
 
-## Licença e autoria
+## Direitos autorais e licença
 
-Há um arquivo `LICENSE` com texto MIT. **A licença do código-base original precisa ser confirmada antes de afirmar que toda a obra pode ser redistribuída como MIT.** Assets de terceiros conservam licenças próprias. Créditos das alterações: **Walney Moreira Klein — walneyk@hotmail.com**.
+Este repositório contém um arquivo `LICENSE` MIT. **A aplicação da MIT ao código-base inicial depende de confirmar sua origem e permissões; não se pode relicenciar automaticamente código de terceiros.** Recursos importados (inclusive Kenney) conservam suas próprias licenças. Não considere a presença do arquivo MIT prova de que todos os ativos e código-base são livres para redistribuição.
 
-Projeto: https://github.com/WalneyNF/wmk-vida-loka
+Repositório: https://github.com/WalneyNF/wmk-vida-loka
