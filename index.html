@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- WMK Vida Loka v2.6.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v2.7.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
@@ -601,6 +601,14 @@
 #wmkAvatarStudio #avatarCanvas{width:min(100%,410px);aspect-ratio:1;background:#273b3d;border:1px solid #486e68;border-radius:9px;image-rendering:auto}
 #wmkAvatarStudio .avatar-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
 #wmkAvatarStudio .avatar-tip{color:#95bfb0;font-size:12px;line-height:1.6}
+#wmkAvatarStudio .wmk-avatar-module{border:1px solid #406c66;border-radius:8px;padding:10px;background:#122f36;margin:12px 0}
+#wmkAvatarStudio .wmk-avatar-module summary{cursor:pointer;font-weight:700;color:#7ce5bf;padding:4px}
+#wmkAvatarStudio .wmk-avatar-module .wmk-layer-row{display:grid;grid-template-columns:90px 1fr;gap:7px;align-items:center;margin:8px 0}
+#wmkAvatarStudio .wmk-avatar-module .wmk-layer-row label{margin:0;font-size:12px}
+#wmkAvatarStudio .wmk-avatar-module .wmk-layer-row select{min-width:0}
+#wmkAvatarStudio .wmk-avatar-module .wmk-avatar-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+#wmkAvatarStudio .wmk-avatar-module .wmk-avatar-actions button{font-size:12px}
+
 @media(max-width:730px){#wmkAvatarStudio .avatar-layout{grid-template-columns:1fr}}
 
 /* v2.5: ferramentas compactas */
@@ -755,7 +763,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.6.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.7.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -789,8 +797,7 @@
       <footer class="menu-footer"><span>© Walney Moreira Klein · walneyk@hotmail.com</span><span>WMK VIDA LOKA / WORLD STUDIO</span></footer>
     </div>
   </section>
-  <section id="wmkMapStudio" hidden aria-label="Editor de mapas">
-    <div class="studio-top"><strong>🗺 WMK WORLD STUDIO · EDITOR 2D</strong>
+  <section id="wmkMapStudio" hidden aria-label="Editor de mapas">    <div class="studio-top"><strong>🗺 WMK WORLD STUDIO · EDITOR 2D</strong>
       <button id="studioReturn">← Menu</button><button id="studioSave">💾 Salvar mapa</button><button id="studioTest">▶ Testar mapa</button>
       <button id="studioFloatToggle" type="button" title="Alternar painéis móveis e layout padrão">▣ Painéis flutuantes</button><button id="studioFloatReset" type="button" title="Restaurar posições">↺ Layout</button><button id="studioUndo" title="Ctrl+Z">↶ Desfazer</button><button id="studioRedo" title="Ctrl+Y">↷ Refazer</button><label class="studio-snap" title="Ajustar posições na grade de 25 unidades"><input type="checkbox" id="studioSnap"> Grade 25</label><button id="studioExport">⬇ JSON</button><button id="studioImportBtn">⬆ JSON</button><input id="studioImportFile" type="file" accept=".json" hidden>
     </div>
@@ -898,9 +905,24 @@
         <label>Boné/capacete<input type="color" id="avatarHatColor"></label>
         <label>Mochila<input type="color" id="avatarPackColor"></label>
       </div>
+      <details class="wmk-avatar-module" open><summary>🧩 Camadas de sprites PNG · Avatar Lab 2.0</summary>
+        <p class="avatar-tip">Importe PNG transparente para a biblioteca e escolha uma imagem por camada. Camadas vazias usam o personagem vetorial existente. Os sprites também aparecem no jogo e nos bots.</p>
+        <div class="wmk-layer-row"><label for="avatarLayerBody">Corpo</label><select id="avatarLayerBody"></select></div>
+        <div class="wmk-layer-row"><label for="avatarLayerClothes">Roupa</label><select id="avatarLayerClothes"></select></div>
+        <div class="wmk-layer-row"><label for="avatarLayerHead">Cabeça</label><select id="avatarLayerHead"></select></div>
+        <div class="wmk-layer-row"><label for="avatarLayerGear">Equipamento</label><select id="avatarLayerGear"></select></div>
+        <div class="wmk-avatar-actions"><button id="avatarAddSprite" type="button">＋ Importar sprite PNG</button><button id="avatarClearLayers" type="button">Limpar camadas</button><input id="avatarSpriteFile" type="file" accept="image/png" hidden></div>
+        <p class="avatar-tip">Cada sprite deve representar uma parte vista de cima, centralizada num PNG quadrado. Recomenda-se 64×64 ou 128×128.</p>
+      </details>
+      <details class="wmk-avatar-module" open><summary>🎞️ Animação e movimento</summary>
+        <label>Estado da prévia<select id="avatarAnimation"><option value="idle">Parado</option><option value="walk">Caminhada</option><option value="run">Corrida</option><option value="shoot">Disparo</option></select></label>
+        <label>Velocidade da animação (1 a 12)<input type="range" id="avatarAnimSpeed" min="1" max="12" step="1" value="6"></label>
+        <div class="wmk-avatar-actions"><button type="button" id="avatarAnimToggle">⏸ Pausar animação</button><button type="button" id="avatarAnimFrame">Próximo quadro</button></div>
+        <p class="avatar-tip">Animação procedural simples (movimento do corpo e membros); ainda não é um editor de keyframes ou spritesheet com quadros individuais.</p>
+      </details>
       <div class="avatar-actions"><select id="avatarProfiles" aria-label="Personagens salvos"></select><button type="button" id="avatarProfileLoad">Carregar perfil</button><button type="button" id="avatarProfileSave">+ Guardar perfil</button><button type="button" id="avatarProfileDelete">Excluir perfil</button></div><div class="avatar-actions"><button id="avatarSave" type="button">💾 Salvar avatar</button><button id="avatarReset" type="button">↶ Restaurar padrão</button><button id="avatarExport" type="button">⬇ Exportar JSON</button><button id="avatarImportBtn" type="button">⬆ Importar JSON</button><input id="avatarImport" type="file" accept=".json,application/json" hidden></div>
       <p id="avatarStatus" role="status" class="avatar-tip">Alterações são visualizadas antes de salvar.</p>
-    </div><div class="avatar-panel"><h3>Pré-visualização ao vivo</h3><canvas id="avatarCanvas" width="420" height="420" aria-label="Visualização do personagem em vista de cima"></canvas><p class="avatar-tip">Modelo estilizado em vista de cima, desenhado por Canvas, sem depender de sprites externos. As opções salvas são aplicadas ao personagem no mundo aberto e na arena. Alterar a aparência não modifica os atributos de combate.</p><p class="avatar-tip">Os modelos de bots são editados separadamente pelo Bot Lab. No futuro, ambos poderão compartilhar uma biblioteca de avatares.</p></div></div>
+    </div><div class="avatar-panel"><h3>Pré-visualização ao vivo</h3><canvas id="avatarCanvas" width="420" height="420" aria-label="Visualização do personagem em vista de cima"></canvas><p class="avatar-tip">Modelo estilizado em vista de cima, desenhado por Canvas, sem depender de sprites externos. As opções salvas são aplicadas ao personagem no mundo aberto e na arena. Alterar a aparência não modifica os atributos de combate.</p><p class="avatar-tip">Os perfis desta biblioteca podem ser utilizados pelo personagem jogável e atribuídos aos bots no Bot Lab. Camadas de sprites PNG são reutilizadas por ID na biblioteca de imagens.</p></div></div>
   </section>
 
   <style id="wmkLibraryStyles">
@@ -1575,7 +1597,6 @@
 
       const target = cop.route.length ? cop.route[0] : cop.finalTarget;
       if (!target) return;
-
       const dx = target.x - cop.x;
       const dy = target.y - cop.y;
       const d = Math.hypot(dx, dy);
@@ -1859,7 +1880,7 @@
     function lineClear(x1,y1,x2,y2){const steps=Math.ceil(distance(x1,y1,x2,y2)/22);for(let i=1;i<steps;i++){const t=i/steps;if(blockedBullet(x1+(x2-x1)*t,y1+(y2-y1)*t))return false}return true}
     function finishAdvancedMission(m){mission.finished=true;player.money+=m.reward;showToast('Vitória: '+m.title+' · W$ '+m.reward)}
     function drawCombat(){if(currentMap.theme!=='arena')return;
-      for(const b of runtimeBots){if(b.currentHP<=0)continue;ctx.save();ctx.translate(b.x,b.y);ctx.fillStyle=b.team==='red'?'#f36f6a':b.team==='blue'?'#57c5ff':'#d4c58a';ctx.beginPath();ctx.arc(0,0,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#10232d';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#0a171e';ctx.fillRect(-18,-24,36,5);ctx.fillStyle='#73ec9f';ctx.fillRect(-18,-24,36*clamp(b.currentHP/b.hp,0,1),5);ctx.font='12px system-ui';ctx.textAlign='center';ctx.fillStyle='#f2ffff';ctx.fillText(b.name,0,-31);if(b.avatarId&&avatarProfiles.some(a=>a.id===b.avatarId)){ctx.save();ctx.scale(1.1,1.1);paintAvatar(ctx,avatarProfiles.find(a=>a.id===b.avatarId).avatar);ctx.restore()}ctx.restore()}
+      for(const b of runtimeBots){if(b.currentHP<=0)continue;ctx.save();ctx.translate(b.x,b.y);ctx.fillStyle=b.team==='red'?'#f36f6a':b.team==='blue'?'#57c5ff':'#d4c58a';ctx.beginPath();ctx.arc(0,0,13,0,Math.PI*2);ctx.fill();ctx.strokeStyle='#10232d';ctx.lineWidth=3;ctx.stroke();ctx.fillStyle='#0a171e';ctx.fillRect(-18,-24,36,5);ctx.fillStyle='#73ec9f';ctx.fillRect(-18,-24,36*clamp(b.currentHP/b.hp,0,1),5);ctx.font='12px system-ui';ctx.textAlign='center';ctx.fillStyle='#f2ffff';ctx.fillText(b.name,0,-31);if(b.avatarId&&avatarProfiles.some(a=>a.id===b.avatarId)){ctx.save();ctx.scale(1.1,1.1);paintAvatar(ctx,avatarProfiles.find(a=>a.id===b.avatarId).avatar,performance.now()/1000*5,(b.behavior==='patrol'?'walk':'idle'));ctx.restore()}ctx.restore()}
       for(const sh of shots){ctx.fillStyle=sh.team===combatTeam?'#a0fff0':'#ffb66b';ctx.beginPath();ctx.arc(sh.x,sh.y,4,0,Math.PI*2);ctx.fill()}
       ctx.strokeStyle='#6cf6cf';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(player.x,player.y);ctx.lineTo(player.x+aim.x*36,player.y+aim.y*36);ctx.stroke();
     }
@@ -2108,7 +2129,7 @@
     }
 
     function drawPlayer() {
-      ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.angle);paintAvatar(ctx,avatar);ctx.restore();
+      ctx.save();ctx.translate(player.x,player.y);ctx.rotate(player.angle);paintAvatar(ctx,avatar,performance.now()/1000*avatar.animationSpeed*2.4,(keyDown('ShiftLeft','ShiftRight')?'run':(keyDown('KeyW','KeyA','KeyS','KeyD','ArrowUp','ArrowDown','ArrowLeft','ArrowRight')?'walk':'idle')));ctx.restore();
     }
 
     function drawMissionMarker(target) {
@@ -2374,8 +2395,7 @@
       camera.x=player.x;camera.y=player.y;
       const available=mapMissions(id);
       if(found.theme==='arena'&&!available.some(m=>m.id===selectedMissionId&&m.goal!=='points'))selectedMissionId=available.find(m=>m.goal==='eliminate')?.id||available[0]?.id||'';
-      else if(!available.some(m=>m.id===selectedMissionId))selectedMissionId=available[0]?.id||'';
-      wmkTeamSignals.clear();mission.index=0;mission.finished=false;mission.startedEscape=false;runtimeBots=found.bots.map(b=>({...structuredClone(b),currentHP:b.hp,cooldown:Math.random(),patrolIndex:0,homeX:b.x,homeY:b.y}));shots=[];playerShots=[];killCount=0;roundSeconds=0;reloadTimer=0;fireTimer=0;magazine=12;combatTeam=mapMissions(id).find(m=>m.id===selectedMissionId)?.team||'blue';
+      else if(!available.some(m=>m.id===selectedMissionId))selectedMissionId=available[0]?.id||'';      wmkTeamSignals.clear();mission.index=0;mission.finished=false;mission.startedEscape=false;runtimeBots=found.bots.map(b=>({...structuredClone(b),currentHP:b.hp,cooldown:Math.random(),patrolIndex:0,homeX:b.x,homeY:b.y}));shots=[];playerShots=[];killCount=0;roundSeconds=0;reloadTimer=0;fireTimer=0;magazine=12;combatTeam=mapMissions(id).find(m=>m.id===selectedMissionId)?.team||'blue';
       $('minimap').parentElement.querySelector('.minimap-heading span:last-child').textContent=found.name.toUpperCase();
       renderMissionList();updateHUD();
     }
@@ -2722,31 +2742,53 @@
     // Avatar do jogador: esquema estável, sem execução de scripts importados.
     const WMK_AVATAR_KEY='wmk-vida-loka-avatar-v1';
     const defaultAvatar=Object.freeze({name:'Piloto WMK',body:'regular',hair:'short',hat:'none',backpack:'none',skin:'#f2c6a1',shirt:'#50d6a8',pants:'#213740',hairColor:'#342722',hatColor:'#d1b260',packColor:'#5a8191'});
-    function safeAvatar(value){const a=value&&typeof value==='object'?value:{};const options=(v,valid,def)=>valid.includes(v)?v:def;const color=(v,def)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:def;return {name:String(a.name||defaultAvatar.name).slice(0,32),body:options(a.body,['regular','slim','wide'],'regular'),hair:options(a.hair,['short','long','none'],'short'),hat:options(a.hat,['none','cap','helmet'],'none'),backpack:options(a.backpack,['none','pack'],'none'),skin:color(a.skin,defaultAvatar.skin),shirt:color(a.shirt,defaultAvatar.shirt),pants:color(a.pants,defaultAvatar.pants),hairColor:color(a.hairColor,defaultAvatar.hairColor),hatColor:color(a.hatColor,defaultAvatar.hatColor),packColor:color(a.packColor,defaultAvatar.packColor)}}
+    function safeAvatar(value){const a=value&&typeof value==='object'?value:{};const options=(v,valid,def)=>valid.includes(v)?v:def;const color=(v,def)=>/^#[0-9a-f]{6}$/i.test(v||'')?v:def;const rawLayers=a.spriteLayers&&typeof a.spriteLayers==='object'?a.spriteLayers:{};const spriteLayers={};for(const part of ['body','clothes','head','gear'])spriteLayers[part]=typeof rawLayers[part]==='string'&&/^[\w-]{1,80}$/.test(rawLayers[part])?rawLayers[part]:'';return {name:String(a.name||defaultAvatar.name).slice(0,32),body:options(a.body,['regular','slim','wide'],'regular'),hair:options(a.hair,['short','long','none'],'short'),hat:options(a.hat,['none','cap','helmet'],'none'),backpack:options(a.backpack,['none','pack'],'none'),skin:color(a.skin,defaultAvatar.skin),shirt:color(a.shirt,defaultAvatar.shirt),pants:color(a.pants,defaultAvatar.pants),hairColor:color(a.hairColor,defaultAvatar.hairColor),hatColor:color(a.hatColor,defaultAvatar.hatColor),packColor:color(a.packColor,defaultAvatar.packColor),spriteLayers,animationSpeed:Math.max(1,Math.min(12,Number(a.animationSpeed)||6))}}
     let avatar=(()=>{try{return safeAvatar(JSON.parse(localStorage.getItem(WMK_AVATAR_KEY)||'null'))}catch{return safeAvatar(defaultAvatar)}})();
     let avatarDraft={...avatar};
     const avatarInputs={avatarName:'name',avatarBody:'body',avatarHair:'hair',avatarHat:'hat',avatarBackpack:'backpack',avatarSkin:'skin',avatarShirt:'shirt',avatarPants:'pants',avatarHairColor:'hairColor',avatarHatColor:'hatColor',avatarPackColor:'packColor'};
-    function paintAvatar(c,a){const bw=a.body==='wide'?21:a.body==='slim'?13:17;
+    // v2.7: desenho por camadas, compatível com avatares das versões anteriores.
+    // As camadas referenciam IDs da biblioteca de sprites; nenhum JS importado é executado.
+    function paintAvatar(c,a,phase=0,state='idle'){
+      const bw=a.body==='wide'?21:a.body==='slim'?13:17;
+      const step=state==='walk'||state==='run'?Math.sin(phase)*(state==='run'?2.9:1.7):0;
+      const recoil=state==='shoot'?Math.max(0,Math.sin(phase))*2:0;
       c.save();c.fillStyle='rgba(0,0,0,.28)';c.beginPath();c.ellipse(2,7,bw*.75,11,0,0,Math.PI*2);c.fill();
+      c.fillStyle=a.pants;c.fillRect(-bw*.56,-9+step,bw*.33,17);c.fillRect(-bw*.12,-9-step,bw*.33,17);
+      c.fillStyle=a.skin;c.fillRect(-bw*.63,-10-step,5,17);c.fillRect(bw*.39,-10+step-recoil,5,17);
       if(a.backpack==='pack'){c.fillStyle=a.packColor;c.fillRect(-bw*.72,-10,8,20)}
-      c.fillStyle=a.pants;c.fillRect(-bw*.55,-9,bw*.85,18);
       c.fillStyle=a.shirt;c.beginPath();c.roundRect(-bw*.50,-10,bw,20,5);c.fill();
-      c.fillStyle=a.skin;c.beginPath();c.arc(5,0,5,0,Math.PI*2);c.fill();
+      c.fillStyle=a.skin;c.beginPath();c.arc(5-recoil*.3,0,5,0,Math.PI*2);c.fill();
       if(a.hair!=='none'){c.fillStyle=a.hairColor;c.beginPath();c.arc(4,-1,a.hair==='long'?5:3,Math.PI,Math.PI*1.9);c.fill();if(a.hair==='long')c.fillRect(1,-7,3,3)}
       if(a.hat!=='none'){c.fillStyle=a.hatColor;c.beginPath();c.roundRect(0,-8,a.hat==='helmet'?9:7,16,3);c.fill();if(a.hat==='cap')c.fillRect(7,-3,5,6)}
-      c.fillStyle='#f7fff5';c.beginPath();c.arc(8,-1,1.2,0,Math.PI*2);c.fill();c.restore();}
+      c.fillStyle='#f7fff5';c.beginPath();c.arc(8,-1,1.2,0,Math.PI*2);c.fill();
+      // Sobreposições ordenadas: corpo -> roupa -> cabeça -> equipamento.
+      for(const part of ['body','clothes','head','gear']){const id=a.spriteLayers?.[part];if(!id)continue;const sprite=getSprite(id);if(!sprite||!sprite.complete||!sprite.naturalWidth)continue;c.save();if(part==='body')c.translate(step*.28,0);if(part==='gear')c.translate(-recoil*.3,0);c.drawImage(sprite,-17,-17,34,34);c.restore()}
+      c.restore();
+    }
+    let wmkAvatarPreviewPhase=0,wmkAvatarPreviewPaused=false,wmkAvatarPreviewLast=0;
     function renderAvatarPreview(){const canvas=$('avatarCanvas');if(!canvas)return;const c=canvas.getContext('2d');c.clearRect(0,0,420,420);c.fillStyle='#284047';c.fillRect(0,0,420,420);c.strokeStyle='rgba(255,255,255,.07)';for(let i=0;i<420;i+=30){c.beginPath();c.moveTo(i,0);c.lineTo(i,420);c.moveTo(0,i);c.lineTo(420,i);c.stroke()}
-      c.save();c.translate(210,205);c.scale(8,8);paintAvatar(c,avatarDraft);c.restore();c.fillStyle='#ddfff4';c.font='bold 17px system-ui';c.textAlign='center';c.fillText(avatarDraft.name,210,370);c.fillStyle='#91b9aa';c.font='12px system-ui';c.fillText('VISÃO DE CIMA · TAMANHO AMPLIADO',210,393);}
-    function avatarFormRefresh(){for(const [id,key] of Object.entries(avatarInputs))$(id).value=avatarDraft[key];renderAvatarPreview()}
+      c.save();c.translate(210,205);c.scale(8,8);paintAvatar(c,avatarDraft,wmkAvatarPreviewPhase,$('avatarAnimation').value);c.restore();c.fillStyle='#ddfff4';c.font='bold 17px system-ui';c.textAlign='center';c.fillText(avatarDraft.name,210,370);c.fillStyle='#91b9aa';c.font='12px system-ui';c.fillText('VISÃO DE CIMA · '+$('avatarAnimation').selectedOptions[0].textContent.toUpperCase(),210,393);}
+    function wmkAvatarPreviewTick(now){if(!$('wmkAvatarStudio').hidden&&!wmkAvatarPreviewPaused){wmkAvatarPreviewPhase+=(Math.min(64,now-wmkAvatarPreviewLast||16)/1000)*avatarDraft.animationSpeed*2.4;renderAvatarPreview()}wmkAvatarPreviewLast=now;requestAnimationFrame(wmkAvatarPreviewTick)}
+    requestAnimationFrame(wmkAvatarPreviewTick);
+    const WMK_AVATAR_LAYERS={avatarLayerBody:'body',avatarLayerClothes:'clothes',avatarLayerHead:'head',avatarLayerGear:'gear'};
+    function refreshAvatarLayerOptions(){for(const [id,part] of Object.entries(WMK_AVATAR_LAYERS)){const sel=$(id);sel.replaceChildren();sel.add(new Option('Sem sprite (desenho padrão)',''));for(const asset of assetCatalog)sel.add(new Option(asset.name,asset.id));sel.value=avatarDraft.spriteLayers?.[part]||''}}
+    for(const [id,part] of Object.entries(WMK_AVATAR_LAYERS))on(id,'change',()=>{avatarDraft=safeAvatar({...avatarDraft,spriteLayers:{...avatarDraft.spriteLayers,[part]:$(id).value}});renderAvatarPreview()});
+    on('avatarAddSprite','click',()=>$('avatarSpriteFile').click());
+    on('avatarSpriteFile','change',async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{if(file.type!=='image/png'||file.size>350000)throw Error('Use PNG de até 350 KB');if(assetCatalog.length>=30)throw Error('Biblioteca cheia (30 imagens)');const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(Error('Falha ao ler PNG'));reader.readAsDataURL(file)});const asset={id:'asset-avatar-'+Date.now()+'-'+Math.floor(Math.random()*1000),name:file.name.slice(0,80),data};assetCatalog.push(asset);if(!persistAssets()){assetCatalog.pop();throw Error('Sem espaço local: exporte um backup e use imagens menores')}refreshAvatarLayerOptions();$('avatarLayerClothes').value=asset.id;avatarDraft=safeAvatar({...avatarDraft,spriteLayers:{...avatarDraft.spriteLayers,clothes:asset.id}});$('avatarStatus').textContent='PNG importado como camada Roupa. Escolha a posição na lista de camadas.';renderAvatarPreview()}catch(err){$('avatarStatus').textContent='Erro: '+err.message}});
+    on('avatarClearLayers','click',()=>{avatarDraft=safeAvatar({...avatarDraft,spriteLayers:{}});refreshAvatarLayerOptions();renderAvatarPreview()});
+    on('avatarAnimation','change',renderAvatarPreview);on('avatarAnimSpeed','input',()=>{avatarDraft=safeAvatar({...avatarDraft,animationSpeed:Number($('avatarAnimSpeed').value)})});
+    on('avatarAnimToggle','click',()=>{wmkAvatarPreviewPaused=!wmkAvatarPreviewPaused;$('avatarAnimToggle').textContent=wmkAvatarPreviewPaused?'▶ Reproduzir animação':'⏸ Pausar animação'});
+    on('avatarAnimFrame','click',()=>{wmkAvatarPreviewPaused=true;$('avatarAnimToggle').textContent='▶ Reproduzir animação';wmkAvatarPreviewPhase+=Math.PI/4;renderAvatarPreview()});
+    function avatarFormRefresh(){for(const [id,key] of Object.entries(avatarInputs))$(id).value=avatarDraft[key];$('avatarAnimSpeed').value=avatarDraft.animationSpeed;refreshAvatarLayerOptions();renderAvatarPreview()}
     function openAvatarStudio(){showMenu();wmkMode='avatar';$('wmkMain').hidden=true;$('wmkAvatarStudio').hidden=false;avatarDraft={...avatar};avatarFormRefresh()}
     on('wmkOpenAvatarStudio','click',openAvatarStudio);
     on('avatarReturn','click',showMenu);
     for(const [id,key] of Object.entries(avatarInputs))on(id,'input',()=>{avatarDraft=safeAvatar({...avatarDraft,[key]:$(id).value});renderAvatarPreview()});
     on('avatarSave','click',()=>{avatar=safeAvatar(avatarDraft);try{localStorage.setItem(WMK_AVATAR_KEY,JSON.stringify(avatar));$('avatarStatus').textContent='Avatar salvo! Aparência aplicada ao jogo.'}catch{$('avatarStatus').textContent='Avatar aplicado, mas o navegador bloqueou o salvamento.'}});
     on('avatarReset','click',()=>{avatarDraft={...defaultAvatar};avatarFormRefresh();$('avatarStatus').textContent='Padrão restaurado na prévia. Clique em Salvar para aplicar.'});
-    on('avatarExport','click',()=>downloadJSON({format:'wmk-vida-loka-avatar',version:1,avatar:safeAvatar(avatarDraft)},'wmk-avatar.json'));
+    on('avatarExport','click',()=>downloadJSON({format:'wmk-vida-loka-avatar',version:2,avatar:safeAvatar(avatarDraft),assets:assetCatalog.filter(a=>Object.values(avatarDraft.spriteLayers||{}).includes(a.id))},'wmk-avatar-v2.json'));
     on('avatarImportBtn','click',()=>$('avatarImport').click());
-    on('avatarImport','change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>20000)throw Error('JSON acima de 20 KB');const raw=JSON.parse(await f.text());if(raw.format!=='wmk-vida-loka-avatar'||!raw.avatar||typeof raw.avatar!=='object')throw Error('Formato de avatar inválido');avatarDraft=safeAvatar(raw.avatar);avatarFormRefresh();$('avatarStatus').textContent='Importado para a prévia. Clique Salvar para aplicar.'}catch(err){$('avatarStatus').textContent='Falha ao importar: '+err.message}e.target.value=''});
+    on('avatarImport','change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>1600000)throw Error('JSON acima de 1,6 MB');const raw=JSON.parse(await f.text());if(raw.format!=='wmk-vida-loka-avatar'||!raw.avatar||typeof raw.avatar!=='object')throw Error('Formato de avatar inválido');if(Array.isArray(raw.assets))for(const a of raw.assets.slice(0,4)){if(typeof a.id==='string'&&typeof a.data==='string'&&/^data:image\/png;base64,/.test(a.data)&&a.data.length<500000&&!assetCatalog.some(existing=>existing.id===a.id)&&assetCatalog.length<30)assetCatalog.push({id:a.id.slice(0,80),name:String(a.name||'Avatar PNG').slice(0,80),data:a.data})}persistAssets();avatarDraft=safeAvatar(raw.avatar);avatarFormRefresh();$('avatarStatus').textContent='Importado para a prévia. Clique Salvar para aplicar.'}catch(err){$('avatarStatus').textContent='Falha ao importar: '+err.message}e.target.value=''});
 
     // Catálogos independentes: cada modelo pode ser reutilizado por múltiplos mapas.
     let activePrefabId='',activeWeaponId='';
