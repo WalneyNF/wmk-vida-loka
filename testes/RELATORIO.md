@@ -15,3 +15,8 @@ Executar: `python -m pip install playwright`, `python -m playwright install chro
 - **71/71 verificações automatizadas aprovadas** no Chromium headless; sem exceções JavaScript reportadas.
 - Testados: criação/duplicação/exportação de objetos; armas customizadas e atribuição a bots; inserção de prefabs; janela de seleção de bots e identificação por equipe.
 - Observações: localStorage simulado; não equivalem a teste real de retenção entre sessões HTTP/Windows nem de performance prolongada.
+
+## v1.7 — Testes do Avatar Lab
+- 12/12 verificações aprovadas em Chromium com `page.set_content` e localStorage simulado.
+- Abertura de editor, canvas, alteração de valores, salvar, estado local, exportação, reset não destrutivo, retorno ao menu, início do jogo e ausência de exceções JS.
+- O ambiente bloqueou navegações `file://` e HTTP local; a persistência real entre sessões no Windows/HTTP ainda não foi testada.
