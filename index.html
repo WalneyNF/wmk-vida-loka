@@ -1,12 +1,12 @@
 <!doctype html>
-<!-- WMK Vida Loka v1.5.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v1.6.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>WMK Vida Loka — Baía Nova | v1.5.0</title>
+  <title>WMK Vida Loka — Baía Nova | v1.6.0</title>
   <style>
     :root {
       color-scheme: dark;
@@ -490,7 +490,7 @@
 @media(max-width:850px){.studio-main{grid-template-columns:1fr;overflow:auto}.studio-viewport{height:45vh;min-height:300px}.studio-panel{max-height:none}#wmkMapStudio{overflow:auto}.wmk-shell h1{font-size:26px}}
 
   
-/* Menu de abertura v1.5.0 — separado dos painéis de jogo e sem dependências externas. */
+/* Menu de abertura v1.6.0 — separado dos painéis de jogo e sem dependências externas. */
 #wmkMain{background:#071016;color:#f4f7f3;overflow:auto;isolation:isolate}
 #wmkMain *{box-sizing:border-box}
 .menu-atmosphere{position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;background:radial-gradient(ellipse at 73% 39%,#18374a 0%,#0b1c27 35%,#071016 73%)}
@@ -561,6 +561,11 @@
 .studio-snap{display:flex;align-items:center;gap:5px;font:11px system-ui;color:#d6e9df;white-space:nowrap}.studio-snap input{accent-color:#55dbac}.studio-bot-note{padding:10px;background:#234047;color:#d6f6f0;font-size:11px;line-height:1.6;border-radius:7px}
 #studioCanvas{cursor:default}
 @media(max-width:850px){#wmkEditor .editor-layout{grid-template-columns:1fr;overflow:auto;height:calc(100dvh - 85px)}#wmkEditor .editor-library{max-height:240px}#wmkEditor .editor-form{min-height:600px}#wmkEditor .mission-studio-head{padding:9px;height:85px}#wmkEditor .mission-studio-head h2{font-size:17px}.gizmo-toolbar{left:5px;right:5px;transform:none;justify-content:center}.gizmo-toolbar button{padding:5px;font-size:9px}#gizmoReadout{display:none}}
+
+/* WMK v1.6 — bibliotecas visuais de bots, objetos e armas */
+.wmk-catalog-studio{position:fixed;inset:0;z-index:60;background:#09161f;color:#e5f4ee;overflow:auto;font:13px system-ui;padding:20px;box-sizing:border-box}
+.wmk-catalog-studio[hidden]{display:none!important}.wmk-catalog-studio header{display:flex;align-items:center;justify-content:space-between;gap:14px;border-bottom:1px solid #315c56;padding:5px 12px 17px}.wmk-catalog-studio h2{font-size:23px;margin:0}.wmk-catalog-studio h2 small{font-size:11px;color:#8fc5ae}.wmk-catalog-studio button,.wmk-picker button{cursor:pointer;border:1px solid #477d74;border-radius:7px;background:#17473f;color:#e5fff3;padding:9px 12px;font-weight:700}.wmk-catalog-studio header>div{display:flex;flex-wrap:wrap;gap:7px}.wmk-catalog-content{display:grid;grid-template-columns:minmax(205px,265px) minmax(400px,820px);gap:16px;max-width:1120px;margin:20px auto}.wmk-catalog-content aside,.wmk-catalog-content form{background:#142832;border:1px solid #315551;padding:17px;border-radius:11px;display:flex;flex-direction:column;gap:12px}.wmk-catalog-content aside p{line-height:1.6;color:#a3c3b9}.wmk-catalog-content form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-content:start}.wmk-catalog-content label{display:flex;flex-direction:column;gap:5px;color:#a6d2c5;font-size:12px}.wmk-catalog-content label:has(input[type=checkbox]){flex-direction:row;align-items:center}.wmk-catalog-content input,.wmk-catalog-content select{width:100%;box-sizing:border-box;border:1px solid #3b6865;border-radius:6px;background:#0d2029;color:#fff;padding:10px;min-height:37px}.wmk-catalog-content input[type=checkbox]{width:18px;min-height:18px}.wmk-catalog-content select[size]{height:310px}.wmk-catalog-content .wmk-wide{grid-column:1/-1}.wmk-picker{width:min(720px,calc(100vw - 24px));max-height:85dvh;background:#10232c;color:#e8f7f2;border:1px solid #6ed4b0;border-radius:15px;padding:20px;box-shadow:0 25px 80px #000c}.wmk-picker::backdrop{background:#020c13d9}.wmk-picker header{display:flex;justify-content:space-between;gap:12px;align-items:center}.wmk-picker>p{color:#a9cabe}.wmk-picker-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;overflow:auto;max-height:55dvh}.wmk-picker-card{display:grid;gap:6px;text-align:left;background:#1a343e!important;border-color:#507a74!important}.wmk-picker-card strong{font-size:15px}.wmk-picker-card small{font-size:11px;color:#b1d8ca}.wmk-picker-card b{font-size:11px;color:#fff}.wmk-picker-card.red{border-left:6px solid #f16d68!important}.wmk-picker-card.blue{border-left:6px solid #5cbcff!important}.wmk-picker-card.neutral{border-left:6px solid #d5d7d3!important}.wmk-picker-card:hover{outline:2px solid #7deac4}
+@media(max-width:700px){.wmk-catalog-content{grid-template-columns:1fr}.wmk-catalog-studio header{flex-wrap:wrap}.wmk-catalog-content form{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -572,7 +577,7 @@
         <div class="brand-mark">WMK</div>
         <div>
           <div class="brand-name">WMK VIDA LOKA</div>
-          <div class="brand-subtitle">BAÍA NOVA · v1.5.0</div>
+          <div class="brand-subtitle">BAÍA NOVA · v1.6.0</div>
         </div>
       </div>
 
@@ -680,7 +685,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.5.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.6.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -688,7 +693,7 @@
   <section id="wmkMain" aria-label="Menu principal WMK Vida Loka">
     <div class="menu-atmosphere" aria-hidden="true"><div class="menu-sun"></div><div class="menu-skyline skyline-back"></div><div class="menu-skyline skyline-front"></div><div class="menu-highway"></div></div>
     <div class="menu-layout">
-      <header class="menu-header"><div class="menu-header-brand"><img src="assets/logo.svg" alt="WMK Vida Loka"><span>BAÍA NOVA <em>·</em> UNIVERSO WMK</span></div><div class="menu-header-right"><span class="menu-pill">● OFFLINE / SINGLE PLAYER</span><span>VERSÃO 1.4.0</span></div></header>
+      <header class="menu-header"><div class="menu-header-brand"><img src="assets/logo.svg" alt="WMK Vida Loka"><span>BAÍA NOVA <em>·</em> UNIVERSO WMK</span></div><div class="menu-header-right"><span class="menu-pill">● OFFLINE / SINGLE PLAYER</span><span>VERSÃO 1.6.0</span></div></header>
       <div class="menu-stage">
         <section class="menu-intro">
           <div class="menu-eyebrow">MUNDO ABERTO 2D <span>///</span> SUA CIDADE, SUAS REGRAS</div>
@@ -699,7 +704,7 @@
             <button id="wmkOpenMapStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">▦</span><span><b>WORLD STUDIO</b><small>Criar e editar mapas</small></span><span class="menu-button-arrow">↗</span></button>
             <button id="wmkOpenMissionStudio" class="menu-button menu-button-secondary" type="button"><span class="menu-action-icon">◎</span><span><b>EDITOR DE MISSÕES</b><small>Contratos, regras e recompensas</small></span><span class="menu-button-arrow">↗</span></button>
           </div>
-          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
+          <div class="menu-quick-tools"><button id="wmkOpenBotStudio" class="bot-entry" type="button">♟ EDITOR DE BOTS</button><button id="wmkOpenObjectStudio" type="button">▣ EDITOR DE OBJETOS</button><button id="wmkOpenWeaponStudio" type="button">⌖ EDITOR DE ARMAS</button><button id="wmkExportAll" type="button">↓ EXPORTAR PROJETO</button><button id="wmkImportAllButton" type="button">↑ IMPORTAR PROJETO</button><input id="wmkImportAll" type="file" accept=".json,application/json" hidden><a href="manual-jogador.html" target="_blank" rel="noopener">? MANUAL DO JOGADOR</a></div>
         </section>
         <aside class="menu-feature" aria-label="Mapa selecionado"><div class="menu-feature-kicker">LOCALIZAÇÃO EM DESTAQUE <span>01 / 04</span></div><div class="menu-map-illustration" aria-hidden="true"><span class="map-road map-road-a"></span><span class="map-road map-road-b"></span><span class="map-road map-road-c"></span><span class="map-road map-road-d"></span><span class="map-block map-block-a"></span><span class="map-block map-block-b"></span><span class="map-block map-block-c"></span><span class="map-block map-block-d"></span><span class="map-point">◆</span></div><div class="menu-feature-content"><span class="menu-feature-label">SEU PRÓXIMO DESTINO</span><h2 id="wmkSelectedMapName">Baía Nova</h2><p id="wmkSelectedMapDescription">O coração urbano de Vida Loka.</p><div class="menu-feature-stats"><span id="wmkSelectedMapMissions">CONTRATOS DISPONÍVEIS</span><span id="wmkSelectedMapObjects">OBJETOS NO MAPA</span></div></div></aside>
       </div>
@@ -719,11 +724,11 @@
         <label>Nome<input id="studioMapName" maxlength="70"></label>
         <label>Descrição<textarea id="studioMapDescription" rows="2" maxlength="240"></textarea></label>
         <label>Cor do terreno<input id="studioBackground" type="color"></label>
-        <label>Ferramenta<select id="studioTool"><option value="select">Selecionar/mover</option><option value="building">🏢 Prédio</option><option value="tree">🌳 Árvore</option><option value="water">🌊 Água</option><option value="sand">🏖 Areia</option><option value="barrier">🚧 Barreira</option><option value="decoration">✨ Decoração</option><option value="sprite">🖼 Sprite importado</option><option value="bot">♟ Inserir bot</option><option value="spawn">📍 Posição inicial</option><option value="erase">🗑 Apagar</option></select></label>
-        <label>Sprite (biblioteca)<select id="studioAssetSelect"></select></label>
+        <label>Ferramenta<select id="studioTool"><option value="select">Selecionar/mover</option><option value="building">🏢 Prédio</option><option value="tree">🌳 Árvore</option><option value="water">🌊 Água</option><option value="sand">🏖 Areia</option><option value="barrier">🚧 Barreira</option><option value="decoration">✨ Decoração</option><option value="sprite">🖼 Sprite importado</option><option value="bot">♟ Inserir bot (escolher tipo)</option><option value="prefab">▣ Objeto da biblioteca</option><option value="spawn">📍 Posição inicial</option><option value="erase">🗑 Apagar</option></select></label>
+        <label>Objeto personalizado<select id="studioPrefabSelect"></select></label><button id="studioOpenObjectEditor" type="button">▣ Abrir Editor de Objetos</button><label>Sprite (biblioteca)<select id="studioAssetSelect"></select></label>
         <button id="studioAssetButton">+ Importar PNG/JPG/WebP</button><input id="studioAssetFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
         <div class="editor-help">Sprites externos: PNG/JPG/WebP até 750 KB. Para usar um pacote 3D, renderize uma imagem vista de cima antes de importar.</div><div id="studioAssetsInfo" style="font-size:10px;color:#a7d6be"></div>
-        <p style="font-size:11px">Selecione uma ferramenta e clique no mapa. Com “Selecionar”, arraste para mover. Colisões impedem passagem de pedestres e carros.</p>
+        <p style="font-size:11px">🔴 Inimigos · 🔵 Aliados · ⚪ Neutros. Ao inserir um bot, escolha o modelo no catálogo. Selecione uma ferramenta e clique no mapa. Com “Selecionar”, arraste para mover. Colisões impedem passagem de pedestres e carros.</p>
       </aside>
       <div class="studio-viewport"><div class="gizmo-toolbar" id="gizmoToolbar" role="toolbar" aria-label="Ferramentas de transformação"><button type="button" id="gizmoMove" class="active" title="Mover (G)">✥ Mover G</button><button type="button" id="gizmoScale" title="Escalonar (S)">⤡ Escala S</button><button type="button" id="gizmoRotate" title="Rotacionar (R)">⟳ Rotação R</button><button type="button" id="gizmoDeselect" title="Limpar seleção">✕</button><span id="gizmoReadout">Selecione objeto ou bot</span></div><canvas id="studioCanvas" width="1000" height="760"></canvas><div class="studio-hint">Selecionar objeto/bot → G mover · S escalar · R girar · arrastar alças coloridas · botão direito: panorâmica</div></div>
       <aside class="studio-panel"><h3>🧱 Seleção e propriedades</h3><select id="studioObjectList" size="8"></select><p class="studio-bot-note" id="studioBotNote" hidden>♟ Bot selecionado: arraste para mover. Abra o Bot Lab para definir arma, dano e IA.</p><button id="studioEditBot" type="button" hidden>⚙ Editar bot no Bot Lab</button>
@@ -756,6 +761,9 @@
       <button type="submit">Aplicar alterações ao bot</button><p id="botStatus" role="status" class="bot-help">Selecione um bot ou crie um novo.</p></form></div>
     </div>
   </section>
+  <dialog id="wmkBotPicker" class="wmk-picker"><header><strong>♟ ESCOLHA O BOT PARA INSERIR</strong><button id="pickerCancel" type="button">✕ Fechar</button></header><p>Selecione um modelo. Depois clique no mapa para posicioná-lo.</p><div id="pickerCards" class="wmk-picker-grid"></div><p id="pickerFeedback" role="status"></p></dialog>
+  <section id="wmkObjectStudio" class="wmk-catalog-studio" hidden><header><h2>▣ WMK Object Lab <small>· Editor de objetos reutilizáveis</small></h2><div><button id="objectExport">⬇ Exportar JSON</button><button id="objectImportButton">⬆ Importar JSON</button><input id="objectImportFile" type="file" accept=".json,application/json" hidden><button id="objectReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de objetos<select id="objectList" size="13"></select></label><button id="objectNew">+ Novo objeto</button><button id="objectClone">⧉ Duplicar</button><button id="objectDelete">🗑 Excluir</button><p>Use os modelos no World Studio com a ferramenta «Objeto da biblioteca». Sprite é opcional.</p></aside><form id="objectForm"><label>Nome<input id="prefName" required maxlength="60"></label><label>Tipo<select id="prefType"><option value="building">Prédio</option><option value="tree">Árvore</option><option value="barrier">Barreira</option><option value="decoration">Decoração</option><option value="sprite">Sprite</option><option value="water">Água</option><option value="sand">Areia</option></select></label><label>Largura<input id="prefW" type="number" min="4" max="900" required></label><label>Altura<input id="prefH" type="number" min="4" max="900" required></label><label>Rotação inicial<input id="prefRotation" type="number" min="-360" max="360"></label><label>Camada<input id="prefLayer" type="number" min="-20" max="20"></label><label>Cor<input id="prefColor" type="color"></label><label>Sprite<select id="prefAsset"></select></label><label class="wmk-wide"><input id="prefSolid" type="checkbox"> Objeto sólido (colisão)</label><button type="submit">💾 Salvar modelo</button><p id="objectStatus" role="status" class="wmk-wide"></p></form></div></section>
+  <section id="wmkWeaponStudio" class="wmk-catalog-studio" hidden><header><h2>⌖ WMK Arsenal Lab <small>· Editor de armas fictícias</small></h2><div><button id="weaponExport">⬇ Exportar JSON</button><button id="weaponImportButton">⬆ Importar JSON</button><input id="weaponImportFile" type="file" accept=".json,application/json" hidden><button id="weaponReturn">← Menu</button></div></header><div class="wmk-catalog-content"><aside><label>Biblioteca de armas<select id="weaponList" size="13"></select></label><button id="weaponNew">+ Nova arma</button><button id="weaponClone">⧉ Duplicar</button><button id="weaponDelete">🗑 Excluir</button><p>Armas são dados do jogo. Atribua-as aos bots no Bot Lab; seus atributos afetam o combate simulado.</p></aside><form id="weaponForm"><label>Nome<input id="wpName" required maxlength="60"></label><label>Categoria<select id="wpType"><option value="pistol">Pistola</option><option value="smg">Automática</option><option value="rifle">Carabina</option><option value="other">Personalizada</option></select></label><label>Dano por disparo<input id="wpDamage" type="number" min="1" max="100" required></label><label>Alcance<input id="wpRange" type="number" min="60" max="1000" required></label><label>Cadência (disparos/seg.)<input id="wpRate" type="number" min="0.2" max="20" step="0.1" required></label><label>Capacidade<input id="wpMagazine" type="number" min="1" max="200" required></label><label>Precisão (%)<input id="wpAccuracy" type="number" min="0" max="100" required></label><label>Cor temática<input id="wpColor" type="color"></label><button type="submit">💾 Salvar arma</button><p id="weaponStatus" role="status" class="wmk-wide"></p></form></div></section>
   <script>
     const WMK_DEFAULT_DRIVING = Object.freeze({ maxSpeed: 220, acceleration: 140, braking: 500, steering: 1.55 });
     const driving = { ...WMK_DEFAULT_DRIVING };
@@ -1584,7 +1592,7 @@
         else if(!canSee&&b.behavior==='chase'&&enemy&&distanceToEnemy<b.vision*1.3)target=enemy;
         else if(!canSee&&b.behavior==='guard'&&distance(b.x,b.y,b.homeX,b.homeY)>30)target={x:b.homeX,y:b.homeY};
         if(target){const a=Math.atan2(target.y-b.y,target.x-b.x);botWalk(b,b.x+Math.cos(a)*b.speed*dt,b.y+Math.sin(a)*b.speed*dt)}
-        if(canSee&&distanceToEnemy<=b.range&&b.cooldown<=0){const error=(Math.random()-.5)*(1-b.accuracy/100)*.9;shoot(b,Math.atan2(enemy.y-b.y,enemy.x-b.x)+error,b.damage,b.team,690);b.cooldown={pistol:.95,smg:.34,rifle:.68}[b.weapon]||.85;}
+        if(canSee&&distanceToEnemy<=b.range&&b.cooldown<=0){const error=(Math.random()-.5)*(1-b.accuracy/100)*.9;shoot(b,Math.atan2(enemy.y-b.y,enemy.x-b.x)+error,b.damage,b.team,690);b.cooldown=1/weaponById(b.weapon).rate;}
       }
       const steps=Math.max(1,Math.ceil(dt*1050/14));
       for(const shot of shots){for(let st=0;st<steps&&shot.life>0;st++){
@@ -2042,6 +2050,24 @@
     }
 
     // WMK World Studio — dados declarativos, sem scripts de mapas/usuários.
+    const WMK_OBJECTS_KEY='wmk-vida-loka-prefabs-v1';
+    const WMK_WEAPONS_KEY='wmk-vida-loka-weapons-v1';
+    const builtInObjects=[
+      {id:'barreira-metal',name:'Barreira metálica',type:'barrier',w:130,h:35,color:'#c77e54',solid:true,rotation:0,layer:1,assetId:''},
+      {id:'casa-pequena',name:'Casa pequena',type:'building',w:150,h:120,color:'#758f94',solid:true,rotation:0,layer:1,assetId:''},
+      {id:'arvore-parque',name:'Árvore de parque',type:'tree',w:55,h:55,color:'#3f9879',solid:true,rotation:0,layer:1,assetId:''}];
+    const builtInWeapons=[
+      {id:'pistol',name:'Pistola padrão',type:'pistol',damage:8,range:320,rate:1.05,magazine:12,accuracy:70,color:'#e2c56b'},
+      {id:'smg',name:'Automática leve',type:'smg',damage:5,range:290,rate:2.95,magazine:30,accuracy:58,color:'#6ac7e4'},
+      {id:'rifle',name:'Carabina',type:'rifle',damage:10,range:450,rate:1.48,magazine:20,accuracy:78,color:'#79e6ac'}];
+    function readCatalog(key,fallback){try{const v=JSON.parse(localStorage.getItem(key));return Array.isArray(v)?v:fallback}catch{return fallback}}
+    function safeObject(o){const num=(v,a,b,d)=>Number.isFinite(+v)?clamp(+v,a,b):d;const types=['building','tree','barrier','decoration','sprite','water','sand'];return {id:String(o.id||'obj-'+Date.now()).replace(/[^a-z0-9-]/gi,'-').slice(0,70),name:String(o.name||'Novo objeto').slice(0,60),type:types.includes(o.type)?o.type:'decoration',w:num(o.w,4,900,70),h:num(o.h,4,900,70),color:/^#[0-9a-f]{6}$/i.test(o.color)?o.color:'#77a39b',solid:!!o.solid,rotation:num(o.rotation,-360,360,0),layer:num(o.layer,-20,20,0),assetId:String(o.assetId||'').slice(0,75)}}
+    function safeWeapon(o){const num=(v,a,b,d)=>Number.isFinite(+v)?clamp(+v,a,b):d;return {id:String(o.id||'weapon-'+Date.now()).replace(/[^a-z0-9-]/gi,'-').slice(0,70),name:String(o.name||'Nova arma').slice(0,60),type:['pistol','smg','rifle','other'].includes(o.type)?o.type:'other',damage:num(o.damage,1,100,8),range:num(o.range,60,1000,300),rate:num(o.rate,.2,20,1),magazine:num(o.magazine,1,200,12),accuracy:num(o.accuracy,0,100,70),color:/^#[0-9a-f]{6}$/i.test(o.color)?o.color:'#e2c56b'}}
+    let objectCatalog=readCatalog(WMK_OBJECTS_KEY,builtInObjects).slice(0,100).map(safeObject);
+    let weaponCatalog=readCatalog(WMK_WEAPONS_KEY,builtInWeapons).slice(0,100).map(safeWeapon);
+    function persistObjectCatalog(){try{localStorage.setItem(WMK_OBJECTS_KEY,JSON.stringify(objectCatalog));return true}catch{return false}}
+    function persistWeaponCatalog(){try{localStorage.setItem(WMK_WEAPONS_KEY,JSON.stringify(weaponCatalog));return true}catch{return false}}
+    function weaponById(id){return weaponCatalog.find(w=>w.id===id)||builtInWeapons.find(w=>w.id===id)||builtInWeapons[0]}
     const WMK_MAPS_KEY='wmk-world-studio-maps-v1';
     const WMK_ASSETS_KEY='wmk-world-studio-assets-v1';
     const baseBuildings=JSON.parse(JSON.stringify(buildings));
@@ -2079,7 +2105,7 @@
     ];
     function sanitizeBot(b,i=0){const n=(val,min,max,def)=>Number.isFinite(Number(val))?clamp(Number(val),min,max):def;
       const points=Array.isArray(b.patrol)?b.patrol.slice(0,30).filter(p=>Array.isArray(p)&&p.length===2&&p.every(v=>Number.isFinite(Number(v)))).map(p=>[n(p[0],20,2700,200),n(p[1],20,2280,200)]):[];
-      return {id:String(b.id||'bot-'+i).slice(0,70),name:String(b.name||'Bot '+i).slice(0,60),team:['red','blue','neutral'].includes(b.team)?b.team:'red',x:n(b.x,20,2700,100),y:n(b.y,20,2280,100),hp:n(b.hp,1,1000,100),weapon:['pistol','smg','rifle'].includes(b.weapon)?b.weapon:'pistol',damage:n(b.damage,1,100,8),range:n(b.range,60,1000,320),vision:n(b.vision,60,900,480),speed:n(b.speed,0,240,95),accuracy:n(b.accuracy,0,100,65),behavior:['guard','patrol','chase'].includes(b.behavior)?b.behavior:'guard',patrol:points};}
+      return {id:String(b.id||'bot-'+i).slice(0,70),name:String(b.name||'Bot '+i).slice(0,60),team:['red','blue','neutral'].includes(b.team)?b.team:'red',x:n(b.x,20,2700,100),y:n(b.y,20,2280,100),hp:n(b.hp,1,1000,100),weapon:weaponCatalog.some(w=>w.id===b.weapon)?b.weapon:'pistol',damage:n(b.damage,1,100,8),range:n(b.range,60,1000,320),vision:n(b.vision,60,900,480),speed:n(b.speed,0,240,95),accuracy:n(b.accuracy,0,100,65),behavior:['guard','patrol','chase'].includes(b.behavior)?b.behavior:'guard',patrol:points};}
     function sanitizeMap(raw){
       if(!raw||typeof raw!=='object')throw Error('Formato de mapa inválido.');
       const num=(v,min,max,def)=>Number.isFinite(Number(v))?Math.max(min,Math.min(max,Number(v))):def;
@@ -2157,7 +2183,7 @@
       }
       g.restore();
     }}
-    function showMenu(){$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
+    function showMenu(){$('wmkObjectStudio').hidden=true;$('wmkWeaponStudio').hidden=true;$('wmkBotStudio').hidden=true;wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('wmkTools').hidden=true;$('wmkCombatHUD').hidden=true;shootHeld=false;$('guideModal').hidden=true;renderMapCards()}
     function startGame(id){applyMap(id);wmkMode='play';$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
       $('missionPanel').hidden=false;$('wmkCombatHUD').hidden=currentMap.theme!=='arena';showToast('Explorando '+currentMap.name+' · ESC para menu')}
@@ -2199,12 +2225,12 @@
       $('studioMapSelect').replaceChildren();for(const m of mapCatalog){const opt=document.createElement('option');opt.value=m.id;opt.textContent=m.name;$('studioMapSelect').appendChild(opt)}
       $('studioMapSelect').value=editingMap.id;
       $('studioMapName').value=editingMap.name;$('studioMapDescription').value=editingMap.description;
-      $('studioBackground').value=editingMap.background;renderAssetSelect();renderObjectList();drawStudio()}
+      $('studioBackground').value=editingMap.background;renderAssetSelect();renderPrefabs();renderObjectList();drawStudio()}
     function renderAssetSelect(){const sel=$('studioAssetSelect');sel.replaceChildren();for(const a of assetCatalog){const opt=document.createElement('option');opt.value=a.id;opt.textContent=a.name;sel.appendChild(opt)}$('studioAssetsInfo').textContent=assetCatalog.length+' imagem(ns) na biblioteca. PNG com transparência recomendado.'}
     function selectedObject(){return editingMap?.objects.find(o=>o.id===selectedObjectId)||null}
     function renderObjectList(){const list=$('studioObjectList');list.replaceChildren();editingMap.objects.forEach(o=>{
       const opt=document.createElement('option');opt.value='obj:'+o.id;opt.textContent='▣ '+o.name+' · '+o.type;list.appendChild(opt)});
-      editingMap.bots.forEach(b=>{const opt=document.createElement('option');opt.value='bot:'+b.id;opt.textContent='♟ '+b.name+' · '+b.team;list.appendChild(opt)});
+      editingMap.bots.forEach(b=>{const opt=document.createElement('option');opt.value='bot:'+b.id;opt.textContent=(b.team==='red'?'🔴 INIMIGO':b.team==='blue'?'🔵 ALIADO':'⚪ NEUTRO')+' · '+b.name+' · '+weaponById(b.weapon).name;list.appendChild(opt)});
       if(selectedObject())list.value='obj:'+selectedObjectId;else if(selectedBotInMap())list.value='bot:'+selectedBotInMapId;else list.selectedIndex=-1;
       syncObjectProps()}
     function syncObjectProps(){const o=selectedObject(),b=selectedBotInMap();$('studioObjectProps').hidden=!o;$('studioBotNote').hidden=!b;$('studioEditBot').hidden=!b;
@@ -2252,7 +2278,7 @@
       for(const y of editingMap.roadsY)g.fillRect(0,y-ROAD_W/2,WORLD_W,ROAD_W);
       g.strokeStyle='#b8b89a';g.lineWidth=3;g.setLineDash([15,22]);for(const x of editingMap.roadsX){g.beginPath();g.moveTo(x,0);g.lineTo(x,WORLD_H);g.stroke()}
       for(const y of editingMap.roadsY){g.beginPath();g.moveTo(0,y);g.lineTo(WORLD_W,y);g.stroke()}g.setLineDash([]);
-      drawMapObjects(g,editingMap.objects);for(const b of editingMap.bots){g.fillStyle=b.team==='red'?'#f36f6a':'#6acfff';g.beginPath();g.arc(b.x,b.y,19,0,Math.PI*2);g.fill();g.fillStyle='#fff';g.font='18px system-ui';g.fillText('♟',b.x-9,b.y+6)}
+      drawMapObjects(g,editingMap.objects);for(const b of editingMap.bots){g.fillStyle=b.team==='red'?'#f36f6a':b.team==='blue'?'#6acfff':'#ddd9c8';g.beginPath();g.arc(b.x,b.y,19,0,Math.PI*2);g.fill();g.fillStyle='#fff';g.font='18px system-ui';g.fillText(b.team==='red'?'⚔':b.team==='blue'?'✚':'○',b.x-9,b.y+6);g.font='15px system-ui';g.fillStyle='#ffffff';g.fillText(b.name.slice(0,24),b.x+24,b.y-22)}
       drawGizmo(g);
       g.fillStyle='#f9e86e';g.beginPath();g.arc(...editingMap.spawn,18,0,Math.PI*2);g.fill();g.strokeStyle='#142228';g.lineWidth=4;g.stroke();g.restore()}
     function addStudioObject(type,x,y){const defaults={building:[145,115,'#72848a',true],tree:[55,55,'#3e9677',true],water:[180,120,'#257ea4',true],sand:[180,130,'#d1ad74',false],barrier:[130,35,'#c87a50',true],decoration:[80,80,'#72a1ca',false],sprite:[96,96,'#9e75cb',false]};
@@ -2264,11 +2290,30 @@
     function saveEditorMap(){editingMap.name=$('studioMapName').value.trim()||'Mapa sem nome';editingMap.description=$('studioMapDescription').value.trim();editingMap.background=$('studioBackground').value;
       const ok=persistMaps();$('studioStatus').textContent=ok?'Mapa salvo neste navegador. Exporte JSON como cópia de segurança.':'Erro ao salvar; exporte JSON.';renderMapCards()}
     function studioEventCoords(e){const r=studioCanvas.getBoundingClientRect();return canvasToMap((e.clientX-r.left)*studioCanvas.width/r.width,(e.clientY-r.top)*studioCanvas.height/r.height)}
+    let pendingBotTemplate=null;
+    function botTemplateCards(){const cards=$('pickerCards');cards.replaceChildren();const defs=[
+      {name:'Guarda inimigo',team:'red',weapon:'pistol',behavior:'guard',hp:100},
+      {name:'Patrulha inimiga',team:'red',weapon:'smg',behavior:'patrol',hp:90},
+      {name:'Aliado protetor',team:'blue',weapon:'rifle',behavior:'guard',hp:120},
+      {name:'Aliado perseguidor',team:'blue',weapon:'smg',behavior:'chase',hp:100},
+      {name:'Civil neutro',team:'neutral',weapon:'pistol',behavior:'guard',hp:75},
+      ...editingMap.bots.slice(0,20).map(b=>({...b,name:'Copiar: '+b.name}))];
+      defs.forEach(d=>{const button=document.createElement('button');button.type='button';button.className='wmk-picker-card '+d.team;
+        const title=document.createElement('strong');title.textContent=d.team==='red'?'🔴 '+d.name:d.team==='blue'?'🔵 '+d.name:'⚪ '+d.name;
+        const desc=document.createElement('small');desc.textContent=(d.team==='red'?'Inimigo':d.team==='blue'?'Aliado':'Neutro')+' · '+d.behavior;
+        const weapon=document.createElement('b');weapon.textContent='Arma: '+weaponById(d.weapon).name+' · HP '+d.hp;
+        button.append(title,desc,weapon);button.addEventListener('click',()=>{pendingBotTemplate={...d};$('wmkBotPicker').close();$('studioStatus').textContent='Modelo selecionado: '+d.name+'. Clique no mapa para posicionar.'});cards.appendChild(button)})}
+    on('studioTool','change',()=>{if($('studioTool').value==='bot'){botTemplateCards();$('wmkBotPicker').showModal()}if($('studioTool').value==='prefab'){$('studioStatus').textContent='Escolha um objeto da biblioteca e clique no mapa.'}});
+    on('pickerCancel','click',()=>{$('wmkBotPicker').close();if(!pendingBotTemplate)$('studioTool').value='select'});
+    $('wmkBotPicker').addEventListener('close',()=>{if(!pendingBotTemplate&&$('studioTool').value==='bot')$('studioTool').value='select'});
+    function renderPrefabs(){const sel=$('studioPrefabSelect');sel.replaceChildren();objectCatalog.forEach(o=>{const opt=document.createElement('option');opt.value=o.id;opt.textContent=o.name+' · '+o.type;sel.appendChild(opt)})}
+    function renderBotWeaponChoices(){const sel=$('botWeapon'),old=sel.value;sel.replaceChildren();weaponCatalog.forEach(w=>{const opt=document.createElement('option');opt.value=w.id;opt.textContent=w.name+' ('+w.damage+' dano)';sel.appendChild(opt)});if(weaponCatalog.some(w=>w.id===old))sel.value=old}
     studioCanvas.addEventListener('contextmenu',e=>e.preventDefault());
     studioCanvas.addEventListener('pointerdown',e=>{if(wmkMode!=='editor')return;const p=studioEventCoords(e),tool=$('studioTool').value;
       if(e.button===2){studioDrag={kind:'pan',x:e.clientX,y:e.clientY,panX:studioPanX,panY:studioPanY};studioCanvas.setPointerCapture(e.pointerId);return}
       if(e.button!==0||p.x<0||p.y<0||p.x>WORLD_W||p.y>WORLD_H)return;
-      if(tool==='bot'){studioCheckpoint();const b=sanitizeBot({id:'bot-'+Date.now(),name:'Novo bot',x:p.x,y:p.y,team:'red'},editingMap.bots.length);editingMap.bots.push(b);setStudioSelection(b,'bot');$('studioTool').value='select';persistMaps();$('studioStatus').textContent='Bot inserido. Arraste para mover, ou use Bot Lab para propriedades.';return}
+      if(tool==='bot'){if(!pendingBotTemplate){botTemplateCards();$('wmkBotPicker').showModal();return}studioCheckpoint();const b=sanitizeBot({...pendingBotTemplate,id:'bot-'+Date.now(),x:p.x,y:p.y},editingMap.bots.length);editingMap.bots.push(b);setStudioSelection(b,'bot');$('studioTool').value='select';pendingBotTemplate=null;persistMaps();$('studioStatus').textContent='Bot inserido. Arraste para mover, ou use Bot Lab para propriedades.';return}
+      if(tool==='prefab'){const pref=objectCatalog.find(o=>o.id===$('studioPrefabSelect').value);if(!pref){$('studioStatus').textContent='Escolha um modelo na biblioteca.';return}studioCheckpoint();const o={...structuredClone(pref),id:'obj-'+Date.now()+'-'+Math.floor(Math.random()*1000),x:snapStudio(p.x),y:snapStudio(p.y)};editingMap.objects.push(o);setStudioSelection(o,'object');$('studioTool').value='select';persistMaps();return}
       if(tool==='spawn'){studioCheckpoint();editingMap.spawn=[Math.round(p.x),Math.round(p.y)];drawStudio();return}
       const hit=hitObject(p.x,p.y),bot=hitBot(p.x,p.y);
       if(tool==='erase'){studioCheckpoint();if(bot)editingMap.bots=editingMap.bots.filter(b=>b.id!==bot.id);else if(hit)editingMap.objects=editingMap.objects.filter(o=>o.id!==hit.id);clearSelection();return}
@@ -2325,10 +2370,10 @@
       const asset={id:'asset-'+Date.now(),name:file.name.slice(0,80),data};assetCatalog.push(asset);imageCache.delete(asset.id);persistAssets();renderAssetSelect();$('studioAssetSelect').value=asset.id;$('studioTool').value='sprite';$('studioStatus').textContent='Sprite importado. Clique no mapa para posicionar.';
     }catch(err){$('studioStatus').textContent=err.message}e.target.value=''});
     on('wmkPlay','click',()=>startGame(currentMapId));
-    on('wmkOpenMapStudio','click',()=>openMapEditor(currentMapId));
+    on('wmkOpenMapStudio','click',()=>openMapEditor(currentMapId));on('studioOpenObjectEditor','click',()=>openObjectStudio());
     on('wmkOpenMissionStudio','click',openMissionEditor);on('missionReturn','click',showMenu);
     on('mainMenuReturn','click',showMenu);
-    on('wmkExportAll','click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog},'wmk-projeto-completo.json'));
+    on('wmkExportAll','click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog,objects:objectCatalog,weapons:weaponCatalog},'wmk-projeto-completo.json'));
     on('wmkImportAllButton','click',()=>$('wmkImportAll').click());
     on('wmkImportAll','change',async e=>{const file=e.target.files[0];if(!file)return;try{
       if(file.size>12_000_000)throw Error('Limite de 12 MB por projeto.');
@@ -2337,7 +2382,7 @@
       const missions=(data.missions||[]).map(normalizeMission);if(missions.some(m=>!m))throw Error('Missões inválidas.');
       if(!confirm('Substituir mapas, missões e biblioteca local pelos dados importados?'))return;
       mapCatalog=maps;assetCatalog=Array.isArray(data.assets)?data.assets.filter(a=>typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)&&a.data.length<1_400_000).slice(0,30):[];
-      missionCatalog=missions;currentMapId=maps[0]?.id||'baia-nova';selectedMissionId=missions[0]?.id||'';
+      missionCatalog=missions;if(Array.isArray(data.objects))objectCatalog=data.objects.slice(0,100).map(safeObject);if(Array.isArray(data.weapons)&&data.weapons.length)weaponCatalog=data.weapons.slice(0,100).map(safeWeapon);persistObjectCatalog();persistWeaponCatalog();currentMapId=maps[0]?.id||'baia-nova';selectedMissionId=missions[0]?.id||'';
       persistAssets();persistMaps();persistMissions();applyMap(currentMapId);showMenu();
     }catch(err){alert('Importação não realizada: '+err.message)}e.target.value=''});
     window.addEventListener('keydown',e=>{if(e.code==='Escape'&&wmkMode==='play'){showMenu();e.preventDefault()}
@@ -2357,8 +2402,8 @@
     function refreshBotMap(){const sel=$('botMap');sel.replaceChildren();mapCatalog.forEach(m=>{const el=document.createElement('option');el.value=m.id;el.textContent=m.name;sel.append(el)});sel.value=currentMapId;refreshBotList()}
     function refreshBotList(){const sel=$('botList'),m=botEditMap();sel.replaceChildren();m.bots.forEach(b=>{const op=document.createElement('option');op.value=b.id;op.textContent=(b.team==='red'?'🔴 ':b.team==='blue'?'🔵 ':'⚪ ')+b.name;sel.append(op)});if(!m.bots.some(b=>b.id===selectedBotId))selectedBotId=m.bots[0]?.id||'';sel.value=selectedBotId;fillBotForm()}
     function fillBotForm(){const b=botSelected();if(!b)return;for(const [id,k] of Object.entries(botFields))$(id).value=b[k];$('botPatrol').value=b.patrol.map(p=>p.join(',')).join('\n')}
-    function openBotStudio(id=currentMapId){currentMapId=id;$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;$('wmkBotStudio').hidden=false;wmkMode='bots';refreshBotMap()}
-    on('wmkOpenBotStudio','click',()=>openBotStudio(currentMapId));on('botReturn','click',()=>{$('wmkBotStudio').hidden=true;showMenu()});on('botMap','change',()=>{selectedBotId='';refreshBotList()});on('botList','change',e=>{selectedBotId=e.target.value;fillBotForm()});
+    function openBotStudio(id=currentMapId){currentMapId=id;$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;$('wmkBotStudio').hidden=false;wmkMode='bots';renderBotWeaponChoices();refreshBotMap()}
+    on('wmkOpenBotStudio','click',()=>openBotStudio(currentMapId));on('botReturn','click',()=>{$('wmkBotStudio').hidden=true;showMenu()});on('botMap','change',()=>{selectedBotId='';refreshBotList()});on('botList','change',e=>{selectedBotId=e.target.value;fillBotForm()});on('botWeapon','change',()=>{const w=weaponById($('botWeapon').value);$('botDamage').value=w.damage;$('botRange').value=w.range;$('botAccuracy').value=w.accuracy});
     on('botNew','click',()=>{const m=botEditMap(),b=sanitizeBot({id:'bot-'+Date.now(),name:'Bot '+(m.bots.length+1),x:400,y:400,team:'red'},m.bots.length);m.bots.push(b);selectedBotId=b.id;persistMaps();refreshBotList()});
     on('botDuplicate','click',()=>{const b=botSelected();if(!b)return;const c={...structuredClone(b),id:'bot-'+Date.now(),name:b.name+' (cópia)',x:Math.min(2690,b.x+80)};botEditMap().bots.push(c);selectedBotId=c.id;persistMaps();refreshBotList()});
     on('botDelete','click',()=>{if(!botSelected()||!confirm('Excluir bot selecionado?'))return;const m=botEditMap();m.bots=m.bots.filter(b=>b.id!==selectedBotId);selectedBotId='';persistMaps();refreshBotList()});
@@ -2373,6 +2418,30 @@
     window.addEventListener('pointerup',()=>shootHeld=false);
     window.addEventListener('keydown',e=>{if(e.code==='KeyR'&&wmkMode==='play'&&currentMap.theme==='arena'&&!e.repeat){reloadTimer=1.3;magazine=0}});
 
+    // Catálogos independentes: cada modelo pode ser reutilizado por múltiplos mapas.
+    let activePrefabId='',activeWeaponId='';
+    function catalogOpen(which){showMenu();$('wmkMain').hidden=true;wmkMode=which;$('wmkObjectStudio').hidden=which!=='objects';$('wmkWeaponStudio').hidden=which!=='weapons';if(which==='objects')refreshObjects();else refreshWeapons()}
+    function openObjectStudio(){catalogOpen('objects')}
+    function openWeaponStudio(){catalogOpen('weapons')}
+    function refreshObjects(){const sel=$('objectList');sel.replaceChildren();objectCatalog.forEach(o=>{const op=document.createElement('option');op.value=o.id;op.textContent=o.name+' · '+o.type;sel.appendChild(op)});if(!objectCatalog.some(o=>o.id===activePrefabId))activePrefabId=objectCatalog[0]?.id||'';sel.value=activePrefabId;
+      const a=$('prefAsset');a.replaceChildren();const empty=document.createElement('option');empty.value='';empty.textContent='Nenhum (usar cor/forma)';a.appendChild(empty);assetCatalog.forEach(asset=>{const op=document.createElement('option');op.value=asset.id;op.textContent=asset.name;a.appendChild(op)});fillObjectModel()}
+    function fillObjectModel(){const o=objectCatalog.find(o=>o.id===activePrefabId);if(!o)return;for(const [id,key] of Object.entries({prefName:'name',prefType:'type',prefW:'w',prefH:'h',prefRotation:'rotation',prefLayer:'layer',prefColor:'color',prefAsset:'assetId'}))$(id).value=o[key];$('prefSolid').checked=o.solid}
+    on('wmkOpenObjectStudio','click',openObjectStudio);on('objectReturn','click',showMenu);on('objectList','change',e=>{activePrefabId=e.target.value;fillObjectModel()});
+    on('objectNew','click',()=>{const o=safeObject({id:'pref-'+Date.now(),name:'Novo modelo',type:'barrier',w:90,h:40,solid:true});objectCatalog.push(o);activePrefabId=o.id;persistObjectCatalog();refreshObjects()});
+    on('objectClone','click',()=>{const o=objectCatalog.find(o=>o.id===activePrefabId);if(!o)return;const c=safeObject({...o,id:'pref-'+Date.now(),name:o.name+' (cópia)'});objectCatalog.push(c);activePrefabId=c.id;persistObjectCatalog();refreshObjects()});
+    on('objectDelete','click',()=>{if(!activePrefabId||!confirm('Excluir o modelo da biblioteca? Objetos já inseridos nos mapas permanecem.'))return;objectCatalog=objectCatalog.filter(o=>o.id!==activePrefabId);activePrefabId='';persistObjectCatalog();refreshObjects()});
+    on('objectForm','submit',e=>{e.preventDefault();const i=objectCatalog.findIndex(o=>o.id===activePrefabId);if(i<0)return;objectCatalog[i]=safeObject({id:activePrefabId,name:$('prefName').value,type:$('prefType').value,w:$('prefW').value,h:$('prefH').value,rotation:$('prefRotation').value,layer:$('prefLayer').value,color:$('prefColor').value,solid:$('prefSolid').checked,assetId:$('prefAsset').value});persistObjectCatalog();refreshObjects();$('objectStatus').textContent='Objeto atualizado. Use o World Studio para inseri-lo no mapa.'});
+    on('objectExport','click',()=>downloadJSON({format:'wmk-vida-loka-prefabs',version:1,objects:objectCatalog},'wmk-biblioteca-objetos.json'));
+    on('objectImportButton','click',()=>$('objectImportFile').click());on('objectImportFile','change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>250000)throw Error('Arquivo acima de 250 KB');const data=JSON.parse(await f.text());if(data.format!=='wmk-vida-loka-prefabs'||!Array.isArray(data.objects)||data.objects.length>100)throw Error('Biblioteca inválida');objectCatalog=data.objects.map(safeObject);persistObjectCatalog();activePrefabId='';refreshObjects();$('objectStatus').textContent='Biblioteca importada.'}catch(err){$('objectStatus').textContent='Erro: '+err.message}e.target.value=''});
+    function refreshWeapons(){const sel=$('weaponList');sel.replaceChildren();weaponCatalog.forEach(w=>{const op=document.createElement('option');op.value=w.id;op.textContent=w.name+' · '+w.damage+' dano';sel.appendChild(op)});if(!weaponCatalog.some(w=>w.id===activeWeaponId))activeWeaponId=weaponCatalog[0]?.id||'';sel.value=activeWeaponId;fillWeaponModel()}
+    function fillWeaponModel(){const w=weaponCatalog.find(w=>w.id===activeWeaponId);if(!w)return;for(const [id,key] of Object.entries({wpName:'name',wpType:'type',wpDamage:'damage',wpRange:'range',wpRate:'rate',wpMagazine:'magazine',wpAccuracy:'accuracy',wpColor:'color'}))$(id).value=w[key]}
+    on('wmkOpenWeaponStudio','click',openWeaponStudio);on('weaponReturn','click',showMenu);on('weaponList','change',e=>{activeWeaponId=e.target.value;fillWeaponModel()});
+    on('weaponNew','click',()=>{const w=safeWeapon({id:'weapon-'+Date.now(),name:'Nova arma',type:'other'});weaponCatalog.push(w);activeWeaponId=w.id;persistWeaponCatalog();refreshWeapons()});
+    on('weaponClone','click',()=>{const w=weaponCatalog.find(w=>w.id===activeWeaponId);if(!w)return;const copy=safeWeapon({...w,id:'weapon-'+Date.now(),name:w.name+' (cópia)'});weaponCatalog.push(copy);activeWeaponId=copy.id;persistWeaponCatalog();refreshWeapons()});
+    on('weaponDelete','click',()=>{if(!activeWeaponId||!confirm('Excluir arma? Bots que a usam voltarão à arma padrão quando reimportados.'))return;weaponCatalog=weaponCatalog.filter(w=>w.id!==activeWeaponId);if(!weaponCatalog.length)weaponCatalog=[...builtInWeapons.map(safeWeapon)];activeWeaponId='';persistWeaponCatalog();refreshWeapons()});
+    on('weaponForm','submit',e=>{e.preventDefault();const i=weaponCatalog.findIndex(w=>w.id===activeWeaponId);if(i<0)return;weaponCatalog[i]=safeWeapon({id:activeWeaponId,name:$('wpName').value,type:$('wpType').value,damage:$('wpDamage').value,range:$('wpRange').value,rate:$('wpRate').value,magazine:$('wpMagazine').value,accuracy:$('wpAccuracy').value,color:$('wpColor').value});persistWeaponCatalog();refreshWeapons();$('weaponStatus').textContent='Arma salva. Agora pode escolhê-la no Editor de Bots.'});
+    on('weaponExport','click',()=>downloadJSON({format:'wmk-vida-loka-weapons',version:1,weapons:weaponCatalog},'wmk-biblioteca-armas.json'));
+    on('weaponImportButton','click',()=>$('weaponImportFile').click());on('weaponImportFile','change',async e=>{const f=e.target.files[0];if(!f)return;try{if(f.size>250000)throw Error('Arquivo acima de 250 KB');const data=JSON.parse(await f.text());if(data.format!=='wmk-vida-loka-weapons'||!Array.isArray(data.weapons)||!data.weapons.length||data.weapons.length>100)throw Error('Arsenal inválido');weaponCatalog=data.weapons.map(safeWeapon);persistWeaponCatalog();activeWeaponId='';refreshWeapons();$('weaponStatus').textContent='Arsenal importado.'}catch(err){$('weaponStatus').textContent='Erro: '+err.message}e.target.value=''});
     function initWMKWorldStudio(){applyMap(currentMapId);wmkMode='menu';$('wmkMain').hidden=false;renderMapCards();}
 
     resize();
