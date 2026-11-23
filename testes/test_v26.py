@@ -15,6 +15,7 @@ with sync_playwright() as pw:
     errors = []
     page.on("pageerror", lambda err: errors.append(str(err)))
     page.goto("about:blank")
+    page.evaluate("""(()=>{const m=new Map();Object.defineProperty(window,'localStorage',{configurable:true,value:{getItem:k=>m.get(k)||null,setItem:(k,v)=>m.set(k,String(v)),removeItem:k=>m.delete(k)}})})()""")
     page.set_content((p / "index.html").read_text())
     test("Menu inicial", page.locator("#wmkMain").is_visible())
     labs = [
