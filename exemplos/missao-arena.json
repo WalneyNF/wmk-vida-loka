@@ -1,0 +1,27 @@
+{
+  "format": "wmk-vida-loka-missions",
+  "version": 1,
+  "missions": [
+    {
+      "id": "exemplo-arena",
+      "title": "Operação Exemplo",
+      "type": "checkpoint",
+      "goal": "eliminate",
+      "maps": [
+        "terminal-zero"
+      ],
+      "points": [
+        [
+          230,
+          300
+        ]
+      ],
+      "kills": 2,
+      "time": 0,
+      "team": "blue",
+      "reward": 500,
+      "vehicle": false,
+      "mode": "livre"
+    }
+  ]
+}

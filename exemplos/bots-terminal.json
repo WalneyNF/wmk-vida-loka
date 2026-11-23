@@ -1,0 +1,32 @@
+{
+  "format": "wmk-vida-loka-bots",
+  "version": 1,
+  "mapId": "terminal-zero",
+  "bots": [
+    {
+      "id": "exemplo-1",
+      "name": "Guarda Exemplo",
+      "team": "red",
+      "x": 950,
+      "y": 720,
+      "hp": 100,
+      "weapon": "pistol",
+      "damage": 8,
+      "range": 320,
+      "vision": 450,
+      "speed": 90,
+      "accuracy": 60,
+      "behavior": "patrol",
+      "patrol": [
+        [
+          950,
+          720
+        ],
+        [
+          1200,
+          820
+        ]
+      ]
+    }
+  ]
+}
