@@ -1,4 +1,4 @@
-
+# WMK Vida Loka v2.2.0 — Jogo e Estúdio de Criação 2D
 
 ## v2.2.0 — World Studio: grupos e prefabs compostos
 
@@ -22,7 +22,6 @@
 
 Consulte [Manual World Studio v2.2](manual-world-studio-v2.2.html).
 
-# WMK Vida Loka v2.2.0 — Jogo e Estúdio de Criação 2D
 
 **WMK Vida Loka** é um protótipo de mundo aberto 2D top-down em HTML5 Canvas, com quatro cenários iniciais, bots, missões, veículos, combate em arena e editores.
 
