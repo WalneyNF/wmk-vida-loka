@@ -1,7 +1,10 @@
-# Relatório de testes v1.4.0 — 23/11/2026
+# Relatório v1.5 — WMK Vida Loka
 
-**39/39 verificações aprovadas; sem erros JavaScript.**
+- 39/39 verificações de regressão da v1.4 aprovadas no Chromium.
+- 13/13 verificações do novo Editor e gizmos aprovadas no Chromium.
+- Desfazer/refazer e checkbox Grade 25 testados adicionalmente.
+- JavaScript validado com `node --check`.
 
-Chromium headless com Python Playwright. Testes: menu principal, quatro mapas, prédios editáveis, duplicação, cópia dos bots, colisão, importação/exportação JSON, CRUD de bots, patrulha, editor de missões, disparos, munição, recarga, condições de eliminação e sobrevivência e retorno ao menu.
+**Não garantido pelos testes:** colisão após rotação em ângulos extremos, sprites grandes, persistência HTTP real, uso em dispositivos móveis, performance de muitos bots.
 
-**Limitação:** testes executados com HTML injetado (restrição a navegação local); foi simulado o armazenamento para verificar reidratação, mas não houve teste de localStorage real entre sessões. Também não foram validados IA A*, multiplayer ou carga com muitos NPCs.
+Executar: `python -m pip install playwright`, `python -m playwright install chromium`, `python testes/test_smoke.py`, `python testes/test_gizmos.py`. No ZIP local, o teste de gizmos contém cenários adicionais.
