@@ -62,3 +62,17 @@ No Chromium headless, foram aprovados **39 testes gerais + 13 de gizmos + 19 dos
 
 ## Licença
 O arquivo `LICENSE` contém MIT para contribuições próprias. **A licença do protótipo HTML original ainda não foi comprovada; a distribuição do conjunto integral sob MIT depende dos direitos necessários.** Recursos de terceiros mantêm suas licenças. Não inclui arte proprietária de GTA ou Counter-Strike.
+
+## Avatar Lab — personalização do personagem (v1.7)
+
+Abra **◉ EDITOR DE AVATAR** no menu principal. Defina nome, corpo (regular, esbelto ou robusto), penteado (curto, comprido, sem cabelo), acessório de cabeça (nenhum, boné, capacete), mochila e cores de pele, camisa, calça, cabelo e acessórios. O painel direito apresenta uma prévia ampliada em Canvas.
+
+Clique **Salvar avatar** para aplicar imediatamente ao personagem de todos os mapas. **Restaurar padrão** altera primeiro a prévia e exige confirmação em Salvar. **Exportar JSON** cria `wmk-avatar.json`; **Importar JSON** valida e carrega o modelo na prévia antes de salvar. O backup **Exportar Projeto** inclui a configuração do avatar, e Importar Projeto a restaura.
+
+O avatar utiliza um desenho 2D vetorial simples. Não há ainda editor de pixel art, sprites animados, hitbox por tamanho corporal ou skins múltiplas. Os bots mantêm aparências independentes.
+
+### Testes da v1.7
+
+Passaram **12/12 verificações específicas** do Avatar Lab em Chromium usando `page.set_content` e armazenamento simulado. Foram exercitados prévia, alterações, salvar, exportar, restaurar, voltar ao menu e jogar; não equivale a validar persistência real entre sessões em Windows/HTTP.
+
+Consulte [Manual do jogador](manual-jogador.html), [Manual do desenvolvedor](manual-desenvolvedor.html), [Guia de evolução](evolucao.html) e [Relatório de testes](testes/RELATORIO.md).
