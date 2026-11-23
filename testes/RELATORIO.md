@@ -1,4 +1,4 @@
-# WMK Vida Loka — Relatório de testes v2.6.0
+# WMK Vida Loka — Relatório de testes v2.7.0
 
 Chromium/Playwright, HTML carregado no navegador com armazenamento local simulado.
 
@@ -16,9 +16,11 @@ Chromium/Playwright, HTML carregado no navegador com armazenamento local simulad
 | test_v24.py | 16/16 |
 | test_v25.py | 13/13 |
 | test_v26.py | 26/26 |
+| test_v27.py | 23/23 |
 
-**Total 222/222 verificações em 12 suítes.**
+**Total 245/245 verificações em 13 suítes.**
 
 A suíte v2.6 verifica abertura, arraste, restauração, armazenamento e retorno ao modo fixo dos três laboratórios, ausência de erros JavaScript e existência das rotinas da IA. Os testes de IA são estruturais, não um teste exaustivo de eficácia tática.
 
 **Pendências:** validação da persistência real após reiniciar Chromium no Windows, desempenho sob muitos bots, cobertura com obstáculos complexos.
+Suíte de avatares legada atualizada para aceitar o novo nome de exportação `wmk-avatar-v2.json`; PNGs e persistência foram testados com armazenamento simulado. Não foi validado o reinício de navegador no Windows.
