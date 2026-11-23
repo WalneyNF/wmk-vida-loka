@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- WMK Vida Loka v2.5.0 — adaptação do protótipo fornecido pelo usuário.
+<!-- WMK Vida Loka v2.6.0 — adaptação do protótipo fornecido pelo usuário.
      Autor das alterações: Walney Moreira Klein (crédito solicitado).
      Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
 <html lang="pt-BR">
@@ -621,6 +621,21 @@
 .wmk-atlas-tools label{margin:6px 0}.wmk-atlas-tools .wmk-atlas-row{display:grid;grid-template-columns:1fr 1fr;gap:6px}
 .wmk-atlas-tools canvas{width:100%;max-width:220px;height:auto;image-rendering:pixelated;background:#20333a;border:1px solid #528a7e;cursor:crosshair;display:block;margin:6px auto}
 @media(max-width:850px){.studio-main.wmk-floating>.studio-panel{max-width:84%;max-height:65%}}
+
+/* WMK v2.6 — áreas de trabalho personalizáveis nos três laboratórios */
+.wmk-lab-layout-active{position:relative!important;display:block!important;overflow:hidden!important;min-height:400px!important;max-width:none!important;max-height:none!important;height:calc(100dvh - 150px)!important;width:100%!important;margin:0!important;padding:0!important}
+.wmk-lab-layout-active>.wmk-lab-pane{position:absolute!important;box-sizing:border-box!important;z-index:4!important;min-width:220px!important;min-height:145px!important;max-width:94%!important;max-height:94%!important;resize:both!important;overflow:auto!important;background:#142a34!important;border:1px solid #508377!important;border-radius:9px!important;box-shadow:0 12px 30px #0008!important;margin:0!important;padding:14px!important}
+.wmk-lab-pane>.wmk-lab-grip{display:none}
+.wmk-lab-layout-active>.wmk-lab-pane>.wmk-lab-grip{display:block;position:sticky;top:-14px;z-index:10;margin:-14px -14px 12px;padding:9px 12px;background:linear-gradient(95deg,#236053,#1a3640);color:#e5fff5;font-size:12px;font-weight:750;cursor:grab;user-select:none;border-radius:8px 8px 0 0;touch-action:none}
+.wmk-lab-layout-active>.wmk-lab-pane>.wmk-lab-grip:active{cursor:grabbing}
+.wmk-layout-controls{display:inline-flex;gap:6px;align-items:center;flex-wrap:wrap;margin:4px 7px}
+.wmk-layout-controls button{min-height:30px!important;font-size:11px!important;padding:6px 9px!important}
+.wmk-lab-layout-active .editor-form{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr))!important}
+#wmkEditor .editor-layout.wmk-lab-layout-active{max-width:none!important;height:calc(100dvh - 88px)!important}
+#wmkBotStudio .bot-grid.wmk-lab-layout-active,#wmkAvatarStudio .avatar-layout.wmk-lab-layout-active{height:calc(100dvh - 130px)!important}
+#wmkBotStudio .wmk-lab-layout-active>#botForm{display:block!important}
+
+@media(max-width:760px){.wmk-lab-layout-active>.wmk-lab-pane{max-width:98%!important}}
 </style>
 </head>
 <body>
@@ -740,7 +755,7 @@
       </div>
     </aside>
     <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão. No Terminal Zero: mouse mira, botão esquerdo dispara e R recarrega.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
-    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.5.0</div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v2.6.0</div>
     <div class="toast" id="toast"></div>
   </main>
 
@@ -966,6 +981,43 @@
     // Editor WMK: CRUD, JSON e painéis flutuantes, preservando o jogo em Canvas.
     const $=id=>document.getElementById(id);
     const on=(id,event,handler)=>{const el=$(id);if(!el){console.warn('[WMK] Controle opcional ausente:',id);return false;}el.addEventListener(event,handler);return true;};
+    // WMK v2.6: painéis independentes, opt-in e com layouts por laboratório.
+    // Apenas a alça inicia o arraste: inputs, selects e formulários permanecem funcionais.
+    const wmkLabLayouts={};
+    function wmkInitLabLayout(id,containerSelector,headerSelector,panes){
+      const section=$(id),host=section?.querySelector(containerSelector),header=section?.querySelector(headerSelector);
+      if(!host||!header||panes.length!==2)return;
+      const items=panes.map(q=>host.querySelector(q));if(items.some(item=>!item))return;
+      const key='wmk-v26-layout-'+id,controls=document.createElement('span');controls.className='wmk-layout-controls';
+      const toggle=document.createElement('button'),reset=document.createElement('button');toggle.type=reset.type='button';toggle.textContent='▣ Painéis móveis';reset.textContent='↺ Layout';controls.append(toggle,reset);
+      header.append(controls);
+      const defaults=(index)=>({left:index===0?12:Math.max(260,host.clientWidth*.32),top:14,width:index===0?Math.min(295,host.clientWidth*.32):Math.max(300,Math.min(host.clientWidth*.60,730)),height:Math.max(260,host.clientHeight-35)});
+      const collect=()=>items.map(el=>({left:el.offsetLeft,top:el.offsetTop,width:el.offsetWidth,height:el.offsetHeight}));
+      const persist=()=>{if(!host.classList.contains('wmk-lab-layout-active'))return;try{localStorage.setItem(key,JSON.stringify({enabled:true,panels:collect()}))}catch(_){}};
+      const apply=(enabled,restore=true)=>{
+        host.classList.toggle('wmk-lab-layout-active',enabled);toggle.textContent=enabled?'▣ Painéis móveis ✓':'▣ Painéis móveis';
+        let stored=null;if(enabled&&restore){try{stored=JSON.parse(localStorage.getItem(key)||'null')}catch(_){}}
+        items.forEach((el,i)=>{if(enabled){const v=stored?.panels?.[i]||defaults(i);const maxW=Math.max(235,host.clientWidth-12),maxH=Math.max(170,host.clientHeight-12);const width=Math.min(maxW,Math.max(220,Number(v.width)||300)),height=Math.min(maxH,Math.max(145,Number(v.height)||300));const left=Math.min(Math.max(0,Number(v.left)||0),Math.max(0,host.clientWidth-width));const top=Math.min(Math.max(0,Number(v.top)||0),Math.max(0,host.clientHeight-height));Object.assign(el.style,{left:left+'px',top:top+'px',width:width+'px',height:height+'px'});}
+          else for(const k of ['left','top','width','height'])el.style[k]='';});
+        if(enabled)persist();else try{localStorage.removeItem(key)}catch(_){}
+      };
+      items.forEach((el,i)=>{
+        el.classList.add('wmk-lab-pane');const grip=document.createElement('div');grip.className='wmk-lab-grip';grip.textContent=(i===0?'☷ Biblioteca / seleção':'☷ Propriedades / prévia')+' — arraste aqui';el.prepend(grip);
+        let drag=null;
+        grip.addEventListener('pointerdown',e=>{if(!host.classList.contains('wmk-lab-layout-active')||e.button!==0)return;const rect=el.getBoundingClientRect();drag={id:e.pointerId,x:e.clientX,y:e.clientY,left:el.offsetLeft,top:el.offsetTop};try{grip.setPointerCapture(e.pointerId)}catch(_){}e.preventDefault()});
+        grip.addEventListener('pointermove',e=>{if(!drag||e.pointerId!==drag.id)return;const l=Math.min(Math.max(0,drag.left+e.clientX-drag.x),Math.max(0,host.clientWidth-el.offsetWidth));const t=Math.min(Math.max(0,drag.top+e.clientY-drag.y),Math.max(0,host.clientHeight-el.offsetHeight));el.style.left=Math.round(l)+'px';el.style.top=Math.round(t)+'px'});
+        const stop=e=>{if(!drag||e.pointerId!==drag.id)return;drag=null;persist()};grip.addEventListener('pointerup',stop);grip.addEventListener('pointercancel',stop);
+        if(typeof ResizeObserver!=='undefined'){const observer=new ResizeObserver(()=>{if(host.classList.contains('wmk-lab-layout-active'))persist()});observer.observe(el)}
+      });
+      toggle.addEventListener('click',()=>apply(!host.classList.contains('wmk-lab-layout-active')));
+      reset.addEventListener('click',()=>{try{localStorage.removeItem(key)}catch(_){}if(host.classList.contains('wmk-lab-layout-active'))apply(true,false)});
+      wmkLabLayouts[id]={apply,persist,host};
+      try{const state=JSON.parse(localStorage.getItem(key)||'null');if(state?.enabled)apply(true,true)}catch(_){}
+    }
+    wmkInitLabLayout('wmkBotStudio','.bot-grid','.bot-header',['aside','#botForm']);
+    wmkInitLabLayout('wmkAvatarStudio','.avatar-layout','.avatar-head',['.avatar-panel:first-child','.avatar-panel:last-child']);
+    wmkInitLabLayout('wmkEditor','.editor-layout','.mission-studio-head',['.editor-library','#missionForm']);
+
     const editorStatus=$('editorStatus');
     const fieldNames=['mTitle','mDescription','mType','mReward','mX','mY','mPoints','mVehicle'];
     function renderMissionList(){
@@ -1740,6 +1792,22 @@
       const next=b._route?.[0]||target,angle=Math.atan2(next.y-b.y,next.x-b.x);
       botWalk(b,b.x+Math.cos(angle)*b.speed*dt,b.y+Math.sin(angle)*b.speed*dt);
     }
+    const wmkTeamSignals=new Map();
+    function wmkCoverPosition(bot,enemy){
+      let best=null,score=Infinity;
+      for(const ob of currentMap.objects){if(!ob.solid)continue;
+        const vx=ob.x-enemy.x,vy=ob.y-enemy.y,length=Math.hypot(vx,vy)||1;
+        // Testar três pontos atrás do obstáculo; não assumir que todo retângulo é quadrado.
+        const ext=(Math.abs(vx/length)*(ob.w||40)+Math.abs(vy/length)*(ob.h||40))/2+28;
+        for(const side of [-22,0,22]){
+          const p={x:ob.x+(vx/length)*ext-(vy/length)*side,y:ob.y+(vy/length)*ext+(vx/length)*side};
+          if(p.x<24||p.y<24||p.x>WORLD_W-24||p.y>WORLD_H-24)continue;
+          const cost=distance(bot.x,bot.y,p.x,p.y);
+          if(cost>380||cost>=score||!canWalk(p.x,p.y)||collidesWithMapObjects(p.x,p.y,17)||lineClear(p.x,p.y,enemy.x,enemy.y))continue;
+          best=p;score=cost;
+        }
+      }return best;
+    }
     function updateCombat(dt){if(currentMap.theme!=='arena')return;
       roundSeconds+=dt;fireTimer=Math.max(0,fireTimer-dt);reloadTimer=Math.max(0,reloadTimer-dt);
       if(reloadTimer===0&&magazine===0)magazine=12;
@@ -1754,19 +1822,18 @@
         else if(!canSee&&b.behavior==='patrol'&&b.patrol.length){target={x:b.patrol[b.patrolIndex][0],y:b.patrol[b.patrolIndex][1]};if(distance(b.x,b.y,target.x,target.y)<35)b.patrolIndex=(b.patrolIndex+1)%b.patrol.length}
         else if(!canSee&&b.behavior==='chase'&&enemy&&distanceToEnemy<b.vision*1.3)target=enemy;
         else if(!canSee&&b.behavior==='guard'&&distance(b.x,b.y,b.homeX,b.homeY)>30)target={x:b.homeX,y:b.homeY};
-        // Busca de abrigo simplificada: inimigos feridos procuram pontos próximos atrás de obstáculos.
+        // Avisos de equipe: aliados compartilham última posição observada por curto período.
+        if(canSee&&enemy&&b.team!=='neutral')wmkTeamSignals.set(b.team,{x:enemy.x,y:enemy.y,time:roundSeconds});
+        const signal=wmkTeamSignals.get(b.team);
+        if(!canSee&&b.behavior==='chase'&&signal&&roundSeconds-signal.time<3.5){target={x:signal.x,y:signal.y};b._aiState='investigando'}
+        else b._aiState=canSee?'atacando':target?'navegando':'vigiando';
+        // Abrigo não é calculado a cada frame; uso de cooldown para baixo custo.
         if(canSee&&b.currentHP<b.hp*.35&&b.behavior!=='guard'){
           b._coverWait=(b._coverWait||0)-dt;
-          if(b._coverWait<=0){b._coverWait=2.5;b._coverTarget=null;
-            let best=Infinity;for(const obstacle of currentMap.objects.filter(o=>o.solid)){
-              const dx=obstacle.x-enemy.x,dy=obstacle.y-enemy.y,len=Math.hypot(dx,dy)||1;
-              const point={x:obstacle.x+dx/len*(Math.max(obstacle.w,obstacle.h)/2+32),y:obstacle.y+dy/len*(Math.max(obstacle.w,obstacle.h)/2+32)};
-              const cost=distance(b.x,b.y,point.x,point.y);
-              if(cost<330&&cost<best&&!collidesWithMapObjects(point.x,point.y,18)&&!lineClear(point.x,point.y,enemy.x,enemy.y)){best=cost;b._coverTarget=point}
-            }
-          }
-          if(b._coverTarget)target=b._coverTarget;
-        }
+          if(b._coverWait<=0){b._coverWait=2.5;b._coverTarget=wmkCoverPosition(b,enemy)}
+          if(b._coverTarget&&distance(b.x,b.y,b._coverTarget.x,b._coverTarget.y)>20){target=b._coverTarget;b._aiState='buscando cobertura'}
+          else if(b._coverTarget){b._aiState='em cobertura';target=null}
+        }else{b._coverTarget=null;b._coverWait=0}
         if(target)navigateBot(b,target,dt)
         if(canSee&&distanceToEnemy<=b.range&&b.cooldown<=0){const error=(Math.random()-.5)*(1-b.accuracy/100)*.9;shoot(b,Math.atan2(enemy.y-b.y,enemy.x-b.x)+error,b.damage,b.team,690);b.cooldown=1/weaponById(b.weapon).rate;}
       }
@@ -2308,7 +2375,7 @@
       const available=mapMissions(id);
       if(found.theme==='arena'&&!available.some(m=>m.id===selectedMissionId&&m.goal!=='points'))selectedMissionId=available.find(m=>m.goal==='eliminate')?.id||available[0]?.id||'';
       else if(!available.some(m=>m.id===selectedMissionId))selectedMissionId=available[0]?.id||'';
-      mission.index=0;mission.finished=false;mission.startedEscape=false;runtimeBots=found.bots.map(b=>({...structuredClone(b),currentHP:b.hp,cooldown:Math.random(),patrolIndex:0,homeX:b.x,homeY:b.y}));shots=[];playerShots=[];killCount=0;roundSeconds=0;reloadTimer=0;fireTimer=0;magazine=12;combatTeam=mapMissions(id).find(m=>m.id===selectedMissionId)?.team||'blue';
+      wmkTeamSignals.clear();mission.index=0;mission.finished=false;mission.startedEscape=false;runtimeBots=found.bots.map(b=>({...structuredClone(b),currentHP:b.hp,cooldown:Math.random(),patrolIndex:0,homeX:b.x,homeY:b.y}));shots=[];playerShots=[];killCount=0;roundSeconds=0;reloadTimer=0;fireTimer=0;magazine=12;combatTeam=mapMissions(id).find(m=>m.id===selectedMissionId)?.team||'blue';
       $('minimap').parentElement.querySelector('.minimap-heading span:last-child').textContent=found.name.toUpperCase();
       renderMissionList();updateHUD();
     }
