@@ -38,6 +38,7 @@ with sync_playwright() as pw:
     move_handle('rotate',45,0)
     assert page.evaluate('selectedObject().rotation')!=before
     page.locator('#studioTool').select_option('bot')
+    page.locator('#pickerCards .wmk-picker-card').first.click()
     page.locator('#studioCanvas').click(position={'x':650,'y':390})
     assert page.evaluate('selectedBotInMap() !== null')
     page.locator('#gizmoMove').click()
