@@ -57,3 +57,15 @@
 - [x] Testes de regressão Chromium
 - [ ] Atlas de tiles/spritesheet, autotile e pincel contínuo
 - [ ] Drag-and-drop na árvore e testes de persistência real por HTTP no Windows
+
+## v2.5 — World Studio
+- [x] Atlas PNG (grade regular, prévia clicável, pintura, JSON)
+- [x] Painéis móveis e redimensionáveis, com layout local
+- [x] Busca de abrigo experimental para bots feridos
+- [x] Testes automatizados v2.5
+
+## Futuro
+- [ ] Atlas com autotile, TMX/TSX e metadados
+- [ ] Painéis móveis nos outros editores
+- [ ] IA tática avançada e medição de desempenho
+- [ ] Persistência real em Windows e migração para IndexedDB
