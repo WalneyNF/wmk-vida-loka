@@ -28,3 +28,11 @@ O Chromium do ambiente bloqueou navegação direta HTTP e `file://` (`ERR_BLOCKE
 - Erros JavaScript não observados nas suítes executadas.
 - O arquivo `testes/test_v22.py` no GitHub contém um smoke test reproduzível simplificado; o ZIP contém a suíte completa de 18 verificações.
 - **Limitações de teste:** Chromium bloqueou navegação HTTP localhost; persistência após reload real do Windows/HTTP ainda não foi comprovada. Escala/rotação de grupos, hierarquia aninhada e autotile continuam pendentes.
+
+
+## v2.3.0 — Hierarquia, camadas e pivô coletivo
+- test_v23.py: 23/23 verificações Chromium com armazenamento simulado.
+- Regressão: nove suítes, 167/167 verificações aprovadas.
+- Validações: árvore e grupos, visibilidade/bloqueio de camadas, pivôs, escala e rotação coletiva, undo/redo, exportação JSON e ausência de exceções JS.
+- JavaScript passou por node --check.
+- Limite: HTTP local bloqueado por política do Chromium deste ambiente (ERR_BLOCKED_BY_ADMINISTRATOR). Persistência real em Windows ainda não validada.
