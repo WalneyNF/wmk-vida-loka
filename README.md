@@ -1,48 +1,60 @@
-# 🚗 WMK Vida Loka v2.0.0 — Mundo aberto e criador de jogos 2D
+# WMK Vida Loka v2.1.0 — Jogo e Estúdio de Criação 2D
 
-**Walney Moreira Klein — walneyk@hotmail.com**
+**WMK Vida Loka** é um protótipo de mundo aberto 2D top-down em HTML5 Canvas, com quatro cenários iniciais, bots, missões, veículos, combate em arena e editores.
 
-Jogo e editor em HTML5 Canvas, CSS e JavaScript. Quatro cenários iniciais: Baía Nova, Costa Dourada, Serra Brava e Terminal Zero. Projeto em português, com moeda fictícia **W$**.
+**Créditos das adaptações:** Walney Moreira Klein — walneyk@hotmail.com.
 
-## Executar
-1. Baixe o repositório usando **Code → Download ZIP**.
-2. Extraia todos os arquivos preservando `assets/`, `testes/` e os manuais.
-3. Abra `index.html`. Recomendado servir a pasta por um servidor HTTP local (por exemplo XAMPP) para testar armazenamento local.
-4. Escolha o mapa. WASD move, Shift corre, E entra/sai de veículos; no modo arena, mouse mira/dispara e R recarrega.
+## Instalação e execução
 
-## Editores disponíveis
-- **World Studio:** editar/criar/copiar mapas, posicionar e transformar objetos e bots com gizmos, exportar/importar JSON, usar grade, salvar prefab do objeto selecionado, pintar terreno por blocos, visualizar colisões e desenhar pontos de patrulha.
-- **Bot Lab:** equipes, vida, arma, dano, precisão, comportamento, waypoints e avatar visual.
-- **Object Lab:** modelos reutilizáveis com colisão, sprite, escala e cor.
-- **Arsenal Lab:** armas fictícias por JSON com dano, cadência, alcance e munição.
-- **Avatar Lab:** personalização, perfis salvos e aparência reutilizável para bots.
-- **Editor de Missões:** criar, duplicar, excluir, testar, definir mapas e recompensas em W$, visualizar fluxo linear de objetivos.
-- **WMK Game Creator:** selecionar mapas e missões, gerar/importar pacote JSON, testar o mapa inicial.
+1. Baixe em **Code → Download ZIP** e extraia todo o projeto, incluindo as pastas `assets/` e `js/`.
+2. Inicie pela pasta do projeto com `py -m http.server 8000` ou use XAMPP.
+3. Acesse `http://localhost:8000` no navegador.
+4. Selecione Baía Nova, Costa Dourada, Serra Brava ou Terminal Zero e clique **Iniciar Jogo**.
+5. Comandos principais: WASD, Shift, E e Espaço. Na arena, mouse para mirar/disparar, R para recarregar e Esc para voltar ao menu.
 
-## O que mudou na v2.0.0
-- Navegação **A*** simples em grade, aplicada aos bots da arena com cache de rotas.
-- Ferramenta visual de waypoints no World Studio.
-- Depurador de colisões e pincel de terreno retangular.
-- Salvamento direto de objetos selecionados como prefabs.
-- Biblioteca de avatares e vínculo com bots.
-- Visão linear do fluxo de missões.
-- Game Creator para importação/exportação de pacotes completos de dados.
+## Editores
 
-## Manuais
-- [Manual do jogador](manual-jogador.html)
-- [Manual do desenvolvedor](manual-desenvolvedor.html)
-- [Laboratório de evolução](evolucao.html)
+| Editor | Funções |
+|---|---|
+| World Studio | Criar, editar e duplicar mapas, inserir objetos, bots, gizmos, sprites, colisões e patrulhas |
+| Editor de Missões | Contratos, recompensas W$, mapas permitidos e condições de vitória |
+| Bot Lab | Equipes, atributos, arma, comportamento, avatar e patrulhas |
+| Object Lab | Prefabs, aparência, dimensões, colisões |
+| Arsenal Lab | Catálogo de armas fictícias com atributos |
+| Avatar Lab | Aparência e perfis de avatares |
+| Game Creator | Exportar e importar pacotes JSON de conteúdo para o motor WMK |
+| **Biblioteca & Diagnóstico (v2.1)** | Visualização centralizada de recursos, dependências quebradas e exportação de backup de auditoria |
+
+## Novidades v2.1
+
+- `js/wmk-core.js`: primeiro módulo JavaScript separado, responsável por inspeção de recursos e geração de cópias de auditoria.
+- Biblioteca no menu principal, com contagem de mapas, missões, bots, objetos posicionados, prefabs, armas, avatares e sprites.
+- Validação de IDs ausentes ou duplicados, além de referências a armas, avatares, sprites e mapas inexistentes.
+- Navegação direta para os editores correspondentes e exportação JSON do inventário atual.
+- Testes automatizados e guia HTML [Arquitetura v2.1](arquitetura-v2.1.html).
+
+**Importante:** o backup `wmk-vida-loka-library` é **somente para auditoria**, não é aceito diretamente pelo importador de projeto. Para um backup restaurável, use **Exportar Projeto** no menu principal.
+
+## Documentação
+
+- [Manual do Jogador](manual-jogador.html)
+- [Manual do Desenvolvedor](manual-desenvolvedor.html)
+- [Arquitetura e biblioteca v2.1](arquitetura-v2.1.html)
+- [Guia de evolução](evolucao.html)
 - [Roadmap](roadmap.html)
-- [Pesquisa](pesquisa.html)
 - [Relatório de testes](testes/RELATORIO.md)
+- [Pesquisa](pesquisa.html)
 
 ## Testes
-104/104 verificações automatizadas aprovadas nas suítes `test_smoke.py`, `test_gizmos.py`, `test_catalogos.py`, `test_avatar.py`, `test_v20.py` e `test_creator_roundtrip.py`. Não substituem testes em aparelhos reais.
 
-## Limitações honestas
-O Game Creator gera um **pacote JSON**, não um executável ou HTML independente. O fluxo de missões é uma visualização, não um editor de grafos com ramificações. A IA ainda não tem cover/avoidance completo. O pincel não tem autotile. Avatares são vetoriais e não possuem spritesheets de oito direções. Sem multiplayer. Faça backups JSON regularmente.
+As sete suítes de regressão executadas somaram **126/126 verificações aprovadas** no Chromium headless. A navegação direta via HTTP e `file://` foi bloqueada no ambiente de validação, portanto o carregamento real pelo servidor e a persistência após reiniciar o navegador ainda devem ser conferidos no Windows. Veja o relatório.
 
-## Licença
-O arquivo `LICENSE` contém MIT para o material passível de licenciamento por seus titulares. **É necessário verificar a licença e a autoria do protótipo de origem antes de afirmar que todo o código-base pode ser distribuído como MIT.** Assets externos mantêm as respectivas licenças.
+## Limitações
 
-**Repositório:** https://github.com/WalneyNF/wmk-vida-loka
+O projeto ainda concentra parte considerável da lógica em `index.html`: a migração modular é incremental. Não há multiplayer, exportação independente de HTML executável, nem editor de missão ramificado ou animação completa de personagens. O armazenamento local pode esgotar, especialmente com sprites. Faça backups regularmente.
+
+## Licença e autoria
+
+Há um arquivo `LICENSE` com texto MIT. **A licença do código-base original precisa ser confirmada antes de afirmar que toda a obra pode ser redistribuída como MIT.** Assets de terceiros conservam licenças próprias. Créditos das alterações: **Walney Moreira Klein — walneyk@hotmail.com**.
+
+Projeto: https://github.com/WalneyNF/wmk-vida-loka
