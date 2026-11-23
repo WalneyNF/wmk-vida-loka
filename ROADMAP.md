@@ -28,3 +28,11 @@ Consulte [evolucao.html](evolucao.html) para o estudo prático de cada etapa.
 - IA com A*, waypoints e patrulhas visuais; controle de armas do jogador, munição e recarga dos bots.
 - Manipulação completa de personagens (sprites, animações), grupos e camadas.
 - Empacotamento de projetos e validação de persistência real no Windows.
+
+## v1.7 — Avatar Lab (implementado)
+- Editor com prévia Canvas de personagem 2D, roupa/cabelo, acessórios e cores.
+- Salvar, exportar/importar JSON e compartilhar em backup do projeto.
+- Avatar aplicado ao personagem jogável de todos os mapas.
+
+## Futuro
+- Galeria de avatares e skins PNG animadas, equipamentos visuais, perfis de NPCs, animação direcional.
