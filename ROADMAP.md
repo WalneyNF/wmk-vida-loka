@@ -84,3 +84,13 @@
 - [ ] Ordens de esquadrão e waypoints compartilhados
 - [ ] Depurador visual de IA e coberturas
 - [ ] Modularização progressiva do motor e dos editores
+
+## v2.7.0 — Avatar Lab 2.0 (23/11/2026)
+- [x] Quatro camadas PNG opcionais por avatar (corpo, roupa, cabeça, equipamento)
+- [x] Importação PNG e seleção de sprites da biblioteca compartilhada
+- [x] Animação procedural de parado, caminhada, corrida e disparo na prévia
+- [x] Velocidade ajustável, pausa e avanço de quadro
+- [x] Compartilhamento de perfis entre jogador e bots; compatibilidade JSON v1/v2
+- [x] 245 verificações automatizadas aprovadas em 13 suítes
+- [ ] Spritesheets com quadros independentes, pivôs por camada e oito direções
+- [ ] Persistência testada no Windows após reiniciar o navegador via HTTP
