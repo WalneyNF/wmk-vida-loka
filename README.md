@@ -21,6 +21,14 @@
 11. [Licenças](#-licença-e-direitos)
 12. [Manuais](#-manuais-e-documentação)
 
+## 📦 Download do código-fonte completo
+
+**Baixar ZIP diretamente do GitHub:** abra [Download ZIP da branch main](https://github.com/WalneyNF/wmk-vida-loka/archive/refs/heads/main.zip) ou clique em **Code → Download ZIP** na página do repositório. Esse pacote inclui o código-fonte e a documentação que estiverem publicados na branch principal.
+
+**Instalação:** descompacte o arquivo, abra a pasta `wmk-vida-loka-main` e execute `index.html` no navegador. Para testar com servidor local, execute `py -m http.server 8000` dentro da pasta e acesse `http://localhost:8000/`.
+
+**Atenção:** esse é o código-fonte, não um instalador do Windows. A versão do ZIP do GitHub acompanha os commits; arquivos criados ou salvos pelo editor dentro do navegador precisam ser exportados separadamente em JSON.
+
 ## 🚀 Como instalar e jogar
 
 **Opção A, sem instalar nada:** baixe o repositório em **Code → Download ZIP**, descompacte e abra `index.html` em um navegador moderno. Mantenha as pastas e os arquivos juntos.
