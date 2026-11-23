@@ -38,3 +38,12 @@
 - [x] Agrupar, mover seleção, desagrupar e duplicar
 - [x] Prefabs compostos com importação/exportação JSON
 - [x] 144 verificações automatizadas; testes HTTP reais ainda pendentes
+
+
+## v2.3 — World Studio: hierarquia e transformação coletiva
+- [x] Árvore clicável de objetos, grupos e bots
+- [x] Camadas com visibilidade e bloqueio individual
+- [x] Pivô central/objeto ativo, escala e rotação coletivas
+- [x] JSON de mapas retrocompatível com layerSettings
+- [x] 23 testes específicos e regressão geral no Chromium
+- [ ] Árvore aninhada, seleção por caixa, autotile e pivô persistente
