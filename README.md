@@ -1,11 +1,11 @@
-# WMK Vida Loka v2.5.0 — Jogo e estúdio de criação 2D
+# WMK Vida Loka v2.6.0 — Jogo e estúdio de criação 2D
 
 **WMK Vida Loka** é um protótipo de mundo aberto 2D top-down com quatro mapas iniciais, bots, missões, veículos, combate em arena e ferramentas de edição.
 
 **Créditos das adaptações:** Walney Moreira Klein — walneyk@hotmail.com.
 
 
-## Novidades da v2.5.0 — World Studio
+## Novidades da v2.6.0 — World Studio
 
 - **Seleção por retângulo:** na ferramenta `Selecionar/mover`, arraste a partir de uma área vazia do mapa. Ctrl/Shift acrescenta objetos à seleção.
 - **Hierarquia de grupos:** selecione peças de dois grupos, clique em `Criar grupo superior da seleção` e edite o conjunto. A árvore exibe a relação pai/filho. `Desfazer grupo superior` desvincula os níveis.
