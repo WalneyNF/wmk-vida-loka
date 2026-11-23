@@ -18,3 +18,13 @@ Abertura de Biblioteca; carregamento de WMKCore; categorias e contagens; auditor
 
 ## Restrições de teste
 O Chromium do ambiente bloqueou navegação direta HTTP e `file://` (`ERR_BLOCKED_BY_ADMINISTRATOR`). Os testes de UI usaram `page.set_content` com módulo incorporado. **O carregamento por HTTP e o armazenamento persistente após reinício real permanecem pendentes**; validar no Windows local. A biblioteca não altera conteúdo e seu backup próprio é apenas para auditoria, não restauração.
+
+
+## v2.2.0 — World Studio (23/11/2026)
+
+- **144/144 verificações aprovadas localmente** (8 suítes em Chromium, incluindo 18 novas no script de testes distribuído no ZIP).
+- Seleção múltipla por Ctrl/Shift, deslocamento em grupo, IDs persistidos, agrupamento, desagrupamento e duplicação.
+- Prefabs compostos: criação, inserção, exportação/importação JSON, desfazer/refazer.
+- Erros JavaScript não observados nas suítes executadas.
+- O arquivo `testes/test_v22.py` no GitHub contém um smoke test reproduzível simplificado; o ZIP contém a suíte completa de 18 verificações.
+- **Limitações de teste:** Chromium bloqueou navegação HTTP localhost; persistência após reload real do Windows/HTTP ainda não foi comprovada. Escala/rotação de grupos, hierarquia aninhada e autotile continuam pendentes.
