@@ -1,0 +1,2137 @@
+<!doctype html>
+<!-- WMK Vida Loka v1.3.0 — adaptação do protótipo fornecido pelo usuário.
+     Autor das alterações: Walney Moreira Klein (crédito solicitado).
+     Licença MIT para modificações próprias, sujeita à autorização/licença do código-base. -->
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>WMK Vida Loka — Baía Nova | v1.3.0</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --panel: rgba(12, 17, 21, .82);
+      --line: rgba(255, 255, 255, .13);
+      --muted: #a5b0b1;
+      --mint: #60e3b4;
+      --gold: #f4c95d;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      background: #17201e;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+
+    #game {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+      background: #25312d;
+      user-select: none;
+    }
+
+    #gameCanvas {
+      position: absolute;
+      inset: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .topbar {
+      position: absolute;
+      top: 16px;
+      left: 18px;
+      right: 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      pointer-events: none;
+    }
+
+    .brand,
+    .stat-card,
+    .mission-card,
+    .minimap-frame,
+    .controls,
+    .vehicle-card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      box-shadow: 0 12px 35px rgba(0, 0, 0, .28);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 10px 15px 10px 10px;
+      border-radius: 13px;
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(145deg, #6be3b7, #239c83);
+      color: #10221d;
+      font-size: 17px;
+      font-weight: 1000;
+      letter-spacing: -2px;
+      transform: skew(-5deg);
+    }
+
+    .brand-name {
+      color: #f3f5ef;
+      font-size: 13px;
+      font-weight: 900;
+      letter-spacing: 1.8px;
+      line-height: 1.1;
+    }
+
+    .brand-subtitle {
+      margin-top: 4px;
+      color: #9da9a6;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+    }
+
+    .right-hud {
+      display: flex;
+      gap: 8px;
+      align-items: stretch;
+    }
+
+    .stat-card {
+      min-width: 98px;
+      padding: 10px 13px;
+      border-radius: 12px;
+    }
+
+    .stat-label {
+      color: var(--muted);
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .stat-value {
+      margin-top: 5px;
+      color: #f4f5ef;
+      font-size: 17px;
+      font-weight: 850;
+      letter-spacing: .2px;
+    }
+
+    .health-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 6px;
+    }
+
+    .health-track {
+      width: 75px;
+      height: 6px;
+      overflow: hidden;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .health-fill {
+      width: 100%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #41d79f, #a5ed75);
+      transition: width .2s ease;
+    }
+
+    .health-number {
+      min-width: 23px;
+      color: #e8eee9;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .wanted-stars {
+      margin-top: 2px;
+      color: rgba(255, 255, 255, .22);
+      font-size: 19px;
+      letter-spacing: 2px;
+      white-space: nowrap;
+    }
+
+    .wanted-stars .on {
+      color: var(--gold);
+      text-shadow: 0 0 12px rgba(244, 201, 93, .4);
+    }
+
+    .mission-card {
+      position: absolute;
+      top: 84px;
+      left: 18px;
+      width: 286px;
+      padding: 15px 16px 14px;
+      border-radius: 14px;
+      pointer-events: none;
+    }
+
+    .mission-kicker {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      color: var(--mint);
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: 1.6px;
+    }
+
+    .mission-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--mint);
+      box-shadow: 0 0 12px rgba(96, 227, 180, .65);
+    }
+
+    .mission-title {
+      margin: 9px 0 5px;
+      color: #f2f4ee;
+      font-size: 18px;
+      font-weight: 850;
+      letter-spacing: -.4px;
+    }
+
+    .mission-copy {
+      min-height: 34px;
+      margin: 0;
+      color: #aeb9b6;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .mission-progress-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      margin-top: 13px;
+      color: #d7ded8;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 1px;
+    }
+
+    .mission-progress-track {
+      height: 4px;
+      margin-top: 7px;
+      overflow: hidden;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, .11);
+    }
+
+    .mission-progress-fill {
+      width: 0%;
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, #42c99c, #d4e96e);
+      transition: width .35s ease;
+    }
+
+    .minimap-frame {
+      position: absolute;
+      right: 18px;
+      bottom: 18px;
+      width: 202px;
+      padding: 9px;
+      border-radius: 14px;
+      pointer-events: none;
+    }
+
+    .minimap-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1px 3px 7px;
+      color: #dbe3dc;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 1.3px;
+    }
+
+    .minimap-heading span:last-child {
+      color: #84938d;
+      font-size: 8px;
+      letter-spacing: 1px;
+    }
+
+    #minimap {
+      display: block;
+      width: 182px;
+      height: 146px;
+      border: 1px solid rgba(255, 255, 255, .1);
+      border-radius: 8px;
+      background: #27332f;
+    }
+
+    .controls {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      max-width: min(650px, calc(100vw - 240px));
+      padding: 9px 11px;
+      border-radius: 12px;
+      pointer-events: none;
+    }
+
+    .control-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding-right: 9px;
+      color: #b4bfbb;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .keycap {
+      display: inline-grid;
+      place-items: center;
+      min-width: 25px;
+      height: 21px;
+      padding: 0 6px;
+      border: 1px solid rgba(255, 255, 255, .19);
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, .07);
+      color: #f0f3ed;
+      font-size: 9px;
+      font-weight: 900;
+      letter-spacing: .4px;
+    }
+
+    .context-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 89px;
+      padding: 9px 13px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 9px;
+      background: rgba(10, 15, 18, .84);
+      color: #eef2ec;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .7px;
+      opacity: 0;
+      transform: translate(-50%, 8px);
+      transition: .18s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .context-hint.visible {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .vehicle-card {
+      position: absolute;
+      top: 84px;
+      right: 18px;
+      display: none;
+      min-width: 116px;
+      padding: 11px 14px;
+      border-radius: 12px;
+      text-align: right;
+      pointer-events: none;
+    }
+
+    .vehicle-speed {
+      color: #f1f4ee;
+      font-size: 25px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .vehicle-unit {
+      margin-top: 4px;
+      color: #a4b2ad;
+      font-size: 9px;
+      font-weight: 850;
+      letter-spacing: 1.5px;
+    }
+
+    .toast {
+      position: absolute;
+      top: 26%;
+      left: 50%;
+      max-width: min(440px, calc(100vw - 32px));
+      padding: 12px 18px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-radius: 10px;
+      background: rgba(9, 14, 17, .88);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, .28);
+      color: #f1f4ee;
+      font-size: 12px;
+      font-weight: 750;
+      letter-spacing: .25px;
+      text-align: center;
+      opacity: 0;
+      transform: translate(-50%, -8px);
+      transition: .2s ease;
+      pointer-events: none;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translate(-50%, 0);
+    }
+
+    .wmk-tools { position:absolute; right:18px; top:151px; z-index:5; width:260px;
+      padding:12px; border-radius:12px; color:#e8f5ee; background:rgba(12,17,21,.93);
+      border:1px solid rgba(96,227,180,.3); box-shadow:0 8px 25px #0007; }
+    .wmk-tools[hidden] {display:none}
+    .wmk-tools h2 {font-size:13px; margin:0 0 9px; color:#60e3b4}
+    .wmk-tools label {display:block; font-size:11px; margin:9px 0}
+    .wmk-tools input {width:100%; accent-color:#60e3b4}
+    .wmk-tools output {float:right; color:#f4c95d}
+    .wmk-tools button,.wmk-tools-toggle {padding:7px 10px; color:#eefaf4; background:#245747;
+      border:1px solid #46977a; border-radius:7px; cursor:pointer; font:700 11px system-ui}
+    .wmk-tools-toggle {position:absolute; z-index:6; top:118px; right:18px}
+    .wmk-credits {position:absolute; left:50%; bottom:2px; transform:translateX(-50%);
+      background:#08120dc9; color:#c3e8d6; font-size:10px; padding:3px 10px;
+      border-radius:6px; white-space:nowrap; z-index:3;}
+    @media (max-width: 760px) {
+      .wmk-tools-toggle {top:112px; right:10px}
+      .wmk-tools {top:145px; right:10px; width:min(260px,calc(100vw - 20px))}
+      .wmk-credits {font-size:8px; max-width:95vw; overflow:hidden; text-overflow:ellipsis}
+    }
+    @media (max-width: 760px) {
+      .topbar { top: 10px; left: 10px; right: 10px; }
+      .brand { padding: 8px; }
+      .brand-mark { width: 32px; height: 32px; }
+      .brand-subtitle { display: none; }
+      .right-hud { gap: 5px; }
+      .stat-card { min-width: auto; padding: 8px 9px; }
+      .stat-value { font-size: 14px; }
+      .health-track { width: 46px; }
+      .mission-card { top: 65px; left: 10px; width: 245px; padding: 12px; }
+      .vehicle-card { top: 65px; right: 10px; }
+      .minimap-frame { right: 10px; bottom: 10px; width: 158px; padding: 7px; }
+      #minimap { width: 142px; height: 112px; }
+      .controls { left: 10px; bottom: 10px; max-width: calc(100vw - 178px); gap: 5px; }
+      .control-item { font-size: 9px; padding-right: 3px; }
+      .keycap { min-width: 22px; height: 19px; }
+      .context-hint { bottom: 132px; }
+    }
+
+    .wmk-logo-small{width:43px;height:43px;object-fit:contain}
+    .wmk-toolbar{position:absolute;top:122px;left:18px;z-index:10;display:flex;gap:5px;flex-wrap:wrap;max-width:55vw}
+    .wmk-toolbar button,.wmk-editor button,.panel-grip button,.wmk-modal button{background:#183c36;border:1px solid #3d9a7b;color:#ecfff6;border-radius:7px;padding:6px 9px;cursor:pointer;font:700 11px system-ui}
+    .wmk-toolbar button:hover,.wmk-editor button:hover{background:#246653}
+    .mission-card{top:auto;bottom:72px;left:18px;pointer-events:auto;z-index:7;width:300px;resize:both;overflow:auto;min-width:225px;min-height:130px;max-height:65vh}
+    .panel-grip{display:flex;align-items:center;justify-content:space-between;margin:-4px -5px 9px;padding:4px 6px;border-radius:6px;background:#1b4139;color:#aaf0d1;font-size:10px;font-weight:800;letter-spacing:1px;cursor:move;user-select:none;touch-action:none}
+    .panel-grip button{padding:1px 6px;cursor:pointer}
+    .wmk-tools{pointer-events:auto;resize:both;overflow:auto;min-width:225px;min-height:180px;max-height:75vh}
+    .wmk-editor{position:absolute;top:160px;left:max(20px,calc(50% - 350px));z-index:12;width:min(700px,calc(100vw - 40px));max-height:72vh;min-width:340px;min-height:220px;resize:both;overflow:auto;background:#0f1a20f5;border:1px solid #3c907d;border-radius:12px;padding:12px;box-shadow:0 20px 60px #000b;color:#effff7;font:12px system-ui}
+    .wmk-editor[hidden],.mission-card[hidden],.wmk-modal[hidden]{display:none!important}
+    .editor-layout{display:grid;grid-template-columns:190px 1fr;gap:15px}
+    .editor-library,.editor-form{display:flex;flex-direction:column;gap:9px}
+    .wmk-editor label{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#bfddce}
+    .wmk-editor input:not([type=checkbox]),.wmk-editor textarea,.wmk-editor select{background:#1b2c34;color:#f4fff9;border:1px solid #506c67;padding:7px;border-radius:5px;width:100%;font:12px system-ui}
+    .wmk-editor select[size]{height:195px}
+    .editor-actions,.editor-fields{display:flex;gap:7px}.editor-fields>label{flex:1;min-width:0}.editor-actions button{flex:1}.wmk-editor .primary{background:#277c5b}.wmk-editor .check{display:flex;flex-direction:row;align-items:center}
+    .wmk-editor small{color:#8dd5b1;line-height:1.5}.wmk-modal{position:absolute;inset:0;z-index:20;background:#000a;display:grid;place-items:center}.wmk-modal>div{background:#10252b;border:1px solid #549d85;padding:24px;border-radius:12px;max-width:530px;color:#ecfff5;line-height:1.6}.wmk-modal a{color:#75e4bb}
+    .wmk-tools-toggle{top:155px;right:18px}
+    .controls{bottom:17px;left:18px;max-width:calc(100vw - 260px)}
+    .wmk-credits{bottom:1px;z-index:9}
+    @media(max-width:760px){.wmk-toolbar{top:104px;left:10px;max-width:calc(100vw - 20px)}.wmk-toolbar button{font-size:9px}.mission-card{top:auto;bottom:125px;left:10px;width:230px}.wmk-editor{left:10px;top:175px;width:calc(100vw - 20px);min-width:0}.editor-layout{grid-template-columns:1fr}.wmk-tools-toggle{top:165px}.controls{bottom:16px}}
+
+/* WMK World Studio v1.3 */
+#wmkMain,#wmkMapStudio{position:absolute;inset:0;z-index:40;background:#09151af5;color:#eefcf6;font:13px system-ui;overflow:auto}
+#wmkMain[hidden],#wmkMapStudio[hidden]{display:none!important}
+.wmk-shell{max-width:1150px;margin:30px auto;padding:20px}.wmk-shell h1{font-size:36px;margin:8px 0;color:#6ceac0}.wmk-shell p{color:#aac2b9}
+.wmk-menu-actions{display:flex;gap:9px;flex-wrap:wrap;margin:20px 0}
+.wmk-menu-actions button,.wmk-map-card button,.studio-panel button{background:#195145;color:#edfff9;border:1px solid #389d7b;border-radius:8px;padding:10px;cursor:pointer;font-weight:700}
+.wmk-map-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.wmk-map-card{border:1px solid #3c7167;border-radius:12px;padding:14px;background:#142a30;min-height:150px}
+.wmk-map-card h3{margin:4px 0;color:#d7fff2}.wmk-map-card p{min-height:36px}.wmk-map-card button{margin:4px}
+.wmk-map-card .selected{outline:2px solid #f4c95d}.wmk-map-badge{font:700 10px system-ui;color:#f2c75d;letter-spacing:1px}
+#wmkMapStudio{z-index:45;display:flex;flex-direction:column;overflow:hidden}
+.studio-top{padding:10px 14px;background:#152d32;display:flex;align-items:center;gap:9px;flex-wrap:wrap;border-bottom:1px solid #50796c}
+.studio-top strong{color:#6ceac0;font-size:16px;margin-right:auto}
+.studio-main{display:grid;grid-template-columns:minmax(180px,220px) minmax(350px,1fr) minmax(230px,300px);gap:9px;padding:9px;flex:1;min-height:0}
+.studio-panel{overflow:auto;background:#10262b;border:1px solid #35645c;border-radius:9px;padding:10px}
+.studio-panel h3{font-size:14px;margin:4px 0 12px;color:#7de8c4}
+.studio-panel label{display:block;margin:9px 0;color:#c2ded1;font-size:11px}
+.studio-panel input,.studio-panel select,.studio-panel textarea{display:block;width:100%;min-width:0;background:#18353a;color:#fff;border:1px solid #567d73;border-radius:5px;padding:7px;margin-top:4px}
+.studio-panel input[type=checkbox]{width:auto;display:inline}
+.studio-panel button{padding:7px;margin:3px;font-size:11px}
+#studioCanvas{height:100%;width:100%;min-height:320px;display:block;background:#203e42;cursor:crosshair;touch-action:none}
+.studio-viewport{position:relative;overflow:hidden;min-height:0;border:1px solid #3e7269;border-radius:9px}
+.studio-hint{position:absolute;bottom:8px;left:8px;background:#0a191de8;padding:7px;font:11px system-ui;color:#d1eadd;pointer-events:none}
+#wmkEditor{z-index:51;position:fixed;top:10vh;left:10vw;width:80vw;max-height:82vh}
+#wmkMain .wmk-credits-inline{margin-top:30px;text-align:center;color:#8acfb5}
+@media(max-width:850px){.studio-main{grid-template-columns:1fr;overflow:auto}.studio-viewport{height:45vh;min-height:300px}.studio-panel{max-height:none}#wmkMapStudio{overflow:auto}.wmk-shell h1{font-size:26px}}
+
+  </style>
+</head>
+<body>
+  <main id="game">
+    <canvas id="gameCanvas" aria-label="Jogo de mundo aberto em visão de cima"></canvas>
+
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-mark">WMK</div>
+        <div>
+          <div class="brand-name">WMK VIDA LOKA</div>
+          <div class="brand-subtitle">BAÍA NOVA · v1.3.0</div>
+        </div>
+      </div>
+
+      <div class="right-hud">
+        <div class="stat-card">
+          <div class="stat-label">Dinheiro</div>
+          <div class="stat-value" id="money">W$ 2.500</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Saúde</div>
+          <div class="health-row">
+            <div class="health-track"><div class="health-fill" id="healthFill"></div></div>
+            <div class="health-number" id="healthNumber">100</div>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-label">Procurado</div>
+          <div class="wanted-stars" id="wantedStars"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="mission-card movable" id="missionPanel" data-panel="mission">
+      <div class="panel-grip" data-drag="missionPanel">☷ CONTRATOS <button type="button" data-hide="missionPanel" title="Ocultar painel">×</button></div>
+      <div class="mission-kicker"><span class="mission-dot"></span> <span id="missionCategory">MISSÃO ATIVA</span></div>
+      <h1 class="mission-title" id="missionTitle">Recupere os pacotes</h1>
+      <p class="mission-copy" id="missionCopy">Siga o marcador dourado e recolha as três encomendas.</p>
+      <div class="mission-progress-row">
+        <span id="missionProgress">PACOTES 0/3</span>
+        <span id="missionPercent">0%</span>
+      </div>
+      <div class="mission-progress-track">
+        <div class="mission-progress-fill" id="missionFill"></div>
+      </div>
+    </section>
+
+    <div class="vehicle-card" id="vehicleCard">
+      <div class="vehicle-speed" id="vehicleSpeed">0</div>
+      <div class="vehicle-unit">KM/H</div>
+    </div>
+
+    <div class="context-hint" id="contextHint"></div>
+
+    <div class="controls">
+      <div class="control-item"><span class="keycap">WASD</span> mover / dirigir</div>
+      <div class="control-item"><span class="keycap">SHIFT</span> correr</div>
+      <div class="control-item"><span class="keycap">E</span> entrar / sair</div>
+      <div class="control-item"><span class="keycap">SPACE</span> freio de mão</div>
+    </div>
+
+    <div class="minimap-frame">
+      <div class="minimap-heading">
+        <span>MAPA DA CIDADE</span>
+        <span>BAÍA NOVA</span>
+      </div>
+      <canvas id="minimap" width="220" height="180"></canvas>
+    </div>
+
+    <button id="wmkToolsToggle" class="wmk-tools-toggle" type="button" aria-expanded="false" aria-controls="wmkTools">⚙ Direção</button>
+    <aside class="wmk-tools movable" id="wmkTools" data-panel="direction" hidden>
+      <div class="panel-grip" data-drag="wmkTools">☷ DIREÇÃO <button type="button" data-hide="wmkTools">×</button></div>
+      <h2>WMK · Laboratório de Direção</h2>
+      <label>Velocidade máxima <output id="maxSpeedValue"></output><input id="maxSpeed" type="range" min="100" max="520" step="10"></label>
+      <label>Aceleração <output id="accelerationValue"></output><input id="acceleration" type="range" min="50" max="480" step="10"></label>
+      <label>Freio <output id="brakingValue"></output><input id="braking" type="range" min="120" max="900" step="20"></label>
+      <label>Sensibilidade da direção <output id="steeringValue"></output><input id="steering" type="range" min="0.6" max="3.5" step="0.1"></label>
+      <button id="wmkDefault" type="button">Restaurar padrão</button>
+      <p style="font-size:10px;color:#b3c5bb">Ajustes salvos neste navegador. O velocímetro é uma estimativa do jogo.</p>
+    </aside>
+
+    <nav class="wmk-toolbar" aria-label="Ferramentas do jogo">
+      <button type="button" id="mainMenuReturn">☰ Menu principal (ESC)</button>
+      <button type="button" id="showMissionPanel">📋 Contrato</button>
+      <button type="button" id="resetPanels">↺ Painéis</button>
+      <button type="button" id="openGuide" title="Manual do jogador">❔ Ajuda</button>
+    </nav>
+    <aside class="wmk-editor movable" id="wmkEditor" data-panel="editor" hidden>
+      <div class="panel-grip" data-drag="wmkEditor">☷ EDITOR DE MISSÕES <button type="button" data-hide="wmkEditor">×</button></div>
+      <div class="editor-layout">
+        <div class="editor-library"><label for="missionList">Missões disponíveis</label><select id="missionList" size="7" aria-label="Lista de missões"></select>
+          <div class="editor-actions"><button id="missionNew" type="button">+ Criar</button><button id="missionDelete" type="button">Excluir</button></div>
+          <button id="missionPlay" type="button" class="primary">▶ Testar missão selecionada</button>
+        </div>
+        <form id="missionForm" class="editor-form">
+          <label>Título <input id="mTitle" maxlength="80" required></label>
+          <label>Descrição <textarea id="mDescription" rows="2" maxlength="250"></textarea></label>
+          <div class="editor-fields"><label>Tipo <select id="mType"><option value="checkpoint">Ir ao destino</option><option value="pickup">Coleta de pacote</option><option value="delivery">Entrega</option><option value="escape">Fuga da polícia</option><option value="race">Corrida por pontos</option></select></label><label>Recompensa (W$) <input id="mReward" type="number" min="0" max="1000000" step="50"></label></div>
+          <div class="editor-fields"><label>X <input id="mX" type="number" min="20" max="2700"></label><label>Y <input id="mY" type="number" min="20" max="2280"></label></div>
+          <label>Marcadores da missão (um X,Y por linha)<textarea id="mPoints" rows="3" placeholder="760,150
+1360,650"></textarea></label>
+          <label>Mapas permitidos (IDs separados por vírgula; vazio = todos)<input id="mMaps" placeholder="baia-nova, costa-dourada"></label>
+          <label>Modo de jogo <select id="mMode"><option value="livre">Mundo livre</option><option value="corrida">Corrida</option><option value="entregas">Entregas</option><option value="exploracao">Exploração</option><option value="policia">Polícia e fuga</option></select></label>
+          <label class="check"><input type="checkbox" id="mVehicle"> Exigir veículo para concluir</label>
+          <div class="editor-actions"><button type="button" id="missionPosition">📍 Usar posição atual</button><button type="submit" class="primary">💾 Salvar missão</button></div>
+          <div class="editor-actions"><button type="button" id="missionExport">Exportar JSON</button><button type="button" id="missionImportButton">Importar JSON</button><input id="missionImport" type="file" accept=".json,application/json" hidden></div>
+          <small id="editorStatus" role="status">Selecione uma missão para editar. Os dados ficam neste navegador.</small>
+        </form>
+      </div>
+    </aside>
+    <div class="wmk-modal" id="guideModal" hidden><div><button id="closeGuide" type="button">Fechar ✕</button><h2>🚘 Como jogar</h2><p>WASD: movimentar/dirigir · E: entrar/sair · Shift: correr · Espaço: freio de mão.</p><p>Abra o <b>Editor de Missões</b>, escolha um contrato e clique em <b>Testar missão</b>. Ao alcançar cada marcador, você avança. No modo fuga, perca as estrelas para concluir.</p><p>Para criar missões: defina nome, descrição, tipo, pontos X,Y, recompensa e clique em Salvar. Exporte ou importe JSON. Painéis são arrastáveis pela barra ☷.</p><p><a href="manual-jogador.html" target="_blank">Abrir manual completo</a></p></div></div>
+    <div class="wmk-credits">© Walney Moreira Klein — walneyk@hotmail.com · WMK Vida Loka v1.3.0</div>
+    <div class="toast" id="toast"></div>
+  </main>
+
+
+  <section id="wmkMain" aria-label="Menu principal">
+    <div class="wmk-shell">
+      <img src="assets/logo.svg" alt="WMK Vida Loka" style="width:220px;max-width:85%">
+      <h1>WMK Vida Loka <small style="font-size:13px;color:#89a9a0">v1.3.0 · World Studio</small></h1>
+      <p>Escolha uma cidade, crie cenários e construa contratos para mapas específicos ou todos os mapas.</p>
+      <div class="wmk-menu-actions">
+        <button id="wmkPlay">▶ JOGAR MAPA SELECIONADO</button>
+        <button id="wmkOpenMapStudio">🗺️ EDITOR DE MAPAS</button>
+        <button id="wmkOpenMissionStudio">📋 EDITOR DE MISSÕES</button>
+        <button id="wmkExportAll">⬇ Exportar projeto JSON</button>
+        <button id="wmkImportAllButton">⬆ Importar projeto JSON</button>
+        <input id="wmkImportAll" type="file" accept=".json,application/json" hidden>
+      </div>
+      <h2>🌍 Mapas disponíveis</h2>
+      <div id="wmkMapCards" class="wmk-map-grid"></div>
+      <div class="wmk-credits-inline">Walney Moreira Klein — walneyk@hotmail.com</div>
+    </div>
+  </section>
+  <section id="wmkMapStudio" hidden aria-label="Editor de mapas">
+    <div class="studio-top"><strong>🗺 WMK WORLD STUDIO · EDITOR 2D</strong>
+      <button id="studioReturn">← Menu</button><button id="studioSave">💾 Salvar mapa</button><button id="studioTest">▶ Testar mapa</button>
+      <button id="studioExport">⬇ JSON</button><button id="studioImportBtn">⬆ JSON</button><input id="studioImportFile" type="file" accept=".json" hidden>
+    </div>
+    <div class="studio-main">
+      <aside class="studio-panel"><h3>🌍 Mapa e ferramentas</h3>
+        <label>Mapa<select id="studioMapSelect"></select></label>
+        <button id="studioNew">+ Novo mapa</button><button id="studioDuplicate">Duplicar</button><button id="studioDelete">Excluir</button>
+        <label>Nome<input id="studioMapName" maxlength="70"></label>
+        <label>Descrição<textarea id="studioMapDescription" rows="2" maxlength="240"></textarea></label>
+        <label>Cor do terreno<input id="studioBackground" type="color"></label>
+        <label>Ferramenta<select id="studioTool"><option value="select">Selecionar/mover</option><option value="building">🏢 Prédio</option><option value="tree">🌳 Árvore</option><option value="water">🌊 Água</option><option value="sand">🏖 Areia</option><option value="barrier">🚧 Barreira</option><option value="decoration">✨ Decoração</option><option value="sprite">🖼 Sprite importado</option><option value="spawn">📍 Posição inicial</option><option value="erase">🗑 Apagar</option></select></label>
+        <label>Sprite (biblioteca)<select id="studioAssetSelect"></select></label>
+        <button id="studioAssetButton">+ Importar PNG/JPG/WebP</button><input id="studioAssetFile" type="file" accept="image/png,image/jpeg,image/webp" hidden>
+        <div id="studioAssetsInfo" style="font-size:10px;color:#a7d6be"></div>
+        <p style="font-size:11px">Selecione uma ferramenta e clique no mapa. Com “Selecionar”, arraste para mover. Colisões impedem passagem de pedestres e carros.</p>
+      </aside>
+      <div class="studio-viewport"><canvas id="studioCanvas" width="1000" height="760"></canvas><div class="studio-hint">Clique para inserir · arraste para mover · roda para zoom · botão direito para panorâmica · Delete para excluir</div></div>
+      <aside class="studio-panel"><h3>🧱 Objetos e propriedades</h3><select id="studioObjectList" size="9"></select>
+        <div id="studioObjectProps">
+          <label>Nome<input id="objName" maxlength="60"></label>
+          <label>Tipo<input id="objType" readonly></label>
+          <label>X<input id="objX" type="number"></label><label>Y<input id="objY" type="number"></label>
+          <label>Largura<input id="objW" type="number" min="4" max="900"></label><label>Altura<input id="objH" type="number" min="4" max="900"></label>
+          <label>Rotação (graus)<input id="objRotation" type="number" min="-360" max="360"></label>
+          <label>Cor<input id="objColor" type="color"></label>
+          <label><input id="objSolid" type="checkbox"> Ativar colisão</label>
+          <label>Camada (ordem de desenho)<input id="objLayer" type="number" min="-20" max="20"></label>
+          <button id="objDuplicate">⧉ Duplicar objeto</button><button id="objDelete">🗑 Excluir objeto</button>
+        </div>
+        <p id="studioStatus" style="font-size:11px;color:#a9e7cc" role="status">Selecione ou crie um objeto.</p>
+      </aside>
+    </div>
+  </section>
+  <script>
+    const WMK_DEFAULT_DRIVING = Object.freeze({ maxSpeed: 220, acceleration: 140, braking: 500, steering: 1.55 });
+    const driving = { ...WMK_DEFAULT_DRIVING };
+    try {
+      const saved = JSON.parse(localStorage.getItem('wmk-vida-loka-driving-v1') || '{}');
+      for (const key of Object.keys(driving)) {
+        if (typeof saved[key] === 'number' && Number.isFinite(saved[key])) driving[key] = saved[key];
+      }
+    } catch (_) { /* armazenamento indisponível ou configuração corrompida */ }
+    const drivingLimits = {maxSpeed:[100,520], acceleration:[50,480], braking:[120,900], steering:[.6,3.5]};
+    for (const key of Object.keys(driving)) {
+      const [min,max] = drivingLimits[key];
+      driving[key] = Math.max(min, Math.min(max, driving[key]));
+    }
+    function syncDrivingUI() {
+      for (const key of Object.keys(driving)) {
+        document.getElementById(key).value = String(driving[key]);
+        document.getElementById(key+'Value').textContent = key === 'steering' ? driving[key].toFixed(1) : String(driving[key]);
+      }
+    }
+    for (const key of Object.keys(driving)) {
+      document.getElementById(key).addEventListener('input', event => {
+        driving[key] = Number(event.target.value);
+        syncDrivingUI();
+        try {localStorage.setItem('wmk-vida-loka-driving-v1', JSON.stringify(driving));} catch (_) {}
+      });
+    }
+    document.getElementById('wmkDefault').addEventListener('click', () => {
+      Object.assign(driving, WMK_DEFAULT_DRIVING);
+      syncDrivingUI();
+      try {localStorage.setItem('wmk-vida-loka-driving-v1', JSON.stringify(driving));} catch (_) {}
+    });
+    document.getElementById('wmkToolsToggle').addEventListener('click', () => {
+      const panel = document.getElementById('wmkTools');
+      panel.hidden = !panel.hidden;
+      document.getElementById('wmkToolsToggle').setAttribute('aria-expanded', String(!panel.hidden));
+    });
+    syncDrivingUI();
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+    const minimap = document.getElementById("minimap");
+    const mapCtx = minimap.getContext("2d");
+
+    const ui = {
+      money: document.getElementById("money"),
+      healthFill: document.getElementById("healthFill"),
+      healthNumber: document.getElementById("healthNumber"),
+      wantedStars: document.getElementById("wantedStars"),
+      missionTitle: document.getElementById("missionTitle"),
+      missionCopy: document.getElementById("missionCopy"),
+      missionProgress: document.getElementById("missionProgress"),
+      missionPercent: document.getElementById("missionPercent"),
+      missionFill: document.getElementById("missionFill"),
+      vehicleCard: document.getElementById("vehicleCard"),
+      vehicleSpeed: document.getElementById("vehicleSpeed"),
+      contextHint: document.getElementById("contextHint"),
+      toast: document.getElementById("toast")
+    };
+
+    // Editor WMK: CRUD, JSON e painéis flutuantes, preservando o jogo em Canvas.
+    const $=id=>document.getElementById(id);
+    const editorStatus=$('editorStatus');
+    const fieldNames=['mTitle','mDescription','mType','mReward','mX','mY','mPoints','mVehicle'];
+    function renderMissionList(){
+      const list=$('missionList');list.replaceChildren();
+      missionCatalog.forEach(m=>{const opt=document.createElement('option');opt.value=m.id;opt.textContent=m.title;list.appendChild(opt)});
+      if(activeMission()){list.value=selectedMissionId;populateMissionForm()}
+    }
+    function populateMissionForm(){
+      const m=activeMission();if(!m)return;
+      $('mTitle').value=m.title;$('mDescription').value=m.description;$('mType').value=m.type;$('mReward').value=m.reward;
+      $('mX').value=m.points[0][0];$('mY').value=m.points[0][1];$('mPoints').value=m.points.map(p=>p.join(',')).join('\n');$('mVehicle').checked=m.vehicle; $('mMaps').value=(m.maps||[]).join(', '); $('mMode').value=m.mode||'livre';
+    }
+    function setMission(id){selectedMissionId=id;mission.index=0;mission.finished=false;mission.startedEscape=false;renderMissionList();updateHUD()}
+    $('missionList').addEventListener('change',e=>{selectedMissionId=e.target.value;populateMissionForm();editorStatus.textContent='Clique em Testar para ativar a missão.'});
+    $('missionNew').addEventListener('click',()=>{const m=normalizeMission({id:'nova-'+Date.now(),title:'Novo contrato',type:'checkpoint',points:[[Math.round(player.x),Math.round(player.y)]],reward:250});missionCatalog.push(m);selectedMissionId=m.id;persistMissions();renderMissionList();editorStatus.textContent='Missão criada. Preencha e clique em Salvar.'});
+    $('missionDelete').addEventListener('click',()=>{const id=$('missionList').value;if(!id||!confirm('Excluir esta missão?'))return;missionCatalog=missionCatalog.filter(m=>m.id!==id);selectedMissionId=missionCatalog[0]?.id||'';persistMissions();setMission(selectedMissionId);editorStatus.textContent='Missão excluída.'});
+    $('missionPlay').addEventListener('click',()=>{if(!$('missionList').value)return;setMission($('missionList').value);$('wmkEditor').hidden=true;startGame(currentMapId);showToast('Missão iniciada: '+activeMission().title)});
+    function syncFirstPoint(){const lines=$('mPoints').value.split('\n');lines[0]=$('mX').value+','+$('mY').value;$('mPoints').value=lines.join('\n')}
+    ['mX','mY'].forEach(id=>$(id).addEventListener('change',syncFirstPoint));
+    $('missionPosition').addEventListener('click',()=>{$('mX').value=Math.round(player.x);$('mY').value=Math.round(player.y);syncFirstPoint();editorStatus.textContent='Posição atual aplicada ao primeiro marcador. Clique em Salvar.'});
+    $('missionForm').addEventListener('submit',event=>{event.preventDefault();try{
+      const id=$('missionList').value;if(!id)throw Error('Crie uma missão primeiro.');
+      const pts=$('mPoints').value.split(/\n+/).map(line=>line.trim()).filter(Boolean).map(line=>line.split(/[;,]/).map(v=>Number(v.trim())));
+      if(!pts.length)pts.push([Number($('mX').value),Number($('mY').value)]);
+      const updated=normalizeMission({id,title:$('mTitle').value,description:$('mDescription').value,type:$('mType').value,reward:Number($('mReward').value),points:pts,vehicle:$('mVehicle').checked,maps:$('mMaps').value.split(',').map(x=>x.trim()).filter(Boolean),mode:$('mMode').value});
+      if(!updated||updated.points.length!==pts.length)throw Error('Coordenadas inválidas. Use X,Y entre os limites do mapa.');
+      missionCatalog[missionCatalog.findIndex(m=>m.id===id)]=updated;persistMissions();setMission(id);editorStatus.textContent='Missão salva e ativada!';showToast('Missão salva.');
+    }catch(err){editorStatus.textContent='Erro: '+err.message}});
+    $('missionExport').addEventListener('click',()=>{const blob=new Blob([JSON.stringify({format:'wmk-vida-loka-missions',version:1,missions:missionCatalog},null,2)],{type:'application/json'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='wmk-missoes.json';a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)});
+    $('missionImportButton').addEventListener('click',()=>$('missionImport').click());
+    $('missionImport').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+      if(file.size>500000)throw Error('Arquivo muito grande (máximo 500 KB).');
+      const data=JSON.parse(await file.text());const entries=Array.isArray(data)?data:data.missions;
+      if(!Array.isArray(entries)||!entries.length||entries.length>100)throw Error('JSON deve conter de 1 a 100 missões.');
+      const parsed=entries.map(normalizeMission);if(parsed.some(m=>!m))throw Error('Há missões ou coordenadas inválidas.');
+      const ids=new Set();parsed.forEach(m=>{if(ids.has(m.id))throw Error('IDs duplicados.');ids.add(m.id)});
+      if(!confirm('Substituir o catálogo atual de missões pelo arquivo importado?'))return;
+      missionCatalog=parsed;selectedMissionId=parsed[0].id;persistMissions();setMission(selectedMissionId);editorStatus.textContent='Importação concluída.';
+    }catch(err){editorStatus.textContent='Importação falhou: '+err.message}e.target.value=''});
+    $('showMissionPanel').addEventListener('click',()=>{$('missionPanel').hidden=!$('missionPanel').hidden});
+    $('openGuide').addEventListener('click',()=>$('guideModal').hidden=false);
+    $('closeGuide').addEventListener('click',()=>$('guideModal').hidden=true);
+    document.querySelectorAll('[data-hide]').forEach(btn=>btn.addEventListener('click',()=>$ (btn.dataset.hide).hidden=true));
+    const panelDefaults={missionPanel:{left:18,bottom:72},wmkTools:{right:18,top:190},wmkEditor:{left:Math.max(20,innerWidth/2-350),top:160}};
+    function movePanel(panel,x,y){panel.style.left=Math.max(0,Math.min(innerWidth-90,x))+'px';panel.style.top=Math.max(0,Math.min(innerHeight-50,y))+'px';panel.style.right='auto';panel.style.bottom='auto';}
+    function savePanelLayout(){const out={};document.querySelectorAll('[data-panel]').forEach(el=>{out[el.id]={left:el.style.left,top:el.style.top,width:el.style.width,height:el.style.height}});try{localStorage.setItem('wmk-vida-loka-layout-v1',JSON.stringify(out))}catch(_){}}
+    document.querySelectorAll('[data-drag]').forEach(grip=>{
+      const panel=$(grip.dataset.drag);let start=null;
+      grip.addEventListener('pointerdown',e=>{if(e.target.closest('button'))return;start={x:e.clientX,y:e.clientY,left:panel.getBoundingClientRect().left,top:panel.getBoundingClientRect().top};grip.setPointerCapture(e.pointerId);e.preventDefault()});
+      grip.addEventListener('pointermove',e=>{if(!start)return;movePanel(panel,start.left+e.clientX-start.x,start.top+e.clientY-start.y)});
+      const finish=()=>{if(start){start=null;savePanelLayout()}};grip.addEventListener('pointerup',finish);grip.addEventListener('pointercancel',finish);
+    });
+    $('resetPanels').addEventListener('click',()=>{document.querySelectorAll('[data-panel]').forEach(el=>{el.style.left='';el.style.top='';el.style.right='';el.style.bottom='';el.style.width='';el.style.height=''});try{localStorage.removeItem('wmk-vida-loka-layout-v1')}catch(_){}showToast('Posições dos painéis restauradas.')});
+    try{const layout=JSON.parse(localStorage.getItem('wmk-vida-loka-layout-v1')||'{}');Object.entries(layout).forEach(([id,rect])=>{const panel=$(id);if(!panel||!rect)return;const x=parseFloat(rect.left),y=parseFloat(rect.top);if(Number.isFinite(x)&&Number.isFinite(y))movePanel(panel,x,y);if(/^\d+px$/.test(rect.width||''))panel.style.width=rect.width;if(/^\d+px$/.test(rect.height||''))panel.style.height=rect.height;})}catch(_){}
+    const WORLD_W = 2720;
+    const WORLD_H = 2300;
+    const ROAD_W = 150;
+    let roadsX = [160, 760, 1360, 1960, 2560];
+    let roadsY = [150, 650, 1150, 1650, 2150];
+
+    let viewW = 0;
+    let viewH = 0;
+    let dpr = 1;
+    let elapsed = 0;
+    let uiTimer = 0;
+    let toastTimer = null;
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    const distance = (x1, y1, x2, y2) => Math.hypot(x2 - x1, y2 - y1);
+
+    function seededRandom() {
+      let seed = 92831;
+      return function() {
+        seed = (seed * 1664525 + 1013904223) % 4294967296;
+        return seed / 4294967296;
+      };
+    }
+
+    const random = seededRandom();
+
+    function roundedRectPath(c, x, y, w, h, radius) {
+      const r = Math.min(radius, w / 2, h / 2);
+      c.beginPath();
+      c.moveTo(x + r, y);
+      c.lineTo(x + w - r, y);
+      c.quadraticCurveTo(x + w, y, x + w, y + r);
+      c.lineTo(x + w, y + h - r);
+      c.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
+      c.lineTo(x + r, y + h);
+      c.quadraticCurveTo(x, y + h, x, y + h - r);
+      c.lineTo(x, y + r);
+      c.quadraticCurveTo(x, y, x + r, y);
+      c.closePath();
+    }
+
+    const buildings = [];
+    const blocks = [];
+    const buildingPalette = [
+      ["#59636a", "#6f7d80"],
+      ["#675d59", "#84736b"],
+      ["#59665d", "#758271"],
+      ["#5c5e70", "#74758a"],
+      ["#62665e", "#828474"],
+      ["#625b66", "#817286"]
+    ];
+
+    function addBuilding(x, y, w, h) {
+      const palette = buildingPalette[Math.floor(random() * buildingPalette.length)];
+      const items = [];
+      const count = 2 + Math.floor(random() * 3);
+
+      for (let i = 0; i < count; i++) {
+        const iw = 16 + random() * 20;
+        const ih = 12 + random() * 12;
+        items.push({
+          x: x + 12 + random() * Math.max(1, w - iw - 24),
+          y: y + 12 + random() * Math.max(1, h - ih - 24),
+          w: iw,
+          h: ih
+        });
+      }
+
+      buildings.push({
+        x, y, w, h,
+        wall: palette[0],
+        roof: palette[1],
+        items
+      });
+    }
+
+    for (let row = 0; row < roadsY.length - 1; row++) {
+      for (let col = 0; col < roadsX.length - 1; col++) {
+        const x = roadsX[col] + ROAD_W / 2 + 8;
+        const y = roadsY[row] + ROAD_W / 2 + 8;
+        const w = roadsX[col + 1] - roadsX[col] - ROAD_W - 16;
+        const h = roadsY[row + 1] - roadsY[row] - ROAD_W - 16;
+
+        blocks.push({ x, y, w, h });
+
+        const mode = (col * 3 + row * 5) % 4;
+
+        if (mode === 0) {
+          addBuilding(x + 34, y + 28, w - 68, h - 56);
+        } else if (mode === 1) {
+          const gap = 14;
+          const margin = 28;
+          const bw = (w - margin * 2 - gap) / 2;
+          addBuilding(x + margin, y + margin, bw, h - margin * 2);
+          addBuilding(x + margin + bw + gap, y + margin, bw, h - margin * 2);
+        } else if (mode === 2) {
+          const gap = 14;
+          const margin = 28;
+          const bh = (h - margin * 2 - gap) / 2;
+          addBuilding(x + margin, y + margin, w - margin * 2, bh);
+          addBuilding(x + margin, y + margin + bh + gap, w - margin * 2, bh);
+        } else {
+          addBuilding(x + 28, y + 28, w * .62, h * .7);
+          addBuilding(x + w * .68, y + h * .58, w * .25, h * .31);
+        }
+      }
+    }
+
+    const cars = [];
+
+    function makeCar(x, y, angle, color) {
+      return {
+        x, y, angle, color,
+        speed: 0,
+        stolen: false,
+        occupied: false
+      };
+    }
+
+    cars.push(makeCar(315, 120, 0, "#d77555"));
+
+    const carColors = ["#dc7354", "#4e94a6", "#d2ad52", "#8997a1", "#805e9c", "#5da07c"];
+
+    for (let row = 0; row < roadsY.length; row++) {
+      for (let col = 0; col < roadsX.length - 1; col++) {
+        if ((row + col) % 2 === 0) {
+          const x = (roadsX[col] + roadsX[col + 1]) / 2;
+          const y = roadsY[row] + (col % 2 === 0 ? 28 : -28);
+          const angle = col % 2 === 0 ? 0 : Math.PI;
+          cars.push(makeCar(x, y, angle, carColors[Math.floor(random() * carColors.length)]));
+        }
+      }
+    }
+
+    for (let col = 0; col < roadsX.length; col++) {
+      for (let row = 0; row < roadsY.length - 1; row++) {
+        if ((col + row) % 3 === 1) {
+          const x = roadsX[col] + (row % 2 === 0 ? 28 : -28);
+          const y = (roadsY[row] + roadsY[row + 1]) / 2;
+          const angle = row % 2 === 0 ? Math.PI / 2 : -Math.PI / 2;
+          cars.push(makeCar(x, y, angle, carColors[Math.floor(random() * carColors.length)]));
+        }
+      }
+    }
+
+    const player = {
+      x: 255,
+      y: 120,
+      angle: 0,
+      hp: 100,
+      money: 2500
+    };
+
+    let activeCar = null;
+    let wanted = 0;
+    let heatTimer = 0;
+    let policeHitCooldown = 0;
+    let crashCooldown = 0;
+
+    // Missões são configuradas via JSON, sem execução de scripts arbitrários.
+    const MISSIONS_KEY = 'wmk-vida-loka-missions-v2';
+    const STARTER_MISSIONS = [
+      {id:'entregas',title:'Correio da Confusão',description:'Busque três pacotes e entregue o carregamento.',type:'delivery',points:[[760,150],[1360,650],[1960,1150],[2560,2150]],reward:800,vehicle:false},
+      {id:'taxi',title:'Táxi do Tio Zé',description:'Encontre o passageiro e leve-o ao destino.',type:'delivery',points:[[760,650],[1960,1650]],reward:400,vehicle:true},
+      {id:'corrida',title:'Volta do Desespero',description:'Passe por todos os pontos de controle da cidade.',type:'race',points:[[160,650],[1360,650],[1360,1650],[2560,1650],[2560,150]],reward:1200,vehicle:true},
+      {id:'lanche',title:'Lanche Express',description:'Chegue à lanchonete antes que esfrie (sem cronômetro nesta versão).',type:'checkpoint',points:[[1960,650]],reward:180,vehicle:false},
+      {id:'fuga',title:'Cadê a Polícia?',description:'Suba o nível de procurado e consiga despistar as patrulhas.',type:'escape',points:[[760,1150]],reward:700,vehicle:false},
+      {id:'turista',title:'Turista Perdido',description:'Visite quatro atrações de Baía Nova.',type:'checkpoint',points:[[160,2150],[760,1650],[1960,1150],[2560,650]],reward:600,vehicle:false},
+      {id:'mecanico',title:'Oficina do Seu Mário',description:'Leve o carro até a oficina do bairro.',type:'checkpoint',points:[[1360,2150]],reward:300,vehicle:true},
+      {id:'tesouro',title:'Caça ao W$',description:'Investigue pontos marcados para achar uma recompensa.',type:'pickup',points:[[160,1150],[1360,150],[2560,1150]],reward:900,vehicle:false},
+      {id:'motoboy',title:'Entrega Impossível',description:'Faça entregas de ponta a ponta da cidade.',type:'delivery',points:[[760,150],[2560,2150],[160,650]],reward:850,vehicle:true},
+      {id:'fotografo',title:'Postais da Baía',description:'Visite os mirantes e conclua sua coleção de postais.',type:'checkpoint',points:[[2560,150],[160,2150]],reward:250,vehicle:false}
+    ];
+    const normalizeMission = obj => {
+      if (!obj || typeof obj!=='object') return null;
+      const points = Array.isArray(obj.points) ? obj.points.slice(0,30).map(p=>Array.isArray(p)?p.map(Number):[]).filter(p=>p.length===2 && p.every(Number.isFinite) && p[0]>=20 && p[0]<=2700 && p[1]>=20 && p[1]<=2280) : [];
+      if (!points.length) return null;
+      return {maps:Array.isArray(obj.maps)?obj.maps.map(String).slice(0,100):[],mode:String(obj.mode||'livre').slice(0,40),id:String(obj.id||'missao-'+Date.now()).slice(0,80),title:String(obj.title||'Sem nome').slice(0,80),description:String(obj.description||'').slice(0,250),type:['pickup','delivery','checkpoint','escape','race'].includes(obj.type)?obj.type:'checkpoint',points,reward:clamp(Math.floor(Number(obj.reward)||0),0,1000000),vehicle:!!obj.vehicle};
+    };
+    let missionCatalog = STARTER_MISSIONS.map(normalizeMission);
+    try {const store=JSON.parse(localStorage.getItem(MISSIONS_KEY)||'null'); if(Array.isArray(store)&&store.length) {const clean=store.slice(0,100).map(normalizeMission).filter(Boolean);if(clean.length)missionCatalog=clean;}}catch(_){}
+    let selectedMissionId = missionCatalog[0].id;
+    const mission = {index:0,finished:false,startedEscape:false};
+    function activeMission(){return missionCatalog.find(m=>m.id===selectedMissionId)||missionCatalog[0]||null}
+    function persistMissions(){try{localStorage.setItem(MISSIONS_KEY,JSON.stringify(missionCatalog));}catch(e){editorStatus.textContent='Sem espaço no armazenamento: exporte seu JSON.'}}
+    const police = [];
+    const roadNodes = [];
+
+    for (let row = 0; row < roadsY.length; row++) {
+      for (let col = 0; col < roadsX.length; col++) {
+        roadNodes.push({
+          id: row * roadsX.length + col,
+          col,
+          row,
+          x: roadsX[col],
+          y: roadsY[row]
+        });
+      }
+    }
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      viewW = rect.width;
+      viewH = rect.height;
+      canvas.width = Math.floor(viewW * dpr);
+      canvas.height = Math.floor(viewH * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    window.addEventListener("resize", resize);
+
+    const keys = Object.create(null);
+
+    function keyDown(...codes) {
+      return codes.some(code => keys[code]);
+    }
+
+    window.addEventListener("keydown", event => {
+      if (["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "Space"].includes(event.code)) {
+        event.preventDefault();
+      }
+
+      if (event.code === "KeyE" && !event.repeat) {
+        toggleVehicle();
+      }
+
+      keys[event.code] = true;
+    });
+
+    window.addEventListener("keyup", event => {
+      keys[event.code] = false;
+    });
+
+    window.addEventListener("blur", () => {
+      for (const key in keys) keys[key] = false;
+    });
+
+    function showToast(message) {
+      ui.toast.textContent = message;
+      ui.toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => ui.toast.classList.remove("show"), 2500);
+    }
+
+    function collidesWithBuilding(x, y, radius) {
+      for (const b of buildings) {
+        const closestX = clamp(x, b.x, b.x + b.w);
+        const closestY = clamp(y, b.y, b.y + b.h);
+        const dx = x - closestX;
+        const dy = y - closestY;
+        if (dx * dx + dy * dy < radius * radius) return true;
+      }
+      return false;
+    }
+
+    function canWalk(x, y) {
+      const r = 10;
+      return x > r && y > r &&
+        x < WORLD_W - r && y < WORLD_H - r &&
+        !collidesWithBuilding(x, y, r) && !collidesWithMapObjects(x,y,r);
+    }
+
+    function canDrive(x, y) {
+      const r = 19;
+      return x > r && y > r &&
+        x < WORLD_W - r && y < WORLD_H - r &&
+        !collidesWithBuilding(x, y, r) && !collidesWithMapObjects(x,y,r);
+    }
+
+    function findNearbyCar() {
+      let nearest = null;
+
+      for (const car of cars) {
+        if (car.occupied) continue;
+        const d = distance(player.x, player.y, car.x, car.y);
+        if (!nearest || d < nearest.distance) nearest = { car, distance: d };
+      }
+
+      return nearest;
+    }
+
+    function toggleVehicle() {
+      if (activeCar) {
+        const car = activeCar;
+        const offsets = [
+          { x: -Math.sin(car.angle), y: Math.cos(car.angle) },
+          { x: Math.sin(car.angle), y: -Math.cos(car.angle) }
+        ];
+
+        let exitPoint = null;
+
+        for (const offset of offsets) {
+          const x = car.x + offset.x * 36;
+          const y = car.y + offset.y * 36;
+          if (canWalk(x, y)) {
+            exitPoint = { x, y };
+            break;
+          }
+        }
+
+        if (!exitPoint) {
+          showToast("Não há espaço suficiente para sair.");
+          return;
+        }
+
+        car.occupied = false;
+        car.speed = 0;
+        activeCar = null;
+        player.x = exitPoint.x;
+        player.y = exitPoint.y;
+        player.angle = car.angle;
+        showToast("Você saiu do veículo.");
+        return;
+      }
+
+      const nearby = findNearbyCar();
+
+      if (!nearby || nearby.distance > 68) {
+        showToast("Aproxime-se de um veículo.");
+        return;
+      }
+
+      const car = nearby.car;
+      car.occupied = true;
+      car.speed = 0;
+      activeCar = car;
+      player.x = car.x;
+      player.y = car.y;
+
+      if (!car.stolen) {
+        car.stolen = true;
+        wanted = Math.min(3, wanted + 1);
+        heatTimer = 23;
+        showToast("Veículo roubado — a polícia foi alertada.");
+      } else {
+        heatTimer = Math.max(heatTimer, 10);
+        showToast("Você voltou ao veículo.");
+      }
+    }
+
+    function currentMissionTarget(){
+      const item=activeMission();if(!item||mission.finished)return null;
+      const point=item.points[Math.min(mission.index,item.points.length-1)];
+      return {x:point[0],y:point[1],type:item.type==='delivery'&&mission.index===item.points.length-1?'delivery':'pickup',label:item.type==='race'?'CHECKPOINT':item.type==='escape'?'FUGA':item.type==='pickup'?'COLETA':'DESTINO'};
+    }
+    function updateMission(){
+      const item=activeMission(),target=currentMissionTarget();if(wmkMode!=='play'||!item||!target)return;
+      if(item.type==='escape'){
+        if(wanted>0)mission.startedEscape=true;
+        if(!mission.startedEscape||wanted>0)return;
+      } else if(item.vehicle&&!activeCar)return;
+      if(distance(player.x,player.y,target.x,target.y)>(activeCar?52:34))return;
+      mission.index++;
+      if(mission.index>=item.points.length){mission.finished=true;player.money+=item.reward;showToast(`Missão concluída: ${item.title} · +W$ ${item.reward}`)}
+      else showToast(`Etapa ${mission.index}/${item.points.length} concluída`);
+    }
+
+    function getNearestRoadPoint(x, y) {
+      let best = null;
+      let bestD2 = Infinity;
+
+      for (let row = 0; row < roadsY.length; row++) {
+        const px = clamp(x, 20, WORLD_W - 20);
+        const py = roadsY[row];
+        const d2 = (px - x) ** 2 + (py - y) ** 2;
+
+        if (d2 < bestD2) {
+          bestD2 = d2;
+          best = { x: px, y: py, axis: "h", lineIndex: row };
+        }
+      }
+
+      for (let col = 0; col < roadsX.length; col++) {
+        const px = roadsX[col];
+        const py = clamp(y, 20, WORLD_H - 20);
+        const d2 = (px - x) ** 2 + (py - y) ** 2;
+
+        if (d2 < bestD2) {
+          bestD2 = d2;
+          best = { x: px, y: py, axis: "v", lineIndex: col };
+        }
+      }
+
+      return best;
+    }
+
+    function nearestNodeId(x, y) {
+      let bestId = 0;
+      let bestD2 = Infinity;
+
+      for (const node of roadNodes) {
+        const d2 = (node.x - x) ** 2 + (node.y - y) ** 2;
+        if (d2 < bestD2) {
+          bestD2 = d2;
+          bestId = node.id;
+        }
+      }
+
+      return bestId;
+    }
+
+    function targetNodeId(point) {
+      if (point.axis === "h") {
+        let col = 0;
+        for (let i = 1; i < roadsX.length; i++) {
+          if (Math.abs(roadsX[i] - point.x) < Math.abs(roadsX[col] - point.x)) col = i;
+        }
+        return point.lineIndex * roadsX.length + col;
+      }
+
+      let row = 0;
+      for (let i = 1; i < roadsY.length; i++) {
+        if (Math.abs(roadsY[i] - point.y) < Math.abs(roadsY[row] - point.y)) row = i;
+      }
+
+      return row * roadsX.length + point.lineIndex;
+    }
+
+    function pathBetween(startId, targetId) {
+      if (startId === targetId) return [];
+
+      const previous = new Array(roadNodes.length).fill(-1);
+      const queue = [startId];
+      previous[startId] = startId;
+
+      for (let q = 0; q < queue.length; q++) {
+        const id = queue[q];
+        const node = roadNodes[id];
+        const neighbors = [];
+
+        if (node.col > 0) neighbors.push(id - 1);
+        if (node.col < roadsX.length - 1) neighbors.push(id + 1);
+        if (node.row > 0) neighbors.push(id - roadsX.length);
+        if (node.row < roadsY.length - 1) neighbors.push(id + roadsX.length);
+
+        for (const next of neighbors) {
+          if (previous[next] !== -1) continue;
+          previous[next] = id;
+          queue.push(next);
+        }
+      }
+
+      if (previous[targetId] === -1) return [];
+
+      const route = [];
+      let current = targetId;
+
+      while (current !== startId) {
+        route.push(roadNodes[current]);
+        current = previous[current];
+      }
+
+      return route.reverse();
+    }
+
+    function planPoliceRoute(cop) {
+      const target = getNearestRoadPoint(player.x, player.y);
+      const startId = nearestNodeId(cop.x, cop.y);
+      const endId = targetNodeId(target);
+
+      cop.route = pathBetween(startId, endId);
+      cop.finalTarget = target;
+      cop.planTimer = 0.8;
+    }
+
+    function spawnPoliceCar() {
+      const candidates = roadNodes.filter(node =>
+        distance(player.x, player.y, node.x, node.y) > 470
+      );
+      const pool = candidates.length ? candidates : roadNodes;
+      const node = pool[Math.floor(Math.random() * pool.length)];
+
+      police.push({
+        x: node.x,
+        y: node.y,
+        angle: Math.random() * Math.PI * 2,
+        route: [],
+        finalTarget: null,
+        planTimer: 0
+      });
+    }
+
+    function keepPoliceCount() {
+      while (police.length < wanted) spawnPoliceCar();
+      while (police.length > wanted) police.pop();
+    }
+
+    function updatePoliceCar(cop, dt) {
+      cop.planTimer -= dt;
+
+      if (cop.planTimer <= 0 || !cop.finalTarget) {
+        planPoliceRoute(cop);
+      }
+
+      const target = cop.route.length ? cop.route[0] : cop.finalTarget;
+      if (!target) return;
+
+      const dx = target.x - cop.x;
+      const dy = target.y - cop.y;
+      const d = Math.hypot(dx, dy);
+
+      if (cop.route.length && d < 24) {
+        cop.route.shift();
+        return;
+      }
+
+      if (!cop.route.length && d < 18) return;
+
+      const desiredAngle = Math.atan2(dy, dx);
+      let difference = desiredAngle - cop.angle;
+
+      while (difference > Math.PI) difference -= Math.PI * 2;
+      while (difference < -Math.PI) difference += Math.PI * 2;
+
+      const maxTurn = 2.8 * dt;
+      cop.angle += clamp(difference, -maxTurn, maxTurn);
+
+      const facing = Math.max(0, Math.cos(difference));
+      const speed = 190 * (.38 + .62 * facing);
+
+      cop.x += Math.cos(cop.angle) * speed * dt;
+      cop.y += Math.sin(cop.angle) * speed * dt;
+    }
+
+    function respawnPlayer() {
+      player.hp = 100;
+      player.money = Math.max(0, player.money - 200);
+
+      if (activeCar) {
+        activeCar.occupied = false;
+        activeCar.speed = 0;
+        activeCar = null;
+      }
+
+      player.x = 255;
+      player.y = 120;
+      player.angle = 0;
+      wanted = 0;
+      heatTimer = 0;
+      police.length = 0;
+      showToast("Você foi socorrido. Foram descontados W$ 200.");
+    }
+
+    function updateLaw(dt) {
+      if (wanted <= 0) {
+        police.length = 0;
+        return;
+      }
+
+      keepPoliceCount();
+
+      let nearestCop = Infinity;
+
+      for (const cop of police) {
+        updatePoliceCar(cop, dt);
+        nearestCop = Math.min(nearestCop, distance(player.x, player.y, cop.x, cop.y));
+      }
+
+      if (nearestCop < 320) {
+        heatTimer = Math.max(heatTimer, 2.8);
+      } else {
+        heatTimer -= dt;
+      }
+
+      if (nearestCop < 39 && policeHitCooldown <= 0) {
+        player.hp = Math.max(0, player.hp - 11);
+        policeHitCooldown = 1.1;
+
+        if (activeCar) activeCar.speed *= .65;
+        showToast("A polícia encostou em você!");
+      }
+
+      if (player.hp <= 0) {
+        respawnPlayer();
+        return;
+      }
+
+      if (heatTimer <= 0) {
+        wanted = Math.max(0, wanted - 1);
+        heatTimer = wanted > 0 ? 17 : 0;
+        keepPoliceCount();
+
+        if (wanted === 0) {
+          showToast("Você despistou a polícia.");
+        }
+      }
+    }
+
+    function updatePlayer(dt) {
+      if (activeCar) {
+        const car = activeCar;
+        const throttle =
+          (keyDown("KeyW", "ArrowUp") ? 1 : 0) -
+          (keyDown("KeyS", "ArrowDown") ? 1 : 0);
+        const steering =
+          (keyDown("KeyD", "ArrowRight") ? 1 : 0) -
+          (keyDown("KeyA", "ArrowLeft") ? 1 : 0);
+        const handbrake = keyDown("Space");
+
+        if (throttle > 0) {
+          car.speed = Math.min(driving.maxSpeed, car.speed + driving.acceleration * dt);
+        } else if (throttle < 0) {
+          if (car.speed > 0) {
+            car.speed = Math.max(0, car.speed - driving.braking * dt);
+          } else {
+            car.speed = Math.max(-driving.maxSpeed * .35, car.speed - driving.acceleration * .65 * dt);
+          }
+        } else {
+          car.speed *= Math.pow(.985, dt * 60);
+        }
+
+        if (handbrake) {
+          car.speed *= Math.pow(.82, dt * 60);
+        }
+
+        const speedFactor = .25 + .75 * Math.min(1, Math.abs(car.speed) / 230);
+        const direction = car.speed < -5 ? -1 : 1;
+        const turnRate = handbrake ? driving.steering * 1.35 : driving.steering;
+        car.angle += steering * turnRate * speedFactor * direction * dt;
+
+        const oldSpeed = Math.abs(car.speed);
+        const nx = car.x + Math.cos(car.angle) * car.speed * dt;
+        const ny = car.y + Math.sin(car.angle) * car.speed * dt;
+
+        if (canDrive(nx, ny)) {
+          car.x = nx;
+          car.y = ny;
+        } else {
+          car.speed *= -.18;
+
+          if (oldSpeed > 260 && crashCooldown <= 0) {
+            player.hp = Math.max(0, player.hp - 5);
+            crashCooldown = .8;
+            showToast("Colisão!");
+          }
+        }
+
+        if (Math.abs(car.speed) < 2) car.speed = 0;
+        player.x = car.x;
+        player.y = car.y;
+        player.angle = car.angle;
+        return;
+      }
+
+      const ix =
+        (keyDown("KeyD", "ArrowRight") ? 1 : 0) -
+        (keyDown("KeyA", "ArrowLeft") ? 1 : 0);
+      const iy =
+        (keyDown("KeyS", "ArrowDown") ? 1 : 0) -
+        (keyDown("KeyW", "ArrowUp") ? 1 : 0);
+
+      if (ix === 0 && iy === 0) return;
+
+      const length = Math.hypot(ix, iy) || 1;
+      const sprinting = keyDown("ShiftLeft", "ShiftRight");
+      const speed = sprinting ? 280 : 185;
+      const dx = (ix / length) * speed * dt;
+      const dy = (iy / length) * speed * dt;
+
+      const nextX = player.x + dx;
+      const nextY = player.y + dy;
+
+      if (canWalk(nextX, player.y)) player.x = nextX;
+      if (canWalk(player.x, nextY)) player.y = nextY;
+
+      player.angle = Math.atan2(iy, ix);
+    }
+
+    function updateCamera(dt) {
+      const desiredX = WORLD_W <= viewW
+        ? WORLD_W / 2
+        : clamp(player.x, viewW / 2, WORLD_W - viewW / 2);
+
+      const desiredY = WORLD_H <= viewH
+        ? WORLD_H / 2
+        : clamp(player.y, viewH / 2, WORLD_H - viewH / 2);
+
+      const smooth = Math.min(1, dt * 5);
+      camera.x += (desiredX - camera.x) * smooth;
+      camera.y += (desiredY - camera.y) * smooth;
+    }
+
+    function update(dt) {
+      elapsed += dt;
+      crashCooldown = Math.max(0, crashCooldown - dt);
+      policeHitCooldown = Math.max(0, policeHitCooldown - dt);
+
+      if (wmkMode !== 'play') return;
+      updatePlayer(dt);
+      updateMission();
+      updateLaw(dt);
+      updateCamera(dt);
+
+      uiTimer += dt;
+      if (uiTimer >= .12) {
+        uiTimer = 0;
+        updateHUD();
+      }
+    }
+
+    const camera = { x: player.x, y: player.y };
+
+    function currentSpeedText() {
+      return activeCar ? Math.round(Math.abs(activeCar.speed) * .34) : 0;
+    }
+
+    function updateHUD() {
+      ui.money.textContent = "W$ " + Math.floor(player.money).toLocaleString("pt-BR");
+      ui.healthFill.style.width = `${clamp(player.hp, 0, 100)}%`;
+      ui.healthNumber.textContent = Math.ceil(player.hp);
+
+      ui.wantedStars.innerHTML = "";
+      for (let i = 0; i < 3; i++) {
+        const star = document.createElement("span");
+        star.textContent = "★";
+        if (i < wanted) star.className = "on";
+        ui.wantedStars.appendChild(star);
+      }
+
+      const contract=activeMission();
+      if(contract){
+        document.getElementById('missionCategory').textContent=contract.type.toUpperCase()+' · '+(missionCatalog.findIndex(m=>m.id===selectedMissionId)+1)+'/'+missionCatalog.length;
+        ui.missionTitle.textContent=contract.title+(mission.finished?' ✓':'');
+        ui.missionCopy.textContent=mission.finished?'Contrato concluído! Abra o editor para escolher outro.':contract.description+(contract.vehicle?' · Exige veículo':'');
+        ui.missionProgress.textContent=mission.finished?'CONCLUÍDO':`ETAPA ${mission.index+1}/${contract.points.length}`;
+        const percent=mission.finished?100:Math.round((mission.index/contract.points.length)*100);
+        ui.missionPercent.textContent=percent+'%';ui.missionFill.style.width=percent+'%';
+      }else{ui.missionTitle.textContent='Sem contratos';ui.missionCopy.textContent='Crie uma missão no editor.';ui.missionProgress.textContent='';ui.missionPercent.textContent='0%';ui.missionFill.style.width='0%';}
+
+      if (activeCar) {
+        ui.vehicleCard.style.display = "block";
+        ui.vehicleSpeed.textContent = currentSpeedText();
+        ui.contextHint.textContent = "E  ·  SAIR DO VEÍCULO";
+        ui.contextHint.classList.add("visible");
+      } else {
+        ui.vehicleCard.style.display = "none";
+        const nearby = findNearbyCar();
+
+        if (nearby && nearby.distance <= 68) {
+          ui.contextHint.textContent = "E  ·  ENTRAR NO VEÍCULO";
+          ui.contextHint.classList.add("visible");
+        } else {
+          ui.contextHint.classList.remove("visible");
+        }
+      }
+    }
+
+    function drawWorld() {
+      ctx.fillStyle = currentMap.background || "#596e58";
+      ctx.fillRect(0, 0, WORLD_W, WORLD_H);
+
+      for (const block of blocks) {
+        ctx.fillStyle = "#b0aa98";
+        ctx.fillRect(block.x - 5, block.y - 5, block.w + 10, block.h + 10);
+        ctx.fillStyle = "#777a70";
+        ctx.fillRect(block.x, block.y, block.w, block.h);
+
+        ctx.strokeStyle = "rgba(255,255,255,.08)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(block.x + 4, block.y + 4, block.w - 8, block.h - 8);
+      }
+
+      ctx.fillStyle = "#30373e";
+      for (const x of roadsX) {
+        ctx.fillRect(x - ROAD_W / 2, 0, ROAD_W, WORLD_H);
+      }
+      for (const y of roadsY) {
+        ctx.fillRect(0, y - ROAD_W / 2, WORLD_W, ROAD_W);
+      }
+
+      ctx.strokeStyle = "rgba(207, 209, 194, .48)";
+      ctx.lineWidth = 3;
+      ctx.setLineDash([]);
+
+      for (const x of roadsX) {
+        ctx.beginPath();
+        ctx.moveTo(x - ROAD_W / 2, 0);
+        ctx.lineTo(x - ROAD_W / 2, WORLD_H);
+        ctx.moveTo(x + ROAD_W / 2, 0);
+        ctx.lineTo(x + ROAD_W / 2, WORLD_H);
+        ctx.stroke();
+      }
+
+      for (const y of roadsY) {
+        ctx.beginPath();
+        ctx.moveTo(0, y - ROAD_W / 2);
+        ctx.lineTo(WORLD_W, y - ROAD_W / 2);
+        ctx.moveTo(0, y + ROAD_W / 2);
+        ctx.lineTo(WORLD_W, y + ROAD_W / 2);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = "rgba(236, 236, 218, .63)";
+      for (const x of roadsX) {
+        for (const y of roadsY) {
+          for (const side of [-1, 1]) {
+            for (let k = -3; k <= 3; k++) {
+              ctx.fillRect(x + side * 87 + k * 8 - 2, y - 53, 4, 106);
+              ctx.fillRect(x - 53, y + side * 87 + k * 8 - 2, 106, 4);
+            }
+          }
+        }
+      }
+
+      ctx.strokeStyle = "rgba(233, 201, 111, .73)";
+      ctx.lineWidth = 2;
+      ctx.setLineDash([20, 23]);
+
+      for (const x of roadsX) {
+        ctx.beginPath();
+        ctx.moveTo(x, 0);
+        ctx.lineTo(x, WORLD_H);
+        ctx.stroke();
+      }
+
+      for (const y of roadsY) {
+        ctx.beginPath();
+        ctx.moveTo(0, y);
+        ctx.lineTo(WORLD_W, y);
+        ctx.stroke();
+      }
+
+      ctx.setLineDash([]);
+
+      for (const building of buildings) {
+        drawBuilding(building);
+      }
+      drawMapObjects(ctx,currentMap.objects);
+    }
+
+    function drawBuilding(building) {
+      const { x, y, w, h } = building;
+
+      ctx.fillStyle = "rgba(0, 0, 0, .27)";
+      roundedRectPath(ctx, x + 6, y + 8, w, h, 8);
+      ctx.fill();
+
+      ctx.fillStyle = building.wall;
+      roundedRectPath(ctx, x, y, w, h, 8);
+      ctx.fill();
+
+      ctx.fillStyle = building.roof;
+      roundedRectPath(ctx, x + 5, y + 5, w - 10, h - 10, 5);
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(255, 255, 255, .16)";
+      ctx.lineWidth = 1;
+      roundedRectPath(ctx, x + 8, y + 8, w - 16, h - 16, 4);
+      ctx.stroke();
+
+      for (const item of building.items) {
+        ctx.fillStyle = "rgba(29, 37, 39, .36)";
+        roundedRectPath(ctx, item.x + 2, item.y + 2, item.w, item.h, 3);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(202, 211, 194, .3)";
+        roundedRectPath(ctx, item.x, item.y, item.w, item.h, 3);
+        ctx.fill();
+      }
+
+      ctx.fillStyle = "rgba(255, 255, 255, .11)";
+      ctx.fillRect(x + 13, y + 13, Math.max(18, w * .16), 3);
+    }
+
+    function drawVehicle(car, isPolice = false) {
+      ctx.save();
+      ctx.translate(car.x, car.y);
+      ctx.rotate(car.angle);
+
+      ctx.fillStyle = "rgba(0, 0, 0, .34)";
+      roundedRectPath(ctx, -19, -9, 44, 23, 6);
+      ctx.fill();
+
+      ctx.fillStyle = "#171b1e";
+      ctx.fillRect(-14, -13, 9, 5);
+      ctx.fillRect(7, -13, 9, 5);
+      ctx.fillRect(-14, 8, 9, 5);
+      ctx.fillRect(7, 8, 9, 5);
+
+      ctx.fillStyle = isPolice ? "#e7e9e4" : car.color;
+      roundedRectPath(ctx, -22, -11, 44, 22, 6);
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(255, 255, 255, .28)";
+      ctx.lineWidth = 1;
+      roundedRectPath(ctx, -22, -11, 44, 22, 6);
+      ctx.stroke();
+
+      if (isPolice) {
+        ctx.fillStyle = "#315b92";
+        ctx.fillRect(-3, -10, 8, 20);
+      }
+
+      ctx.fillStyle = "#91bac1";
+      roundedRectPath(ctx, -9, -7, 17, 14, 3);
+      ctx.fill();
+
+      ctx.strokeStyle = "rgba(28, 46, 50, .75)";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(0, -7);
+      ctx.lineTo(0, 7);
+      ctx.stroke();
+
+      ctx.fillStyle = "#fff0a6";
+      ctx.fillRect(18, -7, 3, 5);
+      ctx.fillRect(18, 2, 3, 5);
+
+      ctx.fillStyle = "#c94f4a";
+      ctx.fillRect(-22, -7, 3, 5);
+      ctx.fillRect(-22, 2, 3, 5);
+
+      if (isPolice) {
+        const flash = Math.sin(elapsed * 15) > 0;
+        ctx.fillStyle = flash ? "#f04f55" : "#328cff";
+        ctx.fillRect(-3, -3, 4, 6);
+        ctx.fillStyle = flash ? "#328cff" : "#f04f55";
+        ctx.fillRect(1, -3, 4, 6);
+      }
+
+      ctx.restore();
+    }
+
+    function drawPlayer() {
+      ctx.save();
+      ctx.translate(player.x, player.y);
+
+      ctx.fillStyle = "rgba(0, 0, 0, .35)";
+      ctx.beginPath();
+      ctx.ellipse(2, 7, 11, 6, 0, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.rotate(player.angle);
+
+      ctx.fillStyle = "#172320";
+      roundedRectPath(ctx, -8, -9, 17, 19, 6);
+      ctx.fill();
+
+      ctx.fillStyle = "#50d6a8";
+      roundedRectPath(ctx, -7, -10, 15, 18, 5);
+      ctx.fill();
+
+      ctx.fillStyle = "#f2c6a1";
+      ctx.beginPath();
+      ctx.arc(5, 0, 5, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.fillStyle = "#edf6df";
+      ctx.beginPath();
+      ctx.arc(7, -1, 1.2, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.restore();
+    }
+
+    function drawMissionMarker(target) {
+      if (!target) return;
+
+      const pulse = 1 + Math.sin(elapsed * 4) * .12;
+      const color = target.type === "delivery" ? "#63e3a6" : "#f2c75d";
+
+      ctx.save();
+      ctx.translate(target.x, target.y);
+
+      ctx.globalAlpha = .16;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(0, 0, 27 * pulse, 0, Math.PI * 2);
+      ctx.fill();
+
+      ctx.globalAlpha = 1;
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(0, 0, 20 * pulse, 0, Math.PI * 2);
+      ctx.stroke();
+
+      ctx.shadowColor = color;
+      ctx.shadowBlur = 15;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+
+      if (target.type === "delivery") {
+        ctx.rect(-9, -9, 18, 18);
+      } else {
+        ctx.moveTo(0, -12);
+        ctx.lineTo(10, 0);
+        ctx.lineTo(0, 12);
+        ctx.lineTo(-10, 0);
+        ctx.closePath();
+      }
+
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      ctx.font = "800 10px system-ui, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillStyle = "#f4f3e8";
+      ctx.fillText(target.label, 0, -32);
+
+      ctx.restore();
+    }
+
+    function drawMinimap() {
+      const w = minimap.width;
+      const h = minimap.height;
+      const sx = w / WORLD_W;
+      const sy = h / WORLD_H;
+
+      mapCtx.clearRect(0, 0, w, h);
+      mapCtx.fillStyle = currentMap.background || "#3c5146";
+      mapCtx.fillRect(0, 0, w, h);
+
+      for (const block of blocks) {
+        mapCtx.fillStyle = "#70786d";
+        mapCtx.fillRect(block.x * sx, block.y * sy, block.w * sx, block.h * sy);
+      }
+
+      mapCtx.fillStyle = "#30383d";
+      for (const x of roadsX) {
+        mapCtx.fillRect((x - ROAD_W / 2) * sx, 0, ROAD_W * sx, h);
+      }
+      for (const y of roadsY) {
+        mapCtx.fillRect(0, (y - ROAD_W / 2) * sy, w, ROAD_W * sy);
+      }
+
+      mapCtx.fillStyle = "#59636a";
+      for (const building of buildings) {
+        mapCtx.fillRect(building.x * sx, building.y * sy, building.w * sx, building.h * sy);
+      }
+
+      for (const car of cars) {
+        mapCtx.fillStyle = car.occupied ? "#f0d078" : "#bdc7bd";
+        mapCtx.fillRect(car.x * sx - 1.5, car.y * sy - 1.5, 3, 3);
+      }
+
+      for (const cop of police) {
+        mapCtx.fillStyle = "#57a8ff";
+        mapCtx.beginPath();
+        mapCtx.arc(cop.x * sx, cop.y * sy, 3.3, 0, Math.PI * 2);
+        mapCtx.fill();
+      }
+
+      const target = currentMissionTarget();
+      if (target) {
+        mapCtx.fillStyle = target.type === "delivery" ? "#64e7a7" : "#f2c75d";
+        mapCtx.beginPath();
+        mapCtx.arc(target.x * sx, target.y * sy, 4, 0, Math.PI * 2);
+        mapCtx.fill();
+      }
+
+      mapCtx.strokeStyle = "rgba(255,255,255,.25)";
+      mapCtx.lineWidth = 1;
+      const left = clamp(camera.x - viewW / 2, 0, WORLD_W) * sx;
+      const top = clamp(camera.y - viewH / 2, 0, WORLD_H) * sy;
+      const mapViewW = Math.min(viewW, WORLD_W) * sx;
+      const mapViewH = Math.min(viewH, WORLD_H) * sy;
+      mapCtx.strokeRect(left, top, mapViewW, mapViewH);
+
+      mapCtx.fillStyle = "#5ce2ae";
+      mapCtx.beginPath();
+      mapCtx.arc(player.x * sx, player.y * sy, 4, 0, Math.PI * 2);
+      mapCtx.fill();
+
+      mapCtx.strokeStyle = "#eafff2";
+      mapCtx.lineWidth = 1.2;
+      mapCtx.stroke();
+    }
+
+    function render() {
+      ctx.clearRect(0, 0, viewW, viewH);
+      ctx.fillStyle = "#25312d";
+      ctx.fillRect(0, 0, viewW, viewH);
+
+      ctx.save();
+      ctx.translate(viewW / 2 - camera.x, viewH / 2 - camera.y);
+
+      drawWorld();
+      drawMissionMarker(currentMissionTarget());
+
+      for (const car of cars) drawVehicle(car, false);
+      for (const cop of police) drawVehicle(cop, true);
+      if (!activeCar) drawPlayer();
+
+      ctx.restore();
+
+      const vignette = ctx.createRadialGradient(
+        viewW / 2, viewH / 2, Math.min(viewW, viewH) * .25,
+        viewW / 2, viewH / 2, Math.max(viewW, viewH) * .75
+      );
+      vignette.addColorStop(0, "rgba(0,0,0,0)");
+      vignette.addColorStop(1, "rgba(0,0,0,.27)");
+      ctx.fillStyle = vignette;
+      ctx.fillRect(0, 0, viewW, viewH);
+
+      drawMinimap();
+    }
+
+    function loop(now) {
+      const dt = Math.min((now - lastTime) / 1000, .05);
+      lastTime = now;
+
+      update(dt);
+      render();
+      requestAnimationFrame(loop);
+    }
+
+    // WMK World Studio — dados declarativos, sem scripts de mapas/usuários.
+    const WMK_MAPS_KEY='wmk-world-studio-maps-v1';
+    const WMK_ASSETS_KEY='wmk-world-studio-assets-v1';
+    const baseBuildings=JSON.parse(JSON.stringify(buildings));
+    const baseBlocks=JSON.parse(JSON.stringify(blocks));
+    const defaultRoadX=[...roadsX],defaultRoadY=[...roadsY];
+    const defaultCars=cars.map(c=>({...c}));
+    const presets=[
+      {id:'baia-nova',name:'Baía Nova',description:'Cidade central: avenidas, prédios e perseguições. Mapa original preservado.',background:'#596e58',theme:'city',spawn:[255,120],roadsX:defaultRoadX,roadsY:defaultRoadY,objects:[],locked:true},
+      {id:'costa-dourada',name:'Costa Dourada',description:'Litoral, marina, calçadão e bairros de veraneio. Ideal para táxi e entregas.',background:'#54877a',theme:'coast',spawn:[160,150],roadsX:[160,760,1360,1960,2560],roadsY:[150,650,1150,1650,2150],objects:[
+        {id:'praia',name:'Faixa de areia',type:'sand',x:2350,y:280,w:520,h:450,solid:false,color:'#d8b97a',layer:-2},
+        {id:'mar',name:'Mar da baía',type:'water',x:2400,y:300,w:530,h:450,solid:true,color:'#287da4',layer:-1},
+        {id:'deck',name:'Píer da marina',type:'decoration',x:2260,y:650,w:260,h:55,solid:false,color:'#bb875e',layer:1},
+        ...Array.from({length:13},(_,i)=>({id:'palmeira-'+i,name:'Palmeira',type:'tree',x:2200+(i%3)*65,y:900+Math.floor(i/3)*240,w:42,h:42,solid:true,color:'#3ab080',layer:2}))],locked:true},
+      {id:'serra-brava',name:'Serra Brava',description:'Interior com bosques, trilhas, deserto vermelho e zona industrial. Exploração e corridas.',background:'#987b50',theme:'highlands',spawn:[160,150],roadsX:[160,760,1360,1960,2560],roadsY:[150,650,1150,1650,2150],objects:[
+        {id:'dunas',name:'Terra vermelha',type:'sand',x:2100,y:1760,w:700,h:500,solid:false,color:'#b66d42',layer:-2},
+        ...Array.from({length:25},(_,i)=>({id:'pinheiro-'+i,name:'Pinheiro',type:'tree',x:350+(i%5)*290,y:300+Math.floor(i/5)*390,w:55,h:55,solid:true,color:'#32684a',layer:1})),
+        {id:'galpao-1',name:'Galpão da Serra',type:'building',x:2250,y:1100,w:170,h:180,solid:true,color:'#646a6a',layer:2},
+        {id:'galpao-2',name:'Oficina rural',type:'building',x:1980,y:1200,w:145,h:115,solid:true,color:'#8b6250',layer:2}],locked:true}
+    ];
+    function sanitizeMap(raw){
+      if(!raw||typeof raw!=='object')throw Error('Formato de mapa inválido.');
+      const num=(v,min,max,def)=>Number.isFinite(Number(v))?Math.max(min,Math.min(max,Number(v))):def;
+      const types=['building','tree','water','sand','barrier','decoration','sprite'];
+      const objects=Array.isArray(raw.objects)?raw.objects.slice(0,450).map((o,i)=>({
+        id:String(o.id||'obj-'+i).slice(0,70),name:String(o.name||'Objeto '+i).slice(0,60),
+        type:types.includes(o.type)?o.type:'decoration',x:num(o.x,0,2720,100),y:num(o.y,0,2300,100),
+        w:num(o.w,4,900,60),h:num(o.h,4,900,60),rotation:num(o.rotation,-360,360,0),
+        color:/^#[0-9a-f]{6}$/i.test(o.color||'')?o.color:'#5d9d8c',
+        solid:!!o.solid,layer:num(o.layer,-20,20,0),assetId:String(o.assetId||'').slice(0,75)
+      })):[];
+      const coord=(arr,defaults,max)=>Array.isArray(arr)?arr.map(Number).filter(x=>Number.isFinite(x)&&x>=75&&x<=max-75).slice(0,18).sort((a,b)=>a-b):[...defaults];
+      return {id:String(raw.id||'mapa-'+Date.now()).replace(/[^a-z0-9-]/gi,'-').slice(0,70),
+        name:String(raw.name||'Mapa sem nome').slice(0,70),description:String(raw.description||'').slice(0,240),
+        background:/^#[0-9a-f]{6}$/i.test(raw.background||'')?raw.background:'#596e58',
+        theme:['city','coast','highlands','custom'].includes(raw.theme)?raw.theme:'custom',
+        spawn:[num(raw.spawn?.[0],35,2685,255),num(raw.spawn?.[1],35,2265,120)],
+        roadsX:coord(raw.roadsX,defaultRoadX,2720),roadsY:coord(raw.roadsY,defaultRoadY,2300),
+        objects,locked:!!raw.locked};
+    }
+    let mapCatalog=presets.map(sanitizeMap);
+    try{const saved=JSON.parse(localStorage.getItem(WMK_MAPS_KEY)||'null');if(Array.isArray(saved)&&saved.length){
+      const custom=saved.map(sanitizeMap);mapCatalog=[...presets.map(p=>custom.find(x=>x.id===p.id)||sanitizeMap(p)),...custom.filter(x=>!presets.some(p=>p.id===x.id))];
+    }}catch(e){console.warn('Mapas locais não carregados:',e)}
+    let assetCatalog=[];
+    try{const list=JSON.parse(localStorage.getItem(WMK_ASSETS_KEY)||'[]');if(Array.isArray(list))assetCatalog=list.filter(a=>typeof a.id==='string'&&typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)).slice(0,30)}catch(_){}
+    const imageCache=new Map();
+    function getSprite(assetId){const found=assetCatalog.find(a=>a.id===assetId);if(!found)return null;
+      if(!imageCache.has(assetId)){const im=new Image();im.src=found.data;imageCache.set(assetId,im)}return imageCache.get(assetId)}
+    let currentMapId='baia-nova';let currentMap=mapCatalog[0];let wmkMode='menu';
+    function missionOnMap(m,id){return !m.maps?.length||m.maps.includes(id)}
+    function mapMissions(id){return missionCatalog.filter(m=>missionOnMap(m,id))}
+    function persistMaps(){try{localStorage.setItem(WMK_MAPS_KEY,JSON.stringify(mapCatalog));return true}catch(e){$('studioStatus').textContent='Armazenamento cheio! Exporte o JSON; imagens grandes podem exceder o limite.';return false}}
+    function persistAssets(){try{localStorage.setItem(WMK_ASSETS_KEY,JSON.stringify(assetCatalog));return true}catch(e){$('studioStatus').textContent='Imagens muito grandes: exporte o projeto JSON ou reduza o tamanho.';return false}}
+    function downloadJSON(data,name){const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));const a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2000)}
+    function rebuildRoadNodes(){roadNodes.length=0;for(let row=0;row<roadsY.length;row++)for(let col=0;col<roadsX.length;col++)roadNodes.push({id:row*roadsX.length+col,col,row,x:roadsX[col],y:roadsY[row]})}
+    function applyMap(id){const found=mapCatalog.find(m=>m.id===id);if(!found)throw Error('Mapa não encontrado.');
+      currentMap=found;currentMapId=found.id;roadsX=[...found.roadsX];roadsY=[...found.roadsY];
+      buildings.length=0;blocks.length=0;
+      if(found.theme==='city'){buildings.push(...baseBuildings);blocks.push(...baseBlocks)}else{
+        for(let row=0;row<roadsY.length-1;row++)for(let col=0;col<roadsX.length-1;col++){
+          const x=roadsX[col]+ROAD_W/2+10,y=roadsY[row]+ROAD_W/2+10;
+          const w=roadsX[col+1]-roadsX[col]-ROAD_W-20,h=roadsY[row+1]-roadsY[row]-ROAD_W-20;
+          if(w<80||h<80)continue;
+          // Regiões livres em parte dos quarteirões para diferenciar os cenários.
+          if((row+col)%3!==0){blocks.push({x,y,w,h});addBuilding(x+35,y+35,w-70,h-70)}
+        }
+      }
+      rebuildRoadNodes();
+      cars.length=0;
+      const firstRoadY=roadsY[0]||150;
+      cars.push(makeCar((roadsX[0]||160)+155,firstRoadY-25,0,'#e2a25d'));
+      for(let i=1;i<Math.min(roadsX.length,5);i++)cars.push(makeCar(roadsX[i]-125,firstRoadY+25,0,carColors[i%carColors.length]));
+      if(activeCar)activeCar=null;
+      player.x=found.spawn[0];player.y=found.spawn[1];player.angle=0;
+      player.hp=100;wanted=0;heatTimer=0;police.length=0;
+      camera.x=player.x;camera.y=player.y;
+      const available=mapMissions(id);
+      if(!available.some(m=>m.id===selectedMissionId))selectedMissionId=available[0]?.id||'';
+      mission.index=0;mission.finished=false;mission.startedEscape=false;
+      $('minimap').parentElement.querySelector('.minimap-heading span:last-child').textContent=found.name.toUpperCase();
+      renderMissionList();updateHUD();
+    }
+    function collidesWithMapObjects(x,y,r){for(const o of currentMap.objects){if(!o.solid)continue;
+      const theta=(o.rotation||0)*Math.PI/180,c=Math.cos(theta),s=Math.sin(theta),dx=x-o.x,dy=y-o.y;
+      const lx=dx*c+dy*s,ly=-dx*s+dy*c;
+      const nx=Math.max(-o.w/2,Math.min(o.w/2,lx)),ny=Math.max(-o.h/2,Math.min(o.h/2,ly));
+      if((lx-nx)**2+(ly-ny)**2<r*r)return true;
+    }return false}
+    function drawMapObjects(g,objects){for(const o of [...objects].sort((a,b)=>a.layer-b.layer)){
+      g.save();g.translate(o.x,o.y);g.rotate((o.rotation||0)*Math.PI/180);g.fillStyle=o.color;
+      if(o.type==='sprite'){
+        const im=getSprite(o.assetId);if(im?.complete&&im.naturalWidth)g.drawImage(im,-o.w/2,-o.h/2,o.w,o.h);
+        else{g.fillStyle='#b78ce1';g.fillRect(-o.w/2,-o.h/2,o.w,o.h);g.fillStyle='#fff';g.font='12px system-ui';g.fillText('SPRITE',-o.w/2+5,0)}
+      }else if(o.type==='tree'){
+        g.fillStyle='#62452c';g.fillRect(-5,-5,10,17);g.fillStyle=o.color;g.beginPath();g.arc(0,0,Math.min(o.w,o.h)*.46,0,Math.PI*2);g.fill();
+      }else{
+        g.fillRect(-o.w/2,-o.h/2,o.w,o.h);
+        if(o.type==='water'){g.strokeStyle='#a0dbea';g.lineWidth=3;g.beginPath();g.moveTo(-o.w*.35,-o.h*.13);g.lineTo(o.w*.35,-o.h*.13);g.moveTo(-o.w*.30,o.h*.18);g.lineTo(o.w*.25,o.h*.18);g.stroke()}
+        else if(o.type==='building'){g.strokeStyle='#e7d7b7';g.lineWidth=3;g.strokeRect(-o.w*.41,-o.h*.41,o.w*.82,o.h*.82)}
+      }
+      g.restore();
+    }}
+    function showMenu(){wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
+      $('wmkTools').hidden=true;renderMapCards()}
+    function startGame(id){applyMap(id);wmkMode='play';$('wmkMain').hidden=true;$('wmkMapStudio').hidden=true;$('wmkEditor').hidden=true;
+      $('missionPanel').hidden=false;showToast('Explorando '+currentMap.name+' · ESC para menu')}
+    function openMissionEditor(){wmkMode='menu';$('wmkMain').hidden=false;$('wmkMapStudio').hidden=true;
+      $('wmkEditor').hidden=false;renderMissionList()}
+    function renderMapCards(){const host=$('wmkMapCards');host.replaceChildren();for(const m of mapCatalog){
+      const card=document.createElement('article');card.className='wmk-map-card';
+      const label=document.createElement('div');label.className='wmk-map-badge';label.textContent=m.theme.toUpperCase()+' · '+m.objects.length+' OBJETOS';
+      const h=document.createElement('h3');h.textContent=m.name;
+      const desc=document.createElement('p');desc.textContent=m.description;
+      const stat=document.createElement('p');stat.textContent=mapMissions(m.id).length+' missões compatíveis';
+      const choose=document.createElement('button');choose.textContent=m.id===currentMapId?'✓ Selecionado':'Selecionar';choose.className=m.id===currentMapId?'selected':'';
+      choose.addEventListener('click',()=>{currentMapId=m.id;renderMapCards()});
+      const play=document.createElement('button');play.textContent='▶ Jogar';play.addEventListener('click',()=>startGame(m.id));
+      const edit=document.createElement('button');edit.textContent='Editar';edit.addEventListener('click',()=>openMapEditor(m.id));
+      card.append(label,h,desc,stat,choose,play,edit);host.appendChild(card);
+    }}
+    let editingMap=null,selectedObjectId='',studioZoom=1,studioPanX=0,studioPanY=0,studioDrag=null;
+    const studioCanvas=$('studioCanvas'),studioCtx=studioCanvas.getContext('2d');
+    function syncMapControls(){if(!editingMap)return;
+      $('studioMapSelect').replaceChildren();for(const m of mapCatalog){const opt=document.createElement('option');opt.value=m.id;opt.textContent=m.name;$('studioMapSelect').appendChild(opt)}
+      $('studioMapSelect').value=editingMap.id;
+      $('studioMapName').value=editingMap.name;$('studioMapDescription').value=editingMap.description;
+      $('studioBackground').value=editingMap.background;renderAssetSelect();renderObjectList();drawStudio()}
+    function renderAssetSelect(){const sel=$('studioAssetSelect');sel.replaceChildren();for(const a of assetCatalog){const opt=document.createElement('option');opt.value=a.id;opt.textContent=a.name;sel.appendChild(opt)}$('studioAssetsInfo').textContent=assetCatalog.length+' imagem(ns) na biblioteca. PNG com transparência recomendado.'}
+    function selectedObject(){return editingMap?.objects.find(o=>o.id===selectedObjectId)||null}
+    function renderObjectList(){const list=$('studioObjectList');list.replaceChildren();editingMap.objects.forEach(o=>{
+      const opt=document.createElement('option');opt.value=o.id;opt.textContent=o.name+' · '+o.type;list.appendChild(opt)});
+      if(selectedObject())list.value=selectedObjectId;else selectedObjectId='';
+      syncObjectProps()}
+    function syncObjectProps(){const o=selectedObject();$('studioObjectProps').style.opacity=o?'1':'.35';
+      if(!o)return;for(const [field,key] of Object.entries({objName:'name',objType:'type',objX:'x',objY:'y',objW:'w',objH:'h',objRotation:'rotation',objColor:'color',objLayer:'layer'}))$(field).value=o[key];$('objSolid').checked=o.solid}
+    function openMapEditor(id){editingMap=mapCatalog.find(m=>m.id===id)||mapCatalog[0];selectedObjectId='';wmkMode='editor';
+      $('wmkMain').hidden=true;$('wmkEditor').hidden=true;$('wmkMapStudio').hidden=false;studioZoom=1;studioPanX=0;studioPanY=0;syncMapControls()}
+    function drawingTransform(){const width=studioCanvas.width,height=studioCanvas.height;
+      const fit=Math.min(width/WORLD_W,height/WORLD_H)*studioZoom;
+      return {scale:fit,ox:(width-WORLD_W*fit)/2+studioPanX,oy:(height-WORLD_H*fit)/2+studioPanY};}
+    function canvasToMap(px,py){const {scale,ox,oy}=drawingTransform();return {x:(px-ox)/scale,y:(py-oy)/scale}}
+    function hitObject(x,y){for(const o of [...editingMap.objects].sort((a,b)=>b.layer-a.layer).reverse()){
+      const theta=(o.rotation||0)*Math.PI/180,c=Math.cos(theta),s=Math.sin(theta),dx=x-o.x,dy=y-o.y;
+      const xx=dx*c+dy*s,yy=-dx*s+dy*c;
+      if(Math.abs(xx)<=o.w/2&&Math.abs(yy)<=o.h/2)return o
+    }return null}
+    function drawStudio(){if(!editingMap||wmkMode!=='editor')return;
+      const g=studioCtx;g.setTransform(1,0,0,1,0,0);g.clearRect(0,0,studioCanvas.width,studioCanvas.height);
+      const {scale,ox,oy}=drawingTransform();g.save();g.translate(ox,oy);g.scale(scale,scale);
+      g.fillStyle=editingMap.background;g.fillRect(0,0,WORLD_W,WORLD_H);
+      g.strokeStyle='#ffffff18';g.lineWidth=2;for(let x=0;x<=WORLD_W;x+=100){g.beginPath();g.moveTo(x,0);g.lineTo(x,WORLD_H);g.stroke()}
+      for(let y=0;y<=WORLD_H;y+=100){g.beginPath();g.moveTo(0,y);g.lineTo(WORLD_W,y);g.stroke()}
+      g.fillStyle='#394b4d';for(const x of editingMap.roadsX)g.fillRect(x-ROAD_W/2,0,ROAD_W,WORLD_H);
+      for(const y of editingMap.roadsY)g.fillRect(0,y-ROAD_W/2,WORLD_W,ROAD_W);
+      g.strokeStyle='#b8b89a';g.lineWidth=3;g.setLineDash([15,22]);for(const x of editingMap.roadsX){g.beginPath();g.moveTo(x,0);g.lineTo(x,WORLD_H);g.stroke()}
+      for(const y of editingMap.roadsY){g.beginPath();g.moveTo(0,y);g.lineTo(WORLD_W,y);g.stroke()}g.setLineDash([]);
+      drawMapObjects(g,editingMap.objects);
+      const o=selectedObject();if(o){g.save();g.translate(o.x,o.y);g.rotate(o.rotation*Math.PI/180);g.strokeStyle='#ffeb69';g.lineWidth=5;g.strokeRect(-o.w/2,-o.h/2,o.w,o.h);g.restore()}
+      g.fillStyle='#f9e86e';g.beginPath();g.arc(...editingMap.spawn,18,0,Math.PI*2);g.fill();g.strokeStyle='#142228';g.lineWidth=4;g.stroke();
+      g.restore();}
+    function addStudioObject(type,x,y){const defaults={building:[145,115,'#72848a',true],tree:[55,55,'#3e9677',true],water:[180,120,'#257ea4',true],sand:[180,130,'#d1ad74',false],barrier:[130,35,'#c87a50',true],decoration:[80,80,'#72a1ca',false],sprite:[96,96,'#9e75cb',false]};
+      const [w,h,color,solid]=defaults[type]||defaults.decoration;
+      if(type==='sprite'&&!$('studioAssetSelect').value){$('studioStatus').textContent='Importe uma imagem primeiro e escolha-a na biblioteca.';return}
+      const o={id:'obj-'+Date.now()+'-'+Math.floor(Math.random()*10000),name:type+' '+(editingMap.objects.length+1),type,x:Math.round(x),y:Math.round(y),w,h,color,solid,rotation:0,layer:0,assetId:type==='sprite'?$('studioAssetSelect').value:''};
+      editingMap.objects.push(o);selectedObjectId=o.id;renderObjectList();drawStudio();}
+    function clearSelection(){selectedObjectId='';renderObjectList();drawStudio()}
+    function saveEditorMap(){editingMap.name=$('studioMapName').value.trim()||'Mapa sem nome';editingMap.description=$('studioMapDescription').value.trim();editingMap.background=$('studioBackground').value;
+      const ok=persistMaps();$('studioStatus').textContent=ok?'Mapa salvo neste navegador. Exporte JSON como cópia de segurança.':'Erro ao salvar; exporte JSON.';renderMapCards();}
+    function studioEventCoords(e){const r=studioCanvas.getBoundingClientRect();return canvasToMap((e.clientX-r.left)*studioCanvas.width/r.width,(e.clientY-r.top)*studioCanvas.height/r.height)}
+    studioCanvas.addEventListener('contextmenu',e=>e.preventDefault());
+    studioCanvas.addEventListener('pointerdown',e=>{if(wmkMode!=='editor')return;const p=studioEventCoords(e),tool=$('studioTool').value;
+      if(e.button===2){studioDrag={kind:'pan',x:e.clientX,y:e.clientY,panX:studioPanX,panY:studioPanY};studioCanvas.setPointerCapture(e.pointerId);return}
+      if(e.button!==0||p.x<0||p.y<0||p.x>WORLD_W||p.y>WORLD_H)return;
+      if(tool==='spawn'){editingMap.spawn=[Math.round(p.x),Math.round(p.y)];drawStudio();return}
+      const hit=hitObject(p.x,p.y);
+      if(tool==='erase'){if(hit){editingMap.objects=editingMap.objects.filter(o=>o.id!==hit.id);clearSelection()}return}
+      if(tool!=='select'){addStudioObject(tool,p.x,p.y);return}
+      selectedObjectId=hit?.id||'';renderObjectList();drawStudio();
+      if(hit){studioDrag={kind:'object',id:hit.id,dx:hit.x-p.x,dy:hit.y-p.y};studioCanvas.setPointerCapture(e.pointerId)}
+    });
+    studioCanvas.addEventListener('pointermove',e=>{if(!studioDrag)return;
+      if(studioDrag.kind==='pan'){const r=studioCanvas.getBoundingClientRect();studioPanX=studioDrag.panX+(e.clientX-studioDrag.x)*studioCanvas.width/r.width;studioPanY=studioDrag.panY+(e.clientY-studioDrag.y)*studioCanvas.height/r.height;drawStudio();return}
+      const o=editingMap.objects.find(o=>o.id===studioDrag.id);if(!o)return;
+      const p=studioEventCoords(e);o.x=Math.round(clamp(p.x+studioDrag.dx,0,WORLD_W));o.y=Math.round(clamp(p.y+studioDrag.dy,0,WORLD_H));syncObjectProps();drawStudio()});
+    studioCanvas.addEventListener('pointerup',()=>{studioDrag=null});studioCanvas.addEventListener('pointercancel',()=>{studioDrag=null});
+    studioCanvas.addEventListener('wheel',e=>{e.preventDefault();studioZoom=clamp(studioZoom*(e.deltaY>0?.9:1.1),.55,4);drawStudio()},{passive:false});
+    $('studioObjectList').addEventListener('change',e=>{selectedObjectId=e.target.value;syncObjectProps();drawStudio()});
+    for(const [field,key] of Object.entries({objName:'name',objX:'x',objY:'y',objW:'w',objH:'h',objRotation:'rotation',objColor:'color',objLayer:'layer'})){
+      $(field).addEventListener('input',e=>{const o=selectedObject();if(!o)return;o[key]=['name','color'].includes(key)?e.target.value:Number(e.target.value);drawStudio();renderMapCards()});
+      $(field).addEventListener('change',()=>renderObjectList());
+    }
+    $('objSolid').addEventListener('change',e=>{const o=selectedObject();if(o)o.solid=e.target.checked});
+    $('objDelete').addEventListener('click',()=>{if(!selectedObject())return;editingMap.objects=editingMap.objects.filter(o=>o.id!==selectedObjectId);clearSelection()});
+    $('objDuplicate').addEventListener('click',()=>{const o=selectedObject();if(!o)return;const c={...o,id:'obj-'+Date.now(),name:o.name+' (cópia)',x:Math.min(o.x+45,WORLD_W),y:Math.min(o.y+45,WORLD_H)};editingMap.objects.push(c);selectedObjectId=c.id;renderObjectList();drawStudio()});
+    $('studioMapSelect').addEventListener('change',e=>{editingMap=mapCatalog.find(m=>m.id===e.target.value);selectedObjectId='';syncMapControls()});
+    $('studioNew').addEventListener('click',()=>{const m=sanitizeMap({id:'mapa-'+Date.now(),name:'Novo mapa',description:'Meu cenário WMK',background:'#668874',theme:'custom',spawn:[160,150],roadsX:[160,760,1360,1960,2560],roadsY:[150,650,1150,1650,2150],objects:[]});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
+    $('studioDuplicate').addEventListener('click',()=>{const m=sanitizeMap({...editingMap,id:'copia-'+Date.now(),name:editingMap.name+' (cópia)',locked:false});mapCatalog.push(m);persistMaps();openMapEditor(m.id)});
+    $('studioDelete').addEventListener('click',()=>{if(editingMap.locked){$('studioStatus').textContent='Mapas iniciais não podem ser excluídos; você pode duplicá-los.';return}
+      if(!confirm('Excluir permanentemente o mapa '+editingMap.name+' do navegador?'))return;
+      const id=editingMap.id;mapCatalog=mapCatalog.filter(m=>m.id!==id);if(currentMapId===id)currentMapId='baia-nova';persistMaps();openMapEditor(currentMapId)});
+    $('studioMapName').addEventListener('change',saveEditorMap);$('studioMapDescription').addEventListener('change',saveEditorMap);$('studioBackground').addEventListener('input',()=>{editingMap.background=$('studioBackground').value;drawStudio()});
+    $('studioSave').addEventListener('click',saveEditorMap);
+    $('studioTest').addEventListener('click',()=>{saveEditorMap();startGame(editingMap.id)});
+    $('studioReturn').addEventListener('click',()=>{saveEditorMap();showMenu()});
+    $('studioExport').addEventListener('click',()=>{saveEditorMap();downloadJSON({format:'wmk-vida-loka-map',version:1,map:editingMap,assets:assetCatalog.filter(a=>editingMap.objects.some(o=>o.assetId===a.id))},editingMap.id+'.json')});
+    $('studioImportBtn').addEventListener('click',()=>$('studioImportFile').click());
+    $('studioImportFile').addEventListener('change',async e=>{const f=e.target.files[0];if(!f)return;try{
+      if(f.size>8_000_000)throw Error('Arquivo acima de 8 MB; reduza os sprites.');
+      const data=JSON.parse(await f.text());if(data.format!=='wmk-vida-loka-map')throw Error('Arquivo não é um mapa WMK.');
+      const m=sanitizeMap(data.map);if(mapCatalog.some(x=>x.id===m.id))m.id='importado-'+Date.now();m.locked=false;
+      const imported=Array.isArray(data.assets)?data.assets:[];for(const a of imported){if(typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)&&a.data.length<=1_400_000&&!assetCatalog.some(x=>x.id===a.id))assetCatalog.push({id:String(a.id).slice(0,75),name:String(a.name||'imagem').slice(0,80),data:a.data})}
+      persistAssets();mapCatalog.push(m);persistMaps();openMapEditor(m.id);$('studioStatus').textContent='Mapa importado. Verifique colisões e posição inicial.';
+    }catch(err){$('studioStatus').textContent='Falha ao importar: '+err.message}e.target.value=''});
+    $('studioAssetButton').addEventListener('click',()=>$('studioAssetFile').click());
+    $('studioAssetFile').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+      if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>750000)throw Error('Use PNG/JPG/WebP de até 750 KB.');
+      const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(file)});
+      const asset={id:'asset-'+Date.now(),name:file.name.slice(0,80),data};assetCatalog.push(asset);imageCache.delete(asset.id);persistAssets();renderAssetSelect();$('studioAssetSelect').value=asset.id;$('studioTool').value='sprite';$('studioStatus').textContent='Sprite importado. Clique no mapa para posicionar.';
+    }catch(err){$('studioStatus').textContent=err.message}e.target.value=''});
+    $('wmkPlay').addEventListener('click',()=>startGame(currentMapId));
+    $('wmkOpenMapStudio').addEventListener('click',()=>openMapEditor(currentMapId));
+    $('wmkOpenMissionStudio').addEventListener('click',openMissionEditor);
+    $('mainMenuReturn').addEventListener('click',showMenu);
+    $('wmkExportAll').addEventListener('click',()=>downloadJSON({format:'wmk-vida-loka-project',version:1,maps:mapCatalog,assets:assetCatalog,missions:missionCatalog},'wmk-projeto-completo.json'));
+    $('wmkImportAllButton').addEventListener('click',()=>$('wmkImportAll').click());
+    $('wmkImportAll').addEventListener('change',async e=>{const file=e.target.files[0];if(!file)return;try{
+      if(file.size>12_000_000)throw Error('Limite de 12 MB por projeto.');
+      const data=JSON.parse(await file.text());if(data.format!=='wmk-vida-loka-project'||!Array.isArray(data.maps))throw Error('Projeto WMK inválido.');
+      const maps=data.maps.slice(0,60).map(sanitizeMap),ids=new Set(maps.map(m=>m.id));if(ids.size!==maps.length)throw Error('IDs de mapa duplicados.');
+      const missions=(data.missions||[]).map(normalizeMission);if(missions.some(m=>!m))throw Error('Missões inválidas.');
+      if(!confirm('Substituir mapas, missões e biblioteca local pelos dados importados?'))return;
+      mapCatalog=maps;assetCatalog=Array.isArray(data.assets)?data.assets.filter(a=>typeof a.data==='string'&&/^data:image\/(png|jpeg|webp);base64,/.test(a.data)&&a.data.length<1_400_000).slice(0,30):[];
+      missionCatalog=missions;currentMapId=maps[0]?.id||'baia-nova';selectedMissionId=missions[0]?.id||'';
+      persistAssets();persistMaps();persistMissions();applyMap(currentMapId);showMenu();
+    }catch(err){alert('Importação não realizada: '+err.message)}e.target.value=''});
+    window.addEventListener('keydown',e=>{if(e.code==='Escape'&&wmkMode==='play'){showMenu();e.preventDefault()}
+      if((e.code==='Delete'||e.code==='Backspace')&&wmkMode==='editor'&&!['INPUT','TEXTAREA','SELECT'].includes(document.activeElement.tagName)){$('objDelete').click();e.preventDefault()}
+    });
+    function initWMKWorldStudio(){applyMap(currentMapId);wmkMode='menu';$('wmkMain').hidden=false;renderMapCards();}
+
+    resize();
+    initWMKWorldStudio();
+    renderMissionList();
+    updateHUD();
+    showToast("Escolha um mapa no menu principal.");
+    let lastTime = performance.now();
+    requestAnimationFrame(loop);
+  </script>
+</body>
+</html>
